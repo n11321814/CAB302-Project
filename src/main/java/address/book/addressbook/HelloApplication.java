@@ -3,16 +3,12 @@ package address.book.addressbook;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
 
 public class HelloApplication extends Application {
+    // Constants defining the window title and size
     public static final String TITLE = "Address Book";
     public static final int WIDTH = 640;
     public static final int HEIGHT = 360;
@@ -24,12 +20,9 @@ public class HelloApplication extends Application {
         stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();
-
     }
 
     public static void main(String[] args) {
         launch();
     }
 }
-
-
