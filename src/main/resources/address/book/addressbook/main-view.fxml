@@ -22,7 +22,7 @@
             <ListView fx:id="contactsListView"  />
             <Button text="New" maxWidth="Infinity"/>
         </VBox>
-        <VBox spacing="10.0" prefWidth="400" >
+        <VBox spacing="10.0" prefWidth="400" fx:id="contactContainer">
             <Label text="Enter the contact's details below." />
             <GridPane hgap="5.0" vgap="5.0" >
                 <columnConstraints>
@@ -39,10 +39,12 @@
                 <TextField fx:id="phoneTextField" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             </GridPane>
             <HBox spacing="10.0" alignment="CENTER">
-                <Button text="Confirm" />
-                <Button text="Cancel" />
-                <Button text="Delete" />
+                <Button text="Confirm" onAction="#onEditConfirm"/>
+                <Button text="Cancel" onAction="#onCancel"/>
+                <Button text="Delete" onAction="#onDelete"/>
+                <Button text="New" onAction="#onAdd" maxWidth="Infinity"/>
             </HBox>
+
         </VBox>
     </HBox>
 </VBox>

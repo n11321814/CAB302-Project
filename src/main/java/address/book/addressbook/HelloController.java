@@ -20,7 +20,11 @@ public class HelloController {
     private CheckBox agreeCheckBox;
     @FXML
     private Button nextButton;
-
+    @FXML
+    protected void onCancelButtonClick() {
+        Stage stage = (Stage) nextButton.getScene().getWindow();
+        stage.close();
+    }
     @FXML
     public void initialize() {
         termsAndConditions.setText("""
@@ -40,21 +44,22 @@ Sapien pellentesque habitant morbi tristique.
 Lorem sed risus ultricies tristique nulla aliquet.
 Elementum nibh tellus molestie nunc non blandit massa.""");
     }
+    @FXML
+    protected void onAgreeCheckBoxClick() {
+        boolean accepted = agreeCheckBox.isSelected();
+        nextButton.setDisable(!accepted);
+    }
+
+    @FXML
+    protected void onHelloButtonClick() {
+        welcomeText.setText("Welcome to the Address Book Application!");
+    }
 
     @FXML
     protected void onNextButtonClick() throws IOException {
         Stage stage = (Stage) nextButton.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(HelloApplication.class.getResource("main-view.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), HelloApplication.WIDTH, HelloApplication.HEIGHT);
-        stage.setScene(scene);}
-
-    @FXML
-    protected void onAgreeCheckBoxClick() {
-        boolean accepted = agreeCheckBox.isSelected();
-        nextButton.setDisable(!accepted);
-    }
-    @FXML
-    protected void onHelloButtonClick() {
-        welcomeText.setText("Welcome to the Address Book Application!");
+        stage.setScene(scene);
     }
 }
