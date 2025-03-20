@@ -1,4 +1,4 @@
-package address.book.addressbook;
+package QUT.CAB203.fortunecookie;
 
 public class Contact {
     private int id;

@@ -1,4 +1,4 @@
-package address.book.addressbook;
+package QUT.CAB203.fortunecookie;
 
 import java.util.ArrayList;
 import java.util.List;

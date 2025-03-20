@@ -1,4 +1,4 @@
-package address.book.addressbook;
+package QUT.CAB203.fortunecookie;
 
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

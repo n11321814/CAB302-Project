@@ -4,6 +4,6 @@ module address.book.addressbook {
     requires java.desktop;
 
 
-    opens address.book.addressbook to javafx.fxml;
-    exports address.book.addressbook;
+    opens QUT.CAB203.fortunecookie to javafx.fxml;
+    exports QUT.CAB203.fortunecookie;
 }
