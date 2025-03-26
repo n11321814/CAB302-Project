@@ -4,7 +4,7 @@ The AI will generate unique messages based on the student's study habits, progre
 This tool aims to make studying more enjoyable and engaging by offering daily doses of encouragement and useful advice
 
 // To Do
-Implement Gui
+Implement Gui - must have user input for their profile (gender, age, topic, interest, study habbits etc)
 Sign up/in system connected to database
 AI integration to produce fortune
 Personalized study tips and advice
