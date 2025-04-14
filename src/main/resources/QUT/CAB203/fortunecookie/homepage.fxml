@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUT.CAB203.fortunecookie.Homepage" />
+
+<!--
+Hey, jayden here,
+I've just made this for the future design,
+so when you guys are done with the homepage and login/registration, I can make a UI
+-->
