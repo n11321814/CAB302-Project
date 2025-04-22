@@ -1,11 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
-
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUT.CAB203.fortunecookie.Homepage" />
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Text?>
 
 <!--
 Hey, jayden here,
-I've just made this for the future design,
-so when you guys are done with the homepage and login/registration, I can make a UI
+I've made a rough design here, so feel free to use it if you haven't started the homepage.
+If you have or when you commit it, ill adjust this design to fit your work.
 -->
+
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUT.CAB203.fortunecookie.Homepage">
+   <children>
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+      <Text layoutX="14.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="App Name - QUOTE ME" />
+      <Line endX="-79.4000244140625" endY="165.20001220703125" layoutX="265.0" layoutY="118.0" startX="-79.4000244140625" startY="-78.00001525878906" />
+      <Line endX="103.10000610351562" endY="-0.29998779296875" layoutX="83.0" layoutY="284.0" startX="-100.0" />
+      <Line endX="311.09283447265625" layoutX="287.0" layoutY="284.0" startX="-101.70707702636719" />
+      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="-1.0" layoutY="366.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
+      <Button layoutX="47.0" layoutY="371.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="146.0" text="Study Tips Vault" />
+      <Button layoutX="238.0" layoutY="371.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="146.0" text="Motivation Station" />
+      <Button layoutX="428.0" layoutY="371.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="146.0" text="Your Profile" />
+      <Button layoutX="14.0" layoutY="302.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" text="Begin Study Mode" />
+      <ImageView fitHeight="174.0" fitWidth="138.0" layoutX="22.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
+         <image>
+            <Image url="@placeholdermascot.png" />
+         </image>
+      </ImageView>
+      <Text layoutX="201.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TODAY'S QUOTE" />
+      <TextArea layoutX="199.0" layoutY="75.0" prefHeight="73.0" prefWidth="366.0" text="&quot;INSERT QUOTE&quot;&#10;&#10;" />
+      <Button layoutX="201.0" layoutY="171.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="105.0" text="Save Quote" />
+      <Button layoutX="339.0" layoutY="171.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="105.0" text="Share" />
+      <Text layoutX="199.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FUN PREDICTION: &quot;You'll ace that test today!&quot;" wrappingWidth="348.86639404296875" />
+   </children>
+</AnchorPane>
