@@ -1,5 +1,8 @@
-package QUT.CAB203.fortunecookie;
+package QUT.CAB203.fortunecookie.controller;
 
+import QUT.CAB203.fortunecookie.model.Contact;
+import QUT.CAB203.fortunecookie.model.IContactDAO;
+import QUT.CAB203.fortunecookie.model.SqliteContactDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
@@ -14,7 +17,7 @@ public class MainController {
     private ListView<Contact> contactsListView;
     private IContactDAO contactDAO;
     public MainController() {
-        contactDAO = new MockContactDAO();
+        contactDAO = new SqliteContactDAO();
     }
     @FXML
     private TextField firstNameTextField;

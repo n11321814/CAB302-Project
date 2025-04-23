@@ -1,5 +1,6 @@
-package QUT.CAB203.fortunecookie;
+package QUT.CAB203.fortunecookie.controller;
 
+import QUT.CAB203.fortunecookie.HelloApplication;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
