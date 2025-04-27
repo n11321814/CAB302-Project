@@ -32,6 +32,7 @@ public class LoginController {
             showAlert("Login failed");
         }
     }
+
     @FXML
     private void goToRegister() throws IOException {
         Stage stage = (Stage) toRegister.getScene().getWindow();
