@@ -1,0 +1,30 @@
+package QUT.CAB203.fortunecookie;
+
+import java.util.ArrayList;
+import java.util.List;
+
+public class UserDAOImplementation implements UserDAO{
+    private List<User> users = new ArrayList<>();
+
+    @Override
+    public boolean registerUser(String username, String password) {
+        for (User user: users){
+            if(user.getUsername().equals(username)){
+                return false; //Username taken
+            }
+        }
+
+        users.add(new User(username, password));
+        return true;
+    }
+
+    @Override
+    public User loginUser(String username,String password){
+        for(User user : users){
+            if(user.getUsername().equals(username) && user.getPassword().equals(password)){
+                return user;
+            }
+        }
+        return null;
+    }
+}

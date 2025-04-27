@@ -1,8 +1,6 @@
 package QUT.CAB203.fortunecookie;
 
 public interface UserDAO {
-    public void addUser(User user);
-    public void updateUser(User user);
-    public void deleteUser(User user);
-
+    boolean registerUser(String username, String password);
+    User loginUser(String username, String password);
 }

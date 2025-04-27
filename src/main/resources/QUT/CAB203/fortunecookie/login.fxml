@@ -8,6 +8,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Text?>
 
+<?import javafx.scene.control.PasswordField?>
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUT.CAB203.fortunecookie.LoginController">
    <children>
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="33.0" layoutX="-3.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="606.0" />
@@ -17,11 +18,11 @@
             <Image url="@profile_icon.jpg" />
          </image>
       </ImageView>
-      <TextField layoutX="227.0" layoutY="188.0" />
+      <TextField layoutX="227.0" layoutY="188.0" fx:id="usernameField"/>
       <Text layoutX="223.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
-      <TextField layoutX="227.0" layoutY="246.0" />
+      <PasswordField layoutX="227.0" layoutY="246.0" fx:id="passwordField"/>
       <Text layoutX="227.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
-      <Button layoutX="225.0" layoutY="299.0" mnemonicParsing="false" text="Register" />
-      <Button layoutX="300.0" layoutY="299.0" mnemonicParsing="false" text="Login" />
+      <Button layoutX="225.0" layoutY="299.0" mnemonicParsing="false" text="Register" onAction="#goToRegister" fx:id="toRegister"/>
+      <Button layoutX="300.0" layoutY="299.0" mnemonicParsing="false" text="Login" onAction="#handleLogin"/>
    </children>
 </AnchorPane>
