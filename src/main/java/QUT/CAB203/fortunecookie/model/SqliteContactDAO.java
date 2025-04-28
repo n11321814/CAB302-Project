@@ -14,7 +14,7 @@ public class SqliteContactDAO implements IContactDAO {
     public SqliteContactDAO() {
         connection = SqliteConnection.getInstance();
         createTable();
-        insertSampleData();
+        // insertSampleData();
     }
 
     // Method to create a table
@@ -54,17 +54,42 @@ public class SqliteContactDAO implements IContactDAO {
 
     @Override
     public void addContact(Contact contact) {
-
+        try {
+            PreparedStatement statement = connection.prepareStatement("INSERT INTO contacts (firstName, lastName, phone, email) VALUES (?, ?, ?, ?)");
+            statement.setString(1, contact.getFirstName());
+            statement.setString(2, contact.getLastName());
+            statement.setString(3, contact.getPhone());
+            statement.setString(4, contact.getEmail());
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void updateContact(Contact contact) {
-
+        try {
+            PreparedStatement statement = connection.prepareStatement("UPDATE contacts SET firstName = ?, lastName = ?, phone = ?, email = ? WHERE id = ?");
+            statement.setString(1, contact.getFirstName());
+            statement.setString(2, contact.getLastName());
+            statement.setString(3, contact.getPhone());
+            statement.setString(4, contact.getEmail());
+            statement.setInt(5, contact.getId());
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
     public void deleteContact(Contact contact) {
-
+        try {
+            PreparedStatement statement = connection.prepareStatement("DELETE FROM contacts WHERE id = ?");
+            statement.setInt(1, contact.getId());
+            statement.executeUpdate();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
