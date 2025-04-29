@@ -1,4 +1,4 @@
-package QUT.CAB203.fortunecookie;
+package QUT.CAB203.fortunecookie.LegacyFiles;
 
 public class Contact {
     private int id;

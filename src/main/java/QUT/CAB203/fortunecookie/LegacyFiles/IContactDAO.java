@@ -1,4 +1,6 @@
-package QUT.CAB203.fortunecookie;
+package QUT.CAB203.fortunecookie.LegacyFiles;
+
+import QUT.CAB203.fortunecookie.LegacyFiles.Contact;
 
 import java.util.List;
 

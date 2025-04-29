@@ -1,9 +1,12 @@
-package QUT.CAB203.fortunecookie;
+package QUT.CAB203.fortunecookie.LegacyFiles;
+
+import QUT.CAB203.fortunecookie.User;
+import QUT.CAB203.fortunecookie.UserDAO;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDAOImplementation implements UserDAO{
+public class UserDAOImplementation implements UserDAO {
     private List<User> users = new ArrayList<>();
 
     @Override
