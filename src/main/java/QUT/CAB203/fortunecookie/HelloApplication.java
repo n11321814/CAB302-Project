@@ -6,6 +6,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
 
 public class HelloApplication extends Application {
     // Constants defining the window title and size
@@ -23,6 +24,11 @@ public class HelloApplication extends Application {
     }
 
     public static void main(String[] args) {
+        Connection connection = SQLiteConnection.getInstance();
+
+        SQLiteDAO sqLiteDAO = new SQLiteDAO();
+        sqLiteDAO.createTable();
+
         launch();
     }
 }
