@@ -27,7 +27,8 @@ If you have or when you commit it, ill adjust this design to fit your work.
       <Button layoutX="47.0" layoutY="371.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="146.0" text="Study Tips Vault" />
       <Button layoutX="238.0" layoutY="371.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="146.0" text="Motivation Station" />
       <Button layoutX="428.0" layoutY="371.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="146.0" text="Your Profile" />
-      <Button layoutX="14.0" layoutY="302.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" text="Begin Study Mode" />
+      <Button layoutX="14.0" layoutY="302.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" text="Log out" fx:id="toLogin" onAction="#goToLogin" />
+      <Button layoutX="200.0" layoutY="302.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" text="Begin Study Mode" />
       <ImageView fitHeight="174.0" fitWidth="138.0" layoutX="22.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
          <image>
             <Image url="@placeholdermascot.png" />

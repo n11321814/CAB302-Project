@@ -2,6 +2,7 @@ package QUT.CAB203.fortunecookie;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -18,16 +19,22 @@ public class LoginController {
     private PasswordField passwordField;
     @FXML
     private Button toRegister;
+    @FXML
+    private Button toHomepage;
 
     private UserDAO userDAO = UserDAOInstance.getInstance();
 
     @FXML
-    private void handleLogin() {
+    private void handleLogin() throws IOException{
         String username = usernameField.getText();
         String password = passwordField.getText();
         User user = userDAO.loginUser(username, password);
         if (user != null) {
             showAlert("Login successful");
+            Stage stage = (Stage) toHomepage.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("homepage.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
+            stage.setScene(scene);
         } else {
             showAlert("Login failed");
         }
