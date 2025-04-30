@@ -1,6 +1,6 @@
-package QUT.CAB203.fortunecookie.LegacyFiles;
+package QUT.CAB302.fortunecookie.LegacyFiles;
 
-import QUT.CAB203.fortunecookie.ApplicationMain;
+import QUT.CAB302.fortunecookie.ApplicationMain;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;

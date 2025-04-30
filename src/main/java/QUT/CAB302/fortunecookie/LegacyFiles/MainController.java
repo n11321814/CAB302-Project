@@ -1,4 +1,4 @@
-package QUT.CAB203.fortunecookie.LegacyFiles;
+package QUT.CAB302.fortunecookie.LegacyFiles;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
