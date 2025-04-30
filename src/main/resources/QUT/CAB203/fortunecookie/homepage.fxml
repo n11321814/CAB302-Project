@@ -1,43 +1,109 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Pos?>
 <?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextArea?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Line?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Text?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
 
-<!--
-Hey, jayden here,
-I've made a rough design here, so feel free to use it if you haven't started the homepage.
-If you have or when you commit it, ill adjust this design to fit your work.
--->
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="QUT.CAB203.fortunecookie.FortuneHomeController"
+            style="-fx-background-color: #FFF9F2;">
 
+    <!-- Top bar: Title + navigation -->
+    <top>
+        <HBox alignment="CENTER_LEFT" spacing="20"
+              style="-fx-background-color: #FFE4C4; -fx-padding: 10,20,10,20;">
+            <Label text="Fortune Cookie"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #8B4513;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <HBox spacing="15">
+                <Label text="HOME"     style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"/>
+                <Label text="CONTACT"  style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"/>
+                <Label text="ABOUT US" style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"/>
+            </HBox>
+        </HBox>
+    </top>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUT.CAB203.fortunecookie.HomepageController">
-   <children>
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
-      <Text layoutX="14.0" layoutY="25.0" strokeType="OUTSIDE" strokeWidth="0.0" text="App Name - QUOTE ME" />
-      <Line endX="-79.4000244140625" endY="165.20001220703125" layoutX="265.0" layoutY="118.0" startX="-79.4000244140625" startY="-78.00001525878906" />
-      <Line endX="103.10000610351562" endY="-0.29998779296875" layoutX="83.0" layoutY="284.0" startX="-100.0" />
-      <Line endX="311.09283447265625" layoutX="287.0" layoutY="284.0" startX="-101.70707702636719" />
-      <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="40.0" layoutX="-1.0" layoutY="366.0" stroke="BLACK" strokeType="INSIDE" width="600.0" />
-      <Button layoutX="47.0" layoutY="371.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="146.0" text="Study Tips Vault" />
-      <Button layoutX="238.0" layoutY="371.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="146.0" text="Motivation Station" />
-      <Button layoutX="428.0" layoutY="371.0" mnemonicParsing="false" prefHeight="30.0" prefWidth="146.0" text="Your Profile" />
-      <Button layoutX="14.0" layoutY="302.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" text="Log out" fx:id="toLogin" onAction="#goToLogin" />
-      <Button layoutX="200.0" layoutY="302.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="146.0" text="Begin Study Mode" />
-      <ImageView fitHeight="174.0" fitWidth="138.0" layoutX="22.0" layoutY="75.0" pickOnBounds="true" preserveRatio="true">
-         <image>
-            <Image url="@placeholdermascot.png" />
-         </image>
-      </ImageView>
-      <Text layoutX="201.0" layoutY="65.0" strokeType="OUTSIDE" strokeWidth="0.0" text="TODAY'S QUOTE" />
-      <TextArea layoutX="199.0" layoutY="75.0" prefHeight="73.0" prefWidth="366.0" text="&quot;INSERT QUOTE&quot;&#10;&#10;" />
-      <Button layoutX="201.0" layoutY="171.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="105.0" text="Save Quote" />
-      <Button layoutX="339.0" layoutY="171.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="105.0" text="Share" />
-      <Text layoutX="199.0" layoutY="263.0" strokeType="OUTSIDE" strokeWidth="0.0" text="FUN PREDICTION: &quot;You'll ace that test today!&quot;" wrappingWidth="348.86639404296875" />
-   </children>
-</AnchorPane>
+    <!-- Center content: cookie + calendar + profile -->
+    <center>
+        <HBox alignment="TOP_CENTER" spacing="40"
+              style="-fx-padding: 30;">
+            
+            <!-- Left column: cookie button & weekly calendar -->
+            <VBox alignment="TOP_CENTER" spacing="30">
+                <!-- Break-cookie button -->
+                <Button text="Double Tap to Break the Cookie"
+                        fx:id="cookieButton"
+                        onMouseClicked="#onCookieClick"
+                        wrapText="true"
+                        alignment="CENTER"
+                        style="
+                            -fx-font-size: 16px;
+                            -fx-background-radius: 30;
+                            -fx-background-color: #FFDAB9;
+                            -fx-padding: 15,30,15,30;
+                        "/>
+
+                <!-- Weekly calendar grid -->
+                <VBox spacing="10" alignment="CENTER">
+                    <Label text="Weekly Calendar"
+                           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                    <GridPane hgap="10" vgap="10"
+                              style="-fx-background-color: white;
+                                     -fx-border-color: #D3E5F0;
+                                     -fx-border-radius: 8;
+                                     -fx-padding: 15;
+                                     -fx-border-width: 2;">
+                        <!-- Header row -->
+                        <Label text="Sun" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
+                        <Label text="Mon" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
+                        <Label text="Tue" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
+                        <Label text="Wed" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
+                        <Label text="Thu" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
+                        <Label text="Fri" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
+                        <Label text="Sat" GridPane.rowIndex="0" GridPane.columnIndex="6"/>
+
+                        <!-- Empty grid cells for days -->
+                        <Label text="—" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-text-fill: #D3E5F0;"/>
+                        <!-- (repeat for all columns 1–6 and rowIndex 1 & 2) -->
+                    </GridPane>
+                </VBox>
+            </VBox>
+
+            <!-- Right column: profile card -->
+            <StackPane style="
+                    -fx-background-color: white;
+                    -fx-border-color: #D3E5F0;
+                    -fx-border-radius: 8;
+                    -fx-padding: 20;">
+                <VBox alignment="TOP_LEFT" spacing="15">
+                    <Label text="Your Profile"
+                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
+
+                    <Label fx:id="progressLabel" text="Progress: 12/10"
+                           style="-fx-font-size: 14px;"/>
+
+                    <Label fx:id="streakLabel" text="Study streak: 🔥 7"
+                           style="-fx-font-size: 14px;"/>
+
+                    <!-- Placeholder for progress graph -->
+                    <Region prefHeight="120" prefWidth="200"
+                            style="
+                                -fx-background-color: #F0F8FF;
+                                -fx-border-color: #D3E5F0;
+                                -fx-border-width: 2;
+                                -fx-border-radius: 4;
+                            "/>
+                </VBox>
+            </StackPane>
+
+        </HBox>
+    </center>
+
+</BorderPane>

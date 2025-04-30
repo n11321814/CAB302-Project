@@ -25,7 +25,7 @@ public class LoginController {
     private UserDAO userDAO = UserDAOInstance.getInstance();
 
     @FXML
-    private void handleLogin() throws IOException{
+    private void handleLogin() throws IOException {
         String username = usernameField.getText();
         String password = passwordField.getText();
         User user = userDAO.loginUser(username, password);
