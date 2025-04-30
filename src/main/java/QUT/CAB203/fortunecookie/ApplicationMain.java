@@ -6,7 +6,8 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-public class ApplicationMain extends Application {
+public class
+ApplicationMain extends Application {
     // Constants defining the window title and size
     public static final String TITLE = "Fortune Cookie Study Helper";
     public static final int WIDTH = 640;
