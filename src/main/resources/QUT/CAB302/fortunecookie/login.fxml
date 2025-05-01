@@ -1,5 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<!--
+   NOTE: In the next iteration, we should consider replacing the absolute positioning
+   of UI elements within the AnchorPane with a more flexible layout using VBox and HBox.
+   VBox can be used to vertically stack the text fields, labels, and buttons with consistent
+   spacing and alignment, while HBox can be used to place elements like the "Back" and "Register"
+   buttons side by side. This change would improve the maintainability and responsiveness
+   of the UI, especially when adapting to different screen sizes or resolutions. Additionally,
+   using layout containers allows for cleaner structure, easier updates, and better scalability.
+   Styling improvements can also be achieved by adding padding, spacing, and external CSS.
+-->
+
+<!-- Import required JavaFX UI components -->
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
@@ -9,20 +21,39 @@
 <?import javafx.scene.text.Text?>
 <?import javafx.scene.control.PasswordField?>
 
+<!-- Root layout container using AnchorPane with fixed size -->
 <AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUT.CAB302.fortunecookie.LoginController">
+
    <children>
+      <!-- Top banner with blue background -->
       <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="33.0" layoutX="-3.0" layoutY="-1.0" stroke="BLACK" strokeType="INSIDE" width="606.0" />
+
+      <!-- Title text for the page -->
       <Text layoutX="14.0" layoutY="20.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Login" />
+
+      <!-- Profile icon image centered at the top -->
       <ImageView fitHeight="103.0" fitWidth="97.0" layoutX="253.0" layoutY="58.0" pickOnBounds="true" preserveRatio="true">
          <image>
-            <Image url="@profile_icon.jpg" />
+            <Image url="@profile_icon.jpg" /> <!-- Profile image resource -->
          </image>
       </ImageView>
+
+      <!-- TextField for the username input -->
       <TextField layoutX="227.0" layoutY="188.0" fx:id="usernameField"/>
+
+      <!-- Label for the username field -->
       <Text layoutX="223.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
+
+      <!-- PasswordField for password input (characters hidden) -->
       <PasswordField layoutX="227.0" layoutY="246.0" fx:id="passwordField"/>
+
+      <!-- Label for the password field -->
       <Text layoutX="227.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
+
+      <!-- Button to navigate the user to the registration screen -->
       <Button layoutX="225.0" layoutY="299.0" mnemonicParsing="false" text="Register" onAction="#goToRegister" fx:id="toRegister"/>
+
+      <!-- Button to perform login action and navigate to homepage -->
       <Button layoutX="300.0" layoutY="299.0" mnemonicParsing="false" text="Login" onAction="#handleLogin" fx:id="toHomepage"/>
    </children>
 </AnchorPane>
