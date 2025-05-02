@@ -12,7 +12,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="QUT.CAB302.fortunecookie.FortuneHomeController"
+            fx:controller="QUT.CAB302.fortunecookie.HomepageController"
             style="-fx-background-color: #FFF9F2;">
 
     <!-- Top bar: Title + navigation -->
