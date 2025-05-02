@@ -5,8 +5,8 @@ module address.book.addressbook {
     requires java.sql;
 
 
-    opens QUT.CAB203.fortunecookie to javafx.fxml;
-    exports QUT.CAB203.fortunecookie;
-    exports QUT.CAB203.fortunecookie.LegacyFiles;
-    opens QUT.CAB203.fortunecookie.LegacyFiles to javafx.fxml;
+    opens QUT.CAB302.fortunecookie to javafx.fxml;
+    exports QUT.CAB302.fortunecookie;
+    exports QUT.CAB302.fortunecookie.LegacyFiles;
+    opens QUT.CAB302.fortunecookie.LegacyFiles to javafx.fxml;
 }

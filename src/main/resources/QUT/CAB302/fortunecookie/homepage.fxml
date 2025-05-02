@@ -12,7 +12,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="QUT.CAB203.fortunecookie.FortuneHomeController"
+            fx:controller="QUT.CAB302.fortunecookie.FortuneHomeController"
             style="-fx-background-color: #FFF9F2;">
 
     <!-- Top bar: Title + navigation -->
@@ -23,6 +23,7 @@
                    style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #8B4513;"/>
             <Region HBox.hgrow="ALWAYS"/>
             <HBox spacing="15">
+                <Label text="LOG OUT"     style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;" onMouseClicked="#goToLogin" fx:id="toLogin"/>
                 <Label text="HOME"     style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"/>
                 <Label text="CONTACT"  style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"/>
                 <Label text="ABOUT US" style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"/>

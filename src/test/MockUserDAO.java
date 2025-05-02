@@ -1,5 +1,5 @@
-import QUT.CAB203.fortunecookie.User;
-import QUT.CAB203.fortunecookie.UserDAO;
+import QUT.CAB302.fortunecookie.User;
+import QUT.CAB302.fortunecookie.UserDAO;
 
 import java.util.ArrayList;
 import java.util.List;

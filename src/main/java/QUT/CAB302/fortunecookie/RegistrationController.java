@@ -1,8 +1,7 @@
-package QUT.CAB203.fortunecookie;
+package QUT.CAB302.fortunecookie;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
@@ -12,38 +11,37 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class LoginController {
+public class RegistrationController {
     @FXML
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
     @FXML
-    private Button toRegister;
-    @FXML
-    private Button toHomepage;
+    private Button toLogin;
 
     private UserDAO userDAO = UserDAOInstance.getInstance();
 
     @FXML
-    private void handleLogin() throws IOException {
+    private void handleRegister() throws IOException {
         String username = usernameField.getText();
         String password = passwordField.getText();
-        User user = userDAO.loginUser(username, password);
-        if (user != null) {
-            showAlert("Login successful");
-            Stage stage = (Stage) toHomepage.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("homepage.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
-            stage.setScene(scene);
+        if (username.isEmpty() || password.isEmpty()) {
+            showAlert("Please fill all fields");
         } else {
-            showAlert("Login failed");
+            boolean success = userDAO.registerUser(username, password);
+            if(success){
+                showAlert("Registration successful");
+                goToLogin();
+            } else{
+                showAlert("User already exists");
+            }
         }
     }
 
     @FXML
-    private void goToRegister() throws IOException {
-        Stage stage = (Stage) toRegister.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("registration.fxml"));
+    private void goToLogin() throws IOException {
+        Stage stage = (Stage) toLogin.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
         stage.setScene(scene);
     }
@@ -56,3 +54,4 @@ public class LoginController {
         alert.showAndWait();
     }
 }
+

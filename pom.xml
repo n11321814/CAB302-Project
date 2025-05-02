@@ -65,7 +65,7 @@
                         <!-- Default configuration for running with: mvn clean javafx:run -->
                         <id>default-cli</id>
                         <configuration>
-                            <mainClass>address.book.addressbook/QUT.CAB203.fortunecookie.ApplicationMain</mainClass>
+                            <mainClass>address.book.addressbook/QUT.CAB302.fortunecookie.ApplicationMain</mainClass>
                             <launcher>app</launcher>
                             <jlinkZipName>app</jlinkZipName>
                             <jlinkImageName>app</jlinkImageName>
