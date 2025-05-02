@@ -1,0 +1,63 @@
+AS OF 02/05/2025:
+
+PS C:\Users\Nic\OneDrive\Desktop\CAB302-Project> git shortlog --summary --numbered --all --no-merges
+    29  Nic
+    14  SylasWoodall
+    11  n11321814
+     5  jay8999
+     4  Zane
+     3  Sylas Woodall
+     1  anter0202
+PS C:\Users\Nic\OneDrive\Desktop\CAB302-Project> git log --pretty=format:'%h was %an, %ar, message: %s'
+a77150b was Nic, 2 days ago, message: Updated Trello Export
+cac6d10 was Nic, 2 days ago, message: Meeting Notes 30/4
+e86ded9 was Nic, 3 days ago, message: Project Management Artifacts
+56cc07d was SylasWoodall, 3 days ago, message: Added link to Homepage after login
+72e74d0 was SylasWoodall, 3 days ago, message: Added Unit Tests for login/registration
+63b3b99 was SylasWoodall, 3 days ago, message: Added Unit Test Folder
+2b855f5 was SylasWoodall, 3 days ago, message: Refactoring
+346e441 was SylasWoodall, 3 days ago, message: Basic Database Integrated, Refactoring
+a472e4e was SylasWoodall, 5 days ago, message: Added Basic Login/Registration Functionality
+0efacb7 was SylasWoodall, 5 days ago, message: Merge remote-tracking branch 'origin/main'
+c1017da was SylasWoodall, 5 days ago, message: Added Basic Login/Registration Functionality
+fd5dc33 was SylasWoodall, 5 days ago, message: Added framework class and DAO for login/registration
+836fbc3 was SylasWoodall, 5 days ago, message: Added framework class and DAO for login/registration
+6d0641a was jay8999, 10 days ago, message: Made simple design UI for homepage, login and registration
+068e3ae was jay8999, 3 weeks ago, message: Homepage UI files
+6d2082c was Nic, 4 weeks ago, message: Week 6 Prac
+1f5d1c7 was Nic, 4 weeks ago, message: Meeting 2 Complete
+736b553 was Nic, 5 weeks ago, message: Meeting 1
+31ab1d9 was Nic, 5 weeks ago, message: Meeting 1
+ec9e562 was Nic, 5 weeks ago, message: Meeting 1
+683cdf2 was Nic, 5 weeks ago, message: Meeting 1
+6d11d5c was Nic, 5 weeks ago, message: Meeting 1
+6373e33 was Nic, 5 weeks ago, message: Meeting 1
+ffc7239 was Nic, 5 weeks ago, message: Meeting 1
+07c5f2e was Nic, 5 weeks ago, message: ReadMe Update
+70c2370 was Nic, 5 weeks ago, message: ReadMe Update
+4ee4555 was Nic, 5 weeks ago, message: demo
+059c8f8 was Nic, 5 weeks ago, message: test
+98f8eaf was Nic, 5 weeks ago, message: Merge branch 'main' of https://github.com/n11321814/CAB302-Project
+cc12785 was Nic, 5 weeks ago, message: Test
+94ec0d9 was SylasWoodall, 5 weeks ago, message: Organised Project Brief, Added Synopsis, Ideas/Suggestions
+b2c401a was jay8999, 5 weeks ago, message: first commit
+8e0b3c7 was jay8999, 5 weeks ago, message: testing a commit
+c4c04c9 was Zane, 5 weeks ago, message: Fixed problem in misc.xml
+d33d2db was n11321814, 5 weeks ago, message: Update Project Brief
+bf0ebd0 was Nic, 5 weeks ago, message: T
+b6534fd was n11321814, 6 weeks ago, message: Test
+8e521e4 was n11321814, 6 weeks ago, message: Test
+c32ac41 was n11321814, 6 weeks ago, message: Test
+2ea9a97 was n11321814, 6 weeks ago, message: Test
+b51de54 was n11321814, 6 weeks ago, message: Test
+fc0384e was Nic, 6 weeks ago, message: Test
+2382792 was Nic, 6 weeks ago, message: Test
+859a007 was n11321814, 6 weeks ago, message: Create README.md
+eacf487 was Nic, 6 weeks ago, message: Fortune Cookie Template
+3373888 was n11321814, 6 weeks ago, message: Week 4 Prac Complete
+1cbaafb was Nic, 6 weeks ago, message: Week 4 Prac
+0e08aa8 was n11321814, 6 weeks ago, message: Update Project Brief
+d38facb was Nic, 6 weeks ago, message: Project Brief
+b98ed5e was Nic, 6 weeks ago, message: Test
+daef5df was Nic, 6 weeks ago, message: Initial commit
+(END)
