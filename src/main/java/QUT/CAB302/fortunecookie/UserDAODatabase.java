@@ -1,4 +1,4 @@
-package QUT.CAB203.fortunecookie;
+package QUT.CAB302.fortunecookie;
 
 import java.sql.*;
 public class UserDAODatabase implements UserDAO {

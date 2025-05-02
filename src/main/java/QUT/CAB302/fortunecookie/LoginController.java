@@ -1,4 +1,4 @@
-package QUT.CAB203.fortunecookie;
+package QUT.CAB302.fortunecookie;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -11,37 +11,38 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 
-public class RegistrationController {
+public class LoginController {
     @FXML
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
     @FXML
-    private Button toLogin;
+    private Button toRegister;
+    @FXML
+    private Button toHomepage;
 
     private UserDAO userDAO = UserDAOInstance.getInstance();
 
     @FXML
-    private void handleRegister() throws IOException {
+    private void handleLogin() throws IOException {
         String username = usernameField.getText();
         String password = passwordField.getText();
-        if (username.isEmpty() || password.isEmpty()) {
-            showAlert("Please fill all fields");
+        User user = userDAO.loginUser(username, password);
+        if (user != null) {
+            showAlert("Login successful");
+            Stage stage = (Stage) toHomepage.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("homepage.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
+            stage.setScene(scene);
         } else {
-            boolean success = userDAO.registerUser(username, password);
-            if(success){
-                showAlert("Registration successful");
-                goToLogin();
-            } else{
-                showAlert("User already exists");
-            }
+            showAlert("Login failed");
         }
     }
 
     @FXML
-    private void goToLogin() throws IOException {
-        Stage stage = (Stage) toLogin.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
+    private void goToRegister() throws IOException {
+        Stage stage = (Stage) toRegister.getScene().getWindow();
+        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("registration.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
         stage.setScene(scene);
     }
@@ -54,4 +55,3 @@ public class RegistrationController {
         alert.showAndWait();
     }
 }
-
