@@ -1,0 +1,1 @@
+moduleSearchIndex = [{"l":"address.book.addressbook"}];updateSearchResults();

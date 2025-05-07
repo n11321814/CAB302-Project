@@ -1,0 +1,1 @@
+packageSearchIndex = [{"l":"All Packages","u":"allpackages-index.html"},{"m":"address.book.addressbook","l":"QUT.CAB302.fortunecookie"},{"m":"address.book.addressbook","l":"QUT.CAB302.fortunecookie.LegacyFiles"}];updateSearchResults();
