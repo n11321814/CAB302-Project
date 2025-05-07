@@ -8,16 +8,17 @@
 
 name: Java CI with Maven
 
+permissions:
+  id-token: write
+  contents: read
+  checks: write
+  
 on:
   push:
     branches: [ "Continuous-Integration" ]
   pull_request:
     branches: [ "Continuous-Integration" ]
     
-permissions:
-  id-token: write
-  contents: read
-  checks: write
   
 jobs:
   build:
