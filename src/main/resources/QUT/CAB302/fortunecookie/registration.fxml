@@ -8,19 +8,17 @@
    buttons side by side. This change would improve the maintainability and responsiveness
    of the UI, especially when adapting to different screen sizes or resolutions.
 -->
-
 <!-- Importing necessary JavaFX classes -->
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<?import javafx.scene.image.Image?>
-<?import javafx.scene.image.ImageView?>
-<?import javafx.scene.layout.AnchorPane?>
-<?import javafx.scene.shape.Rectangle?>
-<?import javafx.scene.text.Text?>
-<?import javafx.scene.control.PasswordField?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.image.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.shape.*?>
+<?import javafx.scene.text.*?>
 
 <!-- Root layout container with a fixed width and height, using AnchorPane -->
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUT.CAB302.fortunecookie.RegistrationController">
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUT.CAB302.fortunecookie.RegistrationController">
    <children>
 
       <!-- Decorative blue header bar at the top -->
@@ -36,21 +34,25 @@
          </image>
       </ImageView>
       <!-- TextField for entering username -->
-      <TextField layoutX="227.0" layoutY="188.0" fx:id="usernameField"/>
+      <TextField fx:id="usernameField" layoutX="227.0" layoutY="188.0" />
 
       <!-- Label for the username field -->
       <Text layoutX="223.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Username" />
 
       <!-- PasswordField for entering password (input hidden) -->
-      <PasswordField layoutX="227.0" layoutY="246.0" fx:id="passwordField"/>
+      <PasswordField fx:id="passwordField" layoutX="227.0" layoutY="246.0" />
 
       <!-- Label for the password field -->
       <Text layoutX="227.0" layoutY="242.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Password" />
 
       <!-- "Back" button that triggers 'goToLogin' method in controller, returning the user to the login page -->
-      <Button layoutX="227.0" layoutY="291.0" mnemonicParsing="false" text="Back" onAction="#goToLogin" fx:id="toLogin"/>
+      <Button fx:id="toLogin" layoutX="227.0" layoutY="291.0" mnemonicParsing="false" onAction="#goToLogin" text="Back" />
 
       <!-- "Register" button that triggers 'handleRegister' method in controller -->
-      <Button layoutX="300.0" layoutY="291.0" mnemonicParsing="false" text="Register" onAction="#handleRegister" />
+      <Button layoutX="300.0" layoutY="291.0" mnemonicParsing="false" onAction="#handleRegister" text="Register" />
+      <TextField fx:id="emailField" layoutX="402.0" layoutY="188.0" />
+      <TextField fx:id="phoneField" layoutX="402.0" layoutY="246.0" />
+      <Text layoutX="402.0" layoutY="177.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Email" />
+      <Text layoutX="402.0" layoutY="234.0" strokeType="OUTSIDE" strokeWidth="0.0" text="Phone" />
    </children>
 </AnchorPane>

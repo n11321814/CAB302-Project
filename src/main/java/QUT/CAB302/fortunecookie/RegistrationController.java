@@ -17,6 +17,10 @@ public class RegistrationController {
     @FXML
     private PasswordField passwordField;
     @FXML
+    private TextField emailField;
+    @FXML
+    private TextField phoneField;
+    @FXML
     private Button toLogin;
 
     private UserDAO userDAO = UserDAOInstance.getInstance();
@@ -25,10 +29,12 @@ public class RegistrationController {
     private void handleRegister() throws IOException {
         String username = usernameField.getText();
         String password = passwordField.getText();
-        if (username.isEmpty() || password.isEmpty()) {
-            showAlert("Please fill all fields");
+        String email = emailField.getText();
+        String phone = phoneField.getText();
+        if (username.isEmpty() || password.isEmpty() || (email.isEmpty() && phone.isEmpty())) {
+            showAlert("Please enter a username, password and at least an email or password.");
         } else {
-            boolean success = userDAO.registerUser(username, password);
+            boolean success = userDAO.registerUser(username, password, email, phone);
             if(success){
                 showAlert("Registration successful");
                 goToLogin();
