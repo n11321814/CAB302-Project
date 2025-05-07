@@ -7,7 +7,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 public class DatabaseTest {
     @Test
     public void testConnection() {
-        Connection conn = SqliteConnection.getInstance();
+        Connection conn = SQLiteConnection.getInstance();
         assertEquals(true, conn != null);
     }
 }

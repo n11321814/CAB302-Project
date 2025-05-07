@@ -2,15 +2,20 @@ package QUT.CAB302.fortunecookie;
 
 import java.sql.*;
 public class UserDAODatabase implements UserDAO {
-    private static final String DB_URL = "jdbc:sqlite:users.db";
+    private static final String DB_URL = "jdbc:sqlite:";
+
+    private Connection connection;
+
+
 
     public UserDAODatabase() {
+        connection = SQLiteConnection.getInstance();
         createUserTable();
     }
 
     private void createUserTable() {
         try (Connection conn = DriverManager.getConnection(DB_URL);
-             Statement stmt = conn.createStatement()) {
+             Statement stmt = connection.createStatement()) {
             String sql = "CREATE TABLE IF NOT EXISTS users (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "username TEXT UNIQUE NOT NULL," +
