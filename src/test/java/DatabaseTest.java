@@ -1,5 +1,3 @@
-package Java;
-
 import QUT.CAB302.fortunecookie.*;
 import org.junit.jupiter.api.*;
 
