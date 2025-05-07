@@ -7,11 +7,6 @@
 # documentation.
 
 name: Java CI with Maven
-
-permissions:
-  id-token: write
-  contents: read
-  checks: write
   
 on:
   push:
