@@ -61,6 +61,9 @@
                 <!-- Quote Display -->
                 <Label fx:id="quoteLabel" text="Inspirational quote will appear here." style="-fx-font-size: 16px; -fx-text-fill: #5A3E1B; -fx-padding: 20 0 20 0;"/>
 
+                <!-- Save Quote Button -->
+                <Button fx:id="saveQuoteButton" text="Save Quote" onMouseClicked="#saveQuote" style="-fx-font-size: 14px; -fx-padding: 10px 20px;"/>
+
                 <Button text="Start Timer"
                         fx:id="startButton"
                         onMouseClicked="#startStudySession"
@@ -86,7 +89,7 @@
                     <Label fx:id="streakLabel" text="Study streak: 🔥 0"
                            style="-fx-font-size: 14px;"/>
 
-                    <!-- More information if needed -->
+                    <!-- More information if needed just add it to this section-->
                     <Label text="Focus: 100%"
                            style="-fx-font-size: 14px;"/>
 

@@ -38,7 +38,10 @@ public class StudyModeController {
     private Label toLogin;
 
     @FXML
-    private Label quoteLabel;  // Add a label for the quote
+    private Label quoteLabel;
+
+    @FXML
+    private Button saveQuoteButton;
 
     private boolean isSessionActive = false;
     private Timeline timer;
@@ -129,7 +132,7 @@ public class StudyModeController {
             isSessionActive = true;
             isPaused = false;
 
-            // Optional: Log mood (could be saved later)
+            // Log mood (please add it being saved later)
             System.out.println("Mood before session: " + mood);
 
         } catch (NumberFormatException e) {
@@ -230,5 +233,20 @@ public class StudyModeController {
         System.out.println("Subject: " + subject);
         System.out.println("Duration: " + durationInMinutes + " minutes");
         // TODO: Replace this with actual DB logic
+    }
+    @FXML
+    private void saveQuote(MouseEvent event) {
+        // Get the current quote from the label
+        String currentQuote = quoteLabel.getText();
+
+        // Save the quote to database(for now, we'll print it to the console here)
+        System.out.println("Quote saved: " + currentQuote);
+
+        // Optionally, you could display a message saying the quote was saved
+        Alert alert = new Alert(Alert.AlertType.INFORMATION);
+        alert.setTitle("Quote Saved");
+        alert.setHeaderText(null);
+        alert.setContentText("The following quote has been saved:\n" + currentQuote);
+        alert.showAndWait();
     }
 }
