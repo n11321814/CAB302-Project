@@ -176,6 +176,12 @@ public class StudyModeController {
     @FXML
     public void goToLogin() {
         try {
+            // Here is the framework for the study streak it just needs to be hooked up to the database, and it will work (hopefully).
+            // Increment streak before logging out
+            //User currentUser = userDAO.getCurrentUser(); // Adjust this if you store the user differently
+            //userDAO.incrementStreak(currentUser);
+
+            // Load login screen
             Stage stage = (Stage) toLogin.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
@@ -184,6 +190,7 @@ public class StudyModeController {
             e.printStackTrace();
         }
     }
+
     public void goToHomepage() {
         try {
             Stage stage = (Stage) toLogin.getScene().getWindow();

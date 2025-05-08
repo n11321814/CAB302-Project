@@ -40,9 +40,13 @@ public class FortuneHomeController {
      */
     @FXML
     public void initialize() {
-        // Initialize streak or quote if needed
-        if (streakLabel != null) {
-            streakLabel.setText("Study streak: 🔥 0");
+        // Attempt to get the current user; fallback to default value
+        // User currentUser = userDAO.getCurrentUser(); // Uncomment and implement this when ready
+
+        if (streakLabel != null /* && currentUser != null */) {
+            // int streak = currentUser.getStreak(); // Uncomment when ready
+            // streakLabel.setText("Study streak: 🔥 " + streak);
+            streakLabel.setText("Study streak: 🔥 0"); // Temporary placeholder
         }
 
         if (quoteLabel != null) {
