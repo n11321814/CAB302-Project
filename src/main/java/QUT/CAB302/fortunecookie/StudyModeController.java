@@ -3,65 +3,60 @@ package QUT.CAB302.fortunecookie;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
-import javafx.scene.control.Button;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import javafx.application.Platform;
-import javafx.scene.control.ButtonType;
-
 import java.io.IOException;
+import java.util.Optional;
 
 public class StudyModeController {
 
     @FXML
-    private Label timerLabel;  // Label for showing the timer
+    private Label timerLabel;
 
     @FXML
-    private Button startButton;  // Button to start the session
+    private Button startButton;
 
     @FXML
-    private TextField subjectTextField;  // TextField for the subject
+    private TextField subjectTextField;
 
     @FXML
-    private TextField durationTextField;  // TextField for the study duration
+    private TextField durationTextField;
 
     @FXML
-    private Label streakLabel;  // Label for showing the study streak
+    private ComboBox<String> moodComboBox;
 
     @FXML
-    private Label toLogin;  // Logout button
+    private Label streakLabel;
 
-    private boolean isSessionActive = false;  // Track if the session is active
-    private Timeline timer;  // Timeline for the study timer
-    private int minutes = 0;  // Minutes counter for the timer
-    private int seconds = 0;  // Seconds counter for the timer
-    private int totalTimeInSeconds = 0;  // Total study time in seconds
+    @FXML
+    private Label toLogin;
+
+    private boolean isSessionActive = false;
+    private Timeline timer;
+    private int minutes = 0;
+    private int seconds = 0;
+    private int totalTimeInSeconds = 0;
     private boolean isPaused = false;
     private boolean sessionEnded = false;
 
-    /**
-     * Called automatically after the FXML is loaded.
-     */
     @FXML
     public void initialize() {
-        // Set the initial streak value
         if (streakLabel != null) {
             streakLabel.setText("Study streak: 🔥 0");
         }
+
+        if (moodComboBox != null) {
+            moodComboBox.getItems().addAll("Happy", "Stressed", "Tired", "Motivated", "Anxious");
+        }
     }
 
-    /**
-     * Start the study session after asking for duration and subject.
-     */
     @FXML
     private void startStudySession(MouseEvent event) {
-        // If timer is running and user clicks to pause
         if (isSessionActive && !isPaused) {
             timer.pause();
             isPaused = true;
@@ -69,7 +64,6 @@ public class StudyModeController {
             return;
         }
 
-        // If paused, resume
         if (isPaused) {
             timer.play();
             isPaused = false;
@@ -77,7 +71,13 @@ public class StudyModeController {
             return;
         }
 
-        // New session setup
+        // NEW: Get mood from ComboBox
+        String mood = (moodComboBox != null) ? moodComboBox.getValue() : null;
+        if (mood == null || mood.trim().isEmpty()) {
+            showError("Please select your mood before starting the session.");
+            return;
+        }
+
         String subject = subjectTextField.getText();
         String durationText = durationTextField.getText();
 
@@ -90,7 +90,7 @@ public class StudyModeController {
             totalTimeInSeconds = Integer.parseInt(durationText) * 60;
             minutes = totalTimeInSeconds / 60;
             seconds = totalTimeInSeconds % 60;
-            sessionEnded = false;  // Reset for new session
+            sessionEnded = false;
 
             updateTimerDisplay();
 
@@ -101,14 +101,15 @@ public class StudyModeController {
             startButton.setText("Pause Study Session");
             isSessionActive = true;
             isPaused = false;
+
+            // Optional: Log mood (could be saved later)
+            System.out.println("Mood before session: " + mood);
+
         } catch (NumberFormatException e) {
             showError("Invalid duration format. Please enter a valid number.");
         }
     }
 
-    /**
-     * Update the timer on each tick.
-     */
     private void updateTimer() {
         if (totalTimeInSeconds > 0) {
             totalTimeInSeconds--;
@@ -129,9 +130,6 @@ public class StudyModeController {
         timerLabel.setText(time);
     }
 
-    /**
-     * Show an error message in case of invalid input.
-     */
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Input Error");
@@ -140,9 +138,6 @@ public class StudyModeController {
         alert.showAndWait();
     }
 
-    /**
-     * Show the session finished popup.
-     */
     private void showSessionEndPopup() {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -157,9 +152,9 @@ public class StudyModeController {
 
             alert.showAndWait().ifPresent(response -> {
                 if (response == newSession) {
-                    // Just close the dialog and wait for the user to start again
                     subjectTextField.clear();
                     durationTextField.clear();
+                    moodComboBox.setValue(null); // Reset mood selection
                     timerLabel.setText("00:00");
                     startButton.setText("Start Study Session");
                     isSessionActive = false;
@@ -170,18 +165,9 @@ public class StudyModeController {
         });
     }
 
-    /**
-     * Go back to the login screen.
-     */
     @FXML
     public void goToLogin() {
         try {
-            // Here is the framework for the study streak it just needs to be hooked up to the database, and it will work (hopefully).
-            // Increment streak before logging out
-            //User currentUser = userDAO.getCurrentUser(); // Adjust this if you store the user differently
-            //userDAO.incrementStreak(currentUser);
-
-            // Load login screen
             Stage stage = (Stage) toLogin.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
@@ -194,26 +180,19 @@ public class StudyModeController {
     public void goToHomepage() {
         try {
             Stage stage = (Stage) toLogin.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("homepage.fxml")); // Make sure the path is correct
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("homepage.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    /**
-     * Save the completed study session to the database.
-     * This is a placeholder method to implement.
-     */
-    private void saveStudySessionToDatabase(String subject, int durationInSeconds) {
-        // Calculate duration in minutes for easier storage/reporting
-        int durationInMinutes = durationInSeconds / 60;
 
-        // Placeholder for database call
+    private void saveStudySessionToDatabase(String subject, int durationInSeconds) {
+        int durationInMinutes = durationInSeconds / 60;
         System.out.println("Saving session to database...");
         System.out.println("Subject: " + subject);
         System.out.println("Duration: " + durationInMinutes + " minutes");
-
         // TODO: Replace this with actual DB logic
     }
 }
