@@ -42,6 +42,8 @@ public class StudyModeController {
     private int minutes = 0;  // Minutes counter for the timer
     private int seconds = 0;  // Seconds counter for the timer
     private int totalTimeInSeconds = 0;  // Total study time in seconds
+    private boolean isPaused = false;
+    private boolean sessionEnded = false;
 
     /**
      * Called automatically after the FXML is loaded.
@@ -59,6 +61,23 @@ public class StudyModeController {
      */
     @FXML
     private void startStudySession(MouseEvent event) {
+        // If timer is running and user clicks to pause
+        if (isSessionActive && !isPaused) {
+            timer.pause();
+            isPaused = true;
+            startButton.setText("Resume Study Session");
+            return;
+        }
+
+        // If paused, resume
+        if (isPaused) {
+            timer.play();
+            isPaused = false;
+            startButton.setText("Pause Study Session");
+            return;
+        }
+
+        // New session setup
         String subject = subjectTextField.getText();
         String durationText = durationTextField.getText();
 
@@ -68,22 +87,20 @@ public class StudyModeController {
         }
 
         try {
-            totalTimeInSeconds = Integer.parseInt(durationText) * 60;  // Convert duration to seconds
+            totalTimeInSeconds = Integer.parseInt(durationText) * 60;
             minutes = totalTimeInSeconds / 60;
             seconds = totalTimeInSeconds % 60;
+            sessionEnded = false;  // Reset for new session
 
-            // Update the timer label with the initial time
             updateTimerDisplay();
 
-            // Set up the timer to update every second
             timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateTimer()));
             timer.setCycleCount(Timeline.INDEFINITE);
             timer.play();
 
-            // Change button text to Pause
             startButton.setText("Pause Study Session");
-
             isSessionActive = true;
+            isPaused = false;
         } catch (NumberFormatException e) {
             showError("Invalid duration format. Please enter a valid number.");
         }
@@ -99,8 +116,11 @@ public class StudyModeController {
             seconds = totalTimeInSeconds % 60;
             updateTimerDisplay();
         } else {
-            timer.stop();
-            showSessionEndPopup();
+            if (!sessionEnded) {
+                sessionEnded = true;
+                timer.stop();
+                showSessionEndPopup();
+            }
         }
     }
 
@@ -173,5 +193,20 @@ public class StudyModeController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+    /**
+     * Save the completed study session to the database.
+     * This is a placeholder method to implement.
+     */
+    private void saveStudySessionToDatabase(String subject, int durationInSeconds) {
+        // Calculate duration in minutes for easier storage/reporting
+        int durationInMinutes = durationInSeconds / 60;
+
+        // Placeholder for database call
+        System.out.println("Saving session to database...");
+        System.out.println("Subject: " + subject);
+        System.out.println("Duration: " + durationInMinutes + " minutes");
+
+        // TODO: Replace this with actual DB logic
     }
 }
