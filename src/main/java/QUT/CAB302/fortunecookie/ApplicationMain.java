@@ -11,8 +11,8 @@ public class
 ApplicationMain extends Application {
     // Constants defining the window title and size
     public static final String TITLE = "Quote Me";
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 360;
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 500;
 
     @Override
     public void start(Stage stage) throws IOException {

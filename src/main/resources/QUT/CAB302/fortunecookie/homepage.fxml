@@ -17,21 +17,21 @@
     <!-- Top bar: Title and LOG OUT button -->
     <top>
         <HBox alignment="CENTER_LEFT"
+              spacing="10"
               style="-fx-background-color: #FFE4C4; -fx-padding: 10 20 10 20;">
-            <!-- Left side: Title "Quote Me" -->
+
+            <!-- Left side: Title -->
             <Label text="Quote Me"
                    style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #5A3E1B;"/>
 
-            <!-- Spacer to push LOG OUT button to the right (without HGrow in FXML) -->
-            <Region />
+            <!-- Spacer to push LOG OUT to the right -->
+            <Region fx:id="spacer" HBox.hgrow="ALWAYS"/>
 
             <!-- Right side: LOG OUT -->
-            <HBox alignment="CENTER_RIGHT" style="-fx-padding-right: 20px;">
-                <Label text="LOG OUT"
-                       fx:id="toLogin"
-                       style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"
-                       onMouseClicked="#goToLogin"/>
-            </HBox>
+            <Label text="LOG OUT"
+                   fx:id="toLogin"
+                   style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"
+                   onMouseClicked="#goToLogin"/>
         </HBox>
     </top>
 
