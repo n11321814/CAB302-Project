@@ -11,7 +11,8 @@ import javafx.animation.Timeline;
 import javafx.util.Duration;
 import javafx.application.Platform;
 import java.io.IOException;
-import java.util.Optional;
+import java.util.Arrays;
+import java.util.List;
 
 public class StudyModeController {
 
@@ -36,6 +37,9 @@ public class StudyModeController {
     @FXML
     private Label toLogin;
 
+    @FXML
+    private Label quoteLabel;  // Add a label for the quote
+
     private boolean isSessionActive = false;
     private Timeline timer;
     private int minutes = 0;
@@ -43,6 +47,10 @@ public class StudyModeController {
     private int totalTimeInSeconds = 0;
     private boolean isPaused = false;
     private boolean sessionEnded = false;
+
+    private Timeline quoteTimeline;  // Timeline for cycling quotes
+    private List<String> quotes;  // List of quotes
+    private int quoteIndex = 0;  // Current index of the quote list
 
     @FXML
     public void initialize() {
@@ -53,6 +61,22 @@ public class StudyModeController {
         if (moodComboBox != null) {
             moodComboBox.getItems().addAll("Happy", "Stressed", "Tired", "Motivated", "Anxious");
         }
+
+        // List of motivational quotes
+        quotes = Arrays.asList(
+                "The best way to predict the future is to create it.",
+                "Success is the sum of small efforts, repeated day in and day out.",
+                "Don’t watch the clock; do what it does. Keep going.",
+                "It always seems impossible until it’s done.",
+                "Believe in yourself and all that you are."
+        );
+
+        // Set the initial quote
+        quoteLabel.setText(quotes.get(quoteIndex));
+
+        // Setup the quote cycling timeline (every 15 seconds)
+        quoteTimeline = new Timeline(new KeyFrame(Duration.seconds(15), e -> updateQuote()));
+        quoteTimeline.setCycleCount(Timeline.INDEFINITE);
     }
 
     @FXML
@@ -98,6 +122,9 @@ public class StudyModeController {
             timer.setCycleCount(Timeline.INDEFINITE);
             timer.play();
 
+            // Start the quote cycling timeline
+            quoteTimeline.play();
+
             startButton.setText("Pause Study Session");
             isSessionActive = true;
             isPaused = false;
@@ -108,6 +135,15 @@ public class StudyModeController {
         } catch (NumberFormatException e) {
             showError("Invalid duration format. Please enter a valid number.");
         }
+    }
+
+    /**
+     * Update the quote every 15 seconds.
+     */
+    private void updateQuote() {
+        // Cycle through the quotes
+        quoteIndex = (quoteIndex + 1) % quotes.size();  // Loops back to the first quote
+        quoteLabel.setText(quotes.get(quoteIndex));  // Update the label with the new quote
     }
 
     private void updateTimer() {

@@ -58,6 +58,9 @@
                 <Label text="00:00" fx:id="timerLabel"
                        style="-fx-font-size: 36px; -fx-text-fill: #FF6347;"/>
 
+                <!-- Quote Display -->
+                <Label fx:id="quoteLabel" text="Inspirational quote will appear here." style="-fx-font-size: 16px; -fx-text-fill: #5A3E1B; -fx-padding: 20 0 20 0;"/>
+
                 <Button text="Start Timer"
                         fx:id="startButton"
                         onMouseClicked="#startStudySession"
