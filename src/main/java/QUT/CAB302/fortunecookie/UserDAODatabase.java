@@ -4,12 +4,11 @@ import java.sql.*;
 
 // Implementation of the UserDAO interface using SQLite
 public class UserDAODatabase implements UserDAO {
+
+    // Database file path
     private static final String DB_URL = "jdbc:sqlite:";
 
     private Connection connection;
-
-    // Database file path
-    private static final String DB_URL = "jdbc:sqlite:users.db";
 
     // Constructor for the user table
     public UserDAODatabase() {
