@@ -3,6 +3,7 @@ module address.book.addressbook {
     requires javafx.fxml;
     requires java.desktop;
     requires java.sql;
+    requires jbcrypt;
 
 
     opens QUT.CAB302.fortunecookie to javafx.fxml;

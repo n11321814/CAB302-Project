@@ -1,6 +1,7 @@
 package QUT.CAB302.fortunecookie;
 
 import java.sql.*;
+import org.mindrot.jbcrypt.BCrypt;
 
 // Implementation of the UserDAO interface using SQLite
 public class UserDAODatabase implements UserDAO {
@@ -33,11 +34,14 @@ public class UserDAODatabase implements UserDAO {
     // Registers a user by inserting their credentials into the database
     @Override
     public boolean registerUser(String username, String password) {
+
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt()); // Hashes Password
+
         String sql = "INSERT INTO users(username, password) VALUES(?, ?)";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, username);
-            pstmt.setString(2, password);
+            pstmt.setString(2, hashedPassword);
             pstmt.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -49,14 +53,16 @@ public class UserDAODatabase implements UserDAO {
     // Authenticates users logging in against the database
     @Override
     public User loginUser(String username, String password) {
-        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+        String sql = "SELECT * FROM users WHERE username = ?";
         try {
-             PreparedStatement pstmt = connection.prepareStatement(sql);
+            PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, username);
-            pstmt.setString(2, password);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                return new User(rs.getString("username"), rs.getString("password"));
+                String storedHash = rs.getString("password"); // Checks hashed password
+                if (BCrypt.checkpw(password, storedHash)) {
+                    return new User(username, storedHash);
+                }
             }
         } catch (SQLException e) {
             System.out.println("Login failed: " + e.getMessage());
