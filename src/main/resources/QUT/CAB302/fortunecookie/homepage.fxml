@@ -4,7 +4,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.BorderPane?>
-<?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
@@ -15,30 +14,34 @@
             fx:controller="QUT.CAB302.fortunecookie.FortuneHomeController"
             style="-fx-background-color: #FFF9F2;">
 
-    <!-- Top bar: Title + navigation -->
+    <!-- Top bar: Title and LOG OUT button -->
     <top>
-        <HBox alignment="CENTER_LEFT" spacing="20"
-              style="-fx-background-color: #FFE4C4; -fx-padding: 10,20,10,20;">
-            <Label text="Fortune Cookie"
-                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #8B4513;"/>
-            <Region HBox.hgrow="ALWAYS"/>
-            <HBox spacing="15">
-                <Label text="LOG OUT"     style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;" onMouseClicked="#goToLogin" fx:id="toLogin"/>
-                <Label text="HOME"     style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"/>
-                <Label text="CONTACT"  style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"/>
-                <Label text="ABOUT US" style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"/>
-            </HBox>
+        <HBox alignment="CENTER_LEFT"
+              spacing="10"
+              style="-fx-background-color: #FFE4C4; -fx-padding: 10 20 10 20;">
+
+            <!-- Left side: Title -->
+            <Label text="Quote Me"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #5A3E1B;"/>
+
+            <!-- Spacer to push LOG OUT to the right -->
+            <Region fx:id="spacer" HBox.hgrow="ALWAYS"/>
+
+            <!-- Right side: LOG OUT -->
+            <Label text="LOG OUT"
+                   fx:id="toLogin"
+                   style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"
+                   onMouseClicked="#goToLogin"/>
         </HBox>
     </top>
 
-    <!-- Center content: cookie + calendar + profile -->
+    <!-- Center content: study mode button + study boost section -->
     <center>
-        <HBox alignment="TOP_CENTER" spacing="40"
-              style="-fx-padding: 30;">
-            
-            <!-- Left column: cookie button & weekly calendar -->
+        <HBox alignment="TOP_CENTER" spacing="40" style="-fx-padding: 30;">
+
+            <!-- Left column: Fortune Cookie Button and Start Study Mode -->
             <VBox alignment="TOP_CENTER" spacing="30">
-                <!-- Break-cookie button -->
+                <!-- Fortune Cookie Button First -->
                 <Button text="Double Tap to Break the Cookie"
                         fx:id="cookieButton"
                         onMouseClicked="#onCookieClick"
@@ -48,59 +51,44 @@
                             -fx-font-size: 16px;
                             -fx-background-radius: 30;
                             -fx-background-color: #FFDAB9;
-                            -fx-padding: 15,30,15,30;
+                            -fx-padding: 15 30 15 30;
                         "/>
 
-                <!-- Weekly calendar grid -->
-                <VBox spacing="10" alignment="CENTER">
-                    <Label text="Weekly Calendar"
-                           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
-                    <GridPane hgap="10" vgap="10"
-                              style="-fx-background-color: white;
-                                     -fx-border-color: #D3E5F0;
-                                     -fx-border-radius: 8;
-                                     -fx-padding: 15;
-                                     -fx-border-width: 2;">
-                        <!-- Header row -->
-                        <Label text="Sun" GridPane.rowIndex="0" GridPane.columnIndex="0"/>
-                        <Label text="Mon" GridPane.rowIndex="0" GridPane.columnIndex="1"/>
-                        <Label text="Tue" GridPane.rowIndex="0" GridPane.columnIndex="2"/>
-                        <Label text="Wed" GridPane.rowIndex="0" GridPane.columnIndex="3"/>
-                        <Label text="Thu" GridPane.rowIndex="0" GridPane.columnIndex="4"/>
-                        <Label text="Fri" GridPane.rowIndex="0" GridPane.columnIndex="5"/>
-                        <Label text="Sat" GridPane.rowIndex="0" GridPane.columnIndex="6"/>
-
-                        <!-- Empty grid cells for days -->
-                        <Label text="—" GridPane.rowIndex="1" GridPane.columnIndex="0" style="-fx-text-fill: #D3E5F0;"/>
-                        <!-- (repeat for all columns 1–6 and rowIndex 1 & 2) -->
-                    </GridPane>
-                </VBox>
+                <!-- Start Study Mode Button Second -->
+                <Button text="Start Study Mode"
+                        fx:id="startStudyButton"
+                        onMouseClicked="#startStudyMode"
+                        wrapText="true"
+                        alignment="CENTER"
+                        style="
+                            -fx-font-size: 18px;
+                            -fx-background-radius: 30;
+                            -fx-background-color: #FFDAB9;
+                            -fx-padding: 20 40 20 40;
+                        "/>
             </VBox>
 
-            <!-- Right column: profile card -->
+            <!-- Right column: Study Boost with Quote -->
             <StackPane style="
                     -fx-background-color: white;
                     -fx-border-color: #D3E5F0;
                     -fx-border-radius: 8;
                     -fx-padding: 20;">
                 <VBox alignment="TOP_LEFT" spacing="15">
-                    <Label text="Your Profile"
+                    <Label text="Today's Study Boost"
                            style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
 
-                    <Label fx:id="progressLabel" text="Progress: 12/10"
-                           style="-fx-font-size: 14px;"/>
-
+                    <!-- Study streak -->
                     <Label fx:id="streakLabel" text="Study streak: 🔥 7"
                            style="-fx-font-size: 14px;"/>
 
-                    <!-- Placeholder for progress graph -->
-                    <Region prefHeight="120" prefWidth="200"
-                            style="
-                                -fx-background-color: #F0F8FF;
-                                -fx-border-color: #D3E5F0;
-                                -fx-border-width: 2;
-                                -fx-border-radius: 4;
-                            "/>
+                    <!-- Quote section -->
+                    <Label text="Quote:"
+                           style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                    <Label fx:id="quoteLabel"
+                           text="“Discipline is the bridge between goals and accomplishment.”"
+                           wrapText="true"
+                           style="-fx-font-size: 14px; -fx-font-style: italic;"/>
                 </VBox>
             </StackPane>
 
