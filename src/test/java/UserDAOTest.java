@@ -61,13 +61,14 @@ public class UserDAOTest {
         assertNull(user, "Login with wrong password should fail");
     }
 
-    // Tests that logging in with an unregistered user fails
+    // Tests logging in with an existing user passes
     @Test
     public void testUserExists() {
         User user = userDAO.loginUser(username1, password1);
         assertNotNull(user, "Login without registering should fail");
     }
 
+    // Tests logging in with a non-existent user fails
     @Test
     public void testUserNotExists() {
         User user = userDAO.loginUser("dsahdhj", "asDasasda");
