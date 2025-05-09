@@ -18,7 +18,7 @@
    <children>
 
       <!-- Blue bar with "Registration" text aligned to the left -->
-      <HBox prefHeight="33.0" alignment="CENTER_LEFT" style="-fx-background-color: dodgerblue; -fx-border-color: black;">
+      <HBox prefHeight="33.0" alignment="CENTER_LEFT" style="-fx-background-color: #FFF9F2; -fx-border-color: black;">
          <padding>
             <Insets left="10"/>
          </padding>
