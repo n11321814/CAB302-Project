@@ -12,12 +12,6 @@ import java.util.List;
 public class StudyVaultController {
 
     @FXML
-    private ScrollPane scrollPane;
-
-    @FXML
-    private VBox quotesVBox;
-
-    @FXML
     private Label backToHome;
 
     @FXML
@@ -29,7 +23,9 @@ public class StudyVaultController {
         loadSavedQuotes();
     }
 
-    // Load saved quotes from database
+    /**
+     * Loads saved quotes from specific user in database and stores then in a string list
+      */
     private void loadSavedQuotes() {
         //
         List<String> savedQuotes = List.of("Test1", "Test2", "Test3"); // TODO access database and store in list
@@ -45,6 +41,11 @@ public class StudyVaultController {
             quotesListView.getItems().add("No saved quotes yet. Save some from your study sessions!");
         }
     }
+
+
+    /**
+     * Implementation of back to homepage button
+     */
     @FXML
     public void goToHomepage() {
         try {
