@@ -8,9 +8,10 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import javafx.scene.control.TextArea?>
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="QUT.CAB302.fortunecookie.FortuneHomeController"
+            fx:controller="QUT.CAB302.fortunecookie.HomepageController"
             style="-fx-background-color: #FFF9F2;">
 
     <!-- Top bar: Title and LOG OUT button -->
@@ -77,6 +78,14 @@
                             -fx-background-color: #FFDAB9;
                             -fx-padding: 20 40 20 40;
                         "/>
+
+
+                <!-- AI Test (temp)-->
+                <Label text="Study Helper (AI Assistant)" />
+                <TextArea fx:id="aiInput" promptText="Ask something..." prefRowCount="3"/>
+                <Button text="Ask AI" onAction="#handleAskAI"/>
+                <TextArea fx:id="aiResponse" editable="false" wrapText="true" prefRowCount="5"/>
+
             </VBox>
 
             <!-- Right column: Study Boost with Quote -->
