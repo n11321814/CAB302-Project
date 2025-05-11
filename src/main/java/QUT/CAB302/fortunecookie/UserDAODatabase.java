@@ -1,16 +1,26 @@
 package QUT.CAB302.fortunecookie;
 
 import java.sql.*;
-public class UserDAODatabase implements UserDAO {
-    private static final String DB_URL = "jdbc:sqlite:users.db";
+import org.mindrot.jbcrypt.BCrypt;
 
+// Implementation of the UserDAO interface using SQLite
+public class UserDAODatabase implements UserDAO {
+
+    // Database file path
+    private static final String DB_URL = "jdbc:sqlite:";
+
+    private Connection connection;
+
+    // Constructor for the user table
     public UserDAODatabase() {
+        connection = SQLiteConnection.getInstance();
         createUserTable();
     }
 
+    // Creates the user table if it doesn't already exist, stores username and password
     private void createUserTable() {
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             Statement stmt = conn.createStatement()) {
+        try {
+             Statement stmt = connection.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS users (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "username TEXT UNIQUE NOT NULL," +
@@ -20,13 +30,18 @@ public class UserDAODatabase implements UserDAO {
             e.printStackTrace();
         }
     }
+
+    // Registers a user by inserting their credentials into the database
     @Override
     public boolean registerUser(String username, String password) {
+
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt()); // Hashes Password
+
         String sql = "INSERT INTO users(username, password) VALUES(?, ?)";
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, username);
-            pstmt.setString(2, password);
+            pstmt.setString(2, hashedPassword);
             pstmt.executeUpdate();
             return true;
         } catch (SQLException e) {
@@ -34,16 +49,20 @@ public class UserDAODatabase implements UserDAO {
             return false;
         }
     }
+
+    // Authenticates users logging in against the database
     @Override
     public User loginUser(String username, String password) {
-        String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+        String sql = "SELECT * FROM users WHERE username = ?";
+        try {
+            PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, username);
-            pstmt.setString(2, password);
             ResultSet rs = pstmt.executeQuery();
             if (rs.next()) {
-                return new User(rs.getString("username"), rs.getString("password"));
+                String storedHash = rs.getString("password"); // Checks hashed password
+                if (BCrypt.checkpw(password, storedHash)) {
+                    return new User(username, storedHash);
+                }
             }
         } catch (SQLException e) {
             System.out.println("Login failed: " + e.getMessage());

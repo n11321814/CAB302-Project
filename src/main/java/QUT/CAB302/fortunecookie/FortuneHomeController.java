@@ -20,6 +20,7 @@ import javafx.scene.Node;
 
 public class FortuneHomeController {
 
+
     @FXML
     private Label streakLabel;
 
@@ -34,6 +35,9 @@ public class FortuneHomeController {
 
     @FXML
     private Button startStudyButton;
+
+    @FXML
+    public Button studyVaultButton;
 
     /**
      * Called automatically after the FXML is loaded.
@@ -138,5 +142,22 @@ public class FortuneHomeController {
                 alert.close();
             }
         });
+    }
+    @FXML
+    private void goToStudyVault(MouseEvent event) {
+        try {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("StudyVault.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Show error message to user
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Failed to load Study Vault");
+            alert.setContentText("Could not load the Study Vault page. Please try again.");
+            alert.showAndWait();
+        }
     }
 }
