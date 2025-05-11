@@ -6,8 +6,11 @@ module address.book.addressbook {
     requires jbcrypt;
 
 
+
     opens QUT.CAB302.fortunecookie to javafx.fxml;
     exports QUT.CAB302.fortunecookie;
     exports QUT.CAB302.fortunecookie.LegacyFiles;
     opens QUT.CAB302.fortunecookie.LegacyFiles to javafx.fxml;
+
+
 }

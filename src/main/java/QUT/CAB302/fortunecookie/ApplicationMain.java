@@ -8,6 +8,9 @@ import java.io.IOException;
 
 // Main class and entrypoint for the application
 public class
+        /**
+         * Application main
+         */
 ApplicationMain extends Application {
     // Constants defining the window title and size
     public static final String TITLE = "Quote Me";
@@ -26,7 +29,6 @@ ApplicationMain extends Application {
 
     // Main method, launches the application
     public static void main(String[] args) {
-
         launch();
     }
 }
