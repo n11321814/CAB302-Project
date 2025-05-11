@@ -6,13 +6,15 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
+// Main class and entrypoint for the application
 public class
 ApplicationMain extends Application {
     // Constants defining the window title and size
-    public static final String TITLE = "Fortune Cookie Study Helper";
-    public static final int WIDTH = 640;
-    public static final int HEIGHT = 360;
+    public static final String TITLE = "Quote Me";
+    public static final int WIDTH = 800;
+    public static final int HEIGHT = 500;
 
+    // Loads the Login layout file, sets the scene height, width, and title
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
@@ -22,6 +24,7 @@ ApplicationMain extends Application {
         stage.show();
     }
 
+    // Main method, launches the application
     public static void main(String[] args) {
 
         launch();
