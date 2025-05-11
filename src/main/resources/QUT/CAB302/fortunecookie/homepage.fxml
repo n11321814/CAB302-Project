@@ -65,6 +65,18 @@
                             -fx-background-color: #FFDAB9;
                             -fx-padding: 20 40 20 40;
                         "/>
+
+                <Button text="Study Vault"
+                        fx:id="studyVaultButton"
+                        onMouseClicked="#goToStudyVault"
+                        wrapText="true"
+                        alignment="CENTER"
+                        style="
+                            -fx-font-size: 18px;
+                            -fx-background-radius: 30;
+                            -fx-background-color: #FFDAB9;
+                            -fx-padding: 20 40 20 40;
+                        "/>
             </VBox>
 
             <!-- Right column: Study Boost with Quote -->

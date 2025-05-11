@@ -1,0 +1,59 @@
+package QUT.CAB302.fortunecookie;
+
+import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Scene;
+import javafx.scene.control.*;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
+
+import java.io.IOException;
+import java.util.List;
+public class StudyVaultController {
+
+    @FXML
+    private ScrollPane scrollPane;
+
+    @FXML
+    private VBox quotesVBox;
+
+    @FXML
+    private Label backToHome;
+
+    @FXML
+    private ListView<String> quotesListView;
+
+    // Initialise controller
+    @FXML
+    public void initialize() {
+        loadSavedQuotes();
+    }
+
+    // Load saved quotes from database
+    private void loadSavedQuotes() {
+        //
+        List<String> savedQuotes = List.of("Test1", "Test2", "Test3"); // TODO access database and store in list
+
+        // Clear existing items
+        quotesListView.getItems().clear();
+
+        // Add all saved quotes to the ListView
+        quotesListView.getItems().addAll(savedQuotes);
+
+        // If no quotes saved display a message
+        if (savedQuotes.isEmpty()) {
+            quotesListView.getItems().add("No saved quotes yet. Save some from your study sessions!");
+        }
+    }
+    @FXML
+    public void goToHomepage() {
+        try {
+            Stage stage = (Stage) backToHome.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}
