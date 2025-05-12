@@ -13,6 +13,7 @@ import javafx.application.Platform;
 import java.io.IOException;
 import java.util.Arrays;
 import java.util.List;
+import javafx.event.ActionEvent;
 
 public class StudyModeController {
 
@@ -248,5 +249,13 @@ public class StudyModeController {
         alert.setHeaderText(null);
         alert.setContentText("The following quote has been saved:\n" + currentQuote);
         alert.showAndWait();
+    }
+    @FXML
+    private void skipQuote(MouseEvent event) {
+        // Logic to get and display a new quote
+        //String newQuote = quoteService.getRandomQuote();
+        //quoteLabel.setText(newQuote);
+        // Sample text for now, im unable to access olama at the moment as it's banned in the country I am in.
+        quoteLabel.setText("new quote");
     }
 }

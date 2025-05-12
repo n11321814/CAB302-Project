@@ -61,8 +61,13 @@
                 <!-- Quote Display -->
                 <Label fx:id="quoteLabel" text="Inspirational quote will appear here." style="-fx-font-size: 16px; -fx-text-fill: #5A3E1B; -fx-padding: 20 0 20 0;"/>
 
-                <!-- Save Quote Button -->
-                <Button fx:id="saveQuoteButton" text="Save Quote" onMouseClicked="#saveQuote" style="-fx-font-size: 14px; -fx-padding: 10px 20px;"/>
+                <!-- Quote Action Buttons -->
+                <HBox alignment="CENTER" spacing="20">
+                    <Button fx:id="saveQuoteButton" text="Save Quote" onMouseClicked="#saveQuote"
+                            style="-fx-font-size: 14px; -fx-padding: 10px 20px;"/>
+                    <Button fx:id="skipQuoteButton" text="Skip Quote" onAction="#skipQuote"
+                            style="-fx-font-size: 14px; -fx-padding: 10px 20px;"/>
+                </HBox>
 
                 <Button text="Start Timer"
                         fx:id="startButton"
