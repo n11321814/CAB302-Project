@@ -10,7 +10,14 @@ import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
 import javafx.util.Duration;
 import javafx.application.Platform;
+import org.json.JSONObject;
+
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.net.HttpURLConnection;
+import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
@@ -249,4 +256,56 @@ public class StudyModeController {
         alert.setContentText("The following quote has been saved:\n" + currentQuote);
         alert.showAndWait();
     }
+
+    // AI Implementation
+
+    @FXML
+    private TextArea aiResponse;
+
+    @FXML
+    public void handleAskAI() {
+
+        String subject = subjectTextField.getText();
+        String duration = durationTextField.getText();
+        String mood = moodComboBox.getValue();
+
+        String model = "mistral";
+        String prompt = "I would like to study " + subject + " for " + duration + " minutes and I am in a " + mood + " mood. Given this context, what study advice can you give me?";
+        Runnable task = () -> {
+
+            try {
+                // Set up an HTTP POST request
+                URL url = new URL("http://localhost:11434/api/generate");
+                HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                conn.setRequestMethod("POST");
+                conn.setRequestProperty("Content-Type", "application/json");
+                conn.setDoOutput(true);
+
+                // Create request JSON
+                JSONObject requestJson = new JSONObject();
+                requestJson.put("model", model);
+                requestJson.put("prompt", prompt);
+                requestJson.put("stream", false);
+
+                // Send request
+                try (OutputStream os = conn.getOutputStream()) {
+                    os.write(requestJson.toString().getBytes());
+                }
+
+                // Get response
+                try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                    String responseLine = br.readLine();
+                    JSONObject responseJson = new JSONObject(responseLine);
+                    String fullResponse = responseJson.getString("response");
+
+                    Platform.runLater(() -> aiResponse.setText(fullResponse));
+                }
+            } catch (Exception e) {
+                e.printStackTrace();
+                Platform.runLater(() -> aiResponse.setText("Error: " + e.getMessage()));
+            }
+        };
+        new Thread(task).start();
+    }
+
 }
