@@ -4,7 +4,8 @@ module address.book.addressbook {
     requires java.desktop;
     requires java.sql;
     requires jbcrypt;
-
+    requires java.net.http;
+    requires org.json;
 
 
     opens QUT.CAB302.fortunecookie to javafx.fxml;

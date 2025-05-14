@@ -1,24 +1,29 @@
 package QUT.CAB302.fortunecookie;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 
 import java.io.IOException;
 import java.util.Random;
 import javafx.animation.ScaleTransition;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
-import javafx.scene.control.Button;
 import javafx.scene.Node;
 
-public class FortuneHomeController {
+import org.json.JSONObject;
+import javafx.scene.control.TextArea;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.URL;
+import java.io.OutputStream;
+
+public class HomepageController {
 
 
     @FXML
@@ -143,6 +148,7 @@ public class FortuneHomeController {
             }
         });
     }
+
     @FXML
     private void goToStudyVault(MouseEvent event) {
         try {
@@ -159,5 +165,57 @@ public class FortuneHomeController {
             alert.setContentText("Could not load the Study Vault page. Please try again.");
             alert.showAndWait();
         }
+    }
+
+    // AI Implementation
+
+    @FXML
+    private TextArea aiInput;
+    @FXML
+    private TextArea aiResponse;
+
+    @FXML
+    public void handleAskAI() {
+        String model = "mistral";
+        String prompt = aiInput.getText();
+        String line;
+        Runnable task = new Runnable() {
+            @Override
+            public void run() {
+
+                try {
+                    // Set up an HTTP POST request
+                    URL url = new URL("http://localhost:11434/api/generate");
+                    HttpURLConnection conn = (HttpURLConnection) url.openConnection();
+                    conn.setRequestMethod("POST");
+                    conn.setRequestProperty("Content-Type", "application/json");
+                    conn.setDoOutput(true);
+
+                    // Create request JSON
+                    JSONObject requestJson = new JSONObject();
+                    requestJson.put("model", model);
+                    requestJson.put("prompt", prompt);
+                    requestJson.put("stream", false);
+
+                    // Send request
+                    try (OutputStream os = conn.getOutputStream()) {
+                        os.write(requestJson.toString().getBytes());
+                    }
+
+                    // Get response
+                    try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
+                        String responseLine = br.readLine();
+                        JSONObject responseJson = new JSONObject(responseLine);
+                        String fullResponse = responseJson.getString("response");
+
+                        Platform.runLater(() -> aiResponse.setText(fullResponse));
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    Platform.runLater(() -> aiResponse.setText("Error: " + e.getMessage()));
+                }
+            }
+        };
+        new Thread(task).start();
     }
 }
