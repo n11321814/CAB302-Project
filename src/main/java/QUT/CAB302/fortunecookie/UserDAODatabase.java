@@ -20,11 +20,18 @@ public class UserDAODatabase implements UserDAO {
     // Creates the user table if it doesn't already exist, stores username and password
     private void createUserTable() {
         try {
-             Statement stmt = connection.createStatement();
+            Statement stmt = connection.createStatement();
             String sql = "CREATE TABLE IF NOT EXISTS users (" +
                     "id INTEGER PRIMARY KEY AUTOINCREMENT," +
                     "username TEXT UNIQUE NOT NULL," +
-                    "password TEXT NOT NULL)";
+                    "password TEXT NOT NULL," +
+                    "phone TEXT," +
+                    "email TEXT," +
+                    "hoursOfStudy INTEGER," +
+                    "studyStreak INTEGER," +
+                    "expertiseLevel TEXT," +
+                    "CHECK (phone IS NOT NULL OR email IS NOT NULL)" +
+                    ")";
             stmt.execute(sql);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -33,15 +40,19 @@ public class UserDAODatabase implements UserDAO {
 
     // Registers a user by inserting their credentials into the database
     @Override
-    public boolean registerUser(String username, String password) {
+    public boolean registerUser(String username, String password, String email, String phone, String hoursOfStudy, String expertiseLevel) {
 
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt()); // Hashes Password
 
-        String sql = "INSERT INTO users(username, password) VALUES(?, ?)";
+        String sql = "INSERT INTO users(username, password, email, phone, hoursOfStudy, expertiseLevel) VALUES(?, ?, ?, ?, ?, ?)";
         try {
             PreparedStatement pstmt = connection.prepareStatement(sql);
             pstmt.setString(1, username);
             pstmt.setString(2, hashedPassword);
+            pstmt.setString(3, email);
+            pstmt.setString(4, phone);
+            pstmt.setString(5, hoursOfStudy);
+            pstmt.setString(6, expertiseLevel);
             pstmt.executeUpdate();
             return true;
         } catch (SQLException e) {

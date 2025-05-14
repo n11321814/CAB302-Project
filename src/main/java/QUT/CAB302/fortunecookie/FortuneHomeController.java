@@ -143,11 +143,29 @@ public class FortuneHomeController {
             }
         });
     }
+
     @FXML
     private void goToStudyVault(MouseEvent event) {
         try {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("StudyVault.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Show error message to user
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Failed to load Study Vault");
+            alert.setContentText("Could not load the Study Vault page. Please try again.");
+            alert.showAndWait();
+        }
+    }
+
+    public void goToSettings(MouseEvent event) {
+        try {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AccountSettings.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {
