@@ -53,8 +53,9 @@
                     <ComboBox fx:id="moodComboBox" promptText="Choose mood" style="-fx-font-size: 14px;"/>
                 </HBox>
 
-                <Button text="Ask AI" onAction="#handleAskAI"/>
-                <TextArea fx:id="aiResponse" editable="false" wrapText="true" prefRowCount="5"/>
+                <!-- Ask AI Button and Response -->
+                <Button text="Ask AI" onAction="#handleAskAI" style="-fx-font-size: 14px; -fx-padding: 10px 20px;"/>
+                <TextArea fx:id="aiResponse" editable="false" wrapText="true" prefRowCount="15"/>
 
                 <!-- Timer Display -->
                 <Label text="00:00" fx:id="timerLabel"
