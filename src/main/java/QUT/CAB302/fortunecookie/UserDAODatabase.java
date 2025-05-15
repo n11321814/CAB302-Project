@@ -15,6 +15,7 @@ public class UserDAODatabase implements UserDAO {
     public UserDAODatabase() {
         connection = SQLiteConnection.getInstance();
         createUserTable();
+        createStudyHabitsTable();
     }
 
     // Creates the user table if it doesn't already exist, stores username and password
@@ -27,10 +28,23 @@ public class UserDAODatabase implements UserDAO {
                     "password TEXT NOT NULL," +
                     "phone TEXT," +
                     "email TEXT," +
+                    "CHECK (phone IS NOT NULL OR email IS NOT NULL)" +
+                    ")";
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createStudyHabitsTable() {
+        try {
+            Statement stmt = connection.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS studyHabits (" +
+                    "id INTEGER PRIMARY KEY," +
                     "hoursOfStudy INTEGER," +
                     "studyStreak INTEGER," +
                     "expertiseLevel TEXT," +
-                    "CHECK (phone IS NOT NULL OR email IS NOT NULL)" +
+                    "FOREIGN KEY(id) REFERENCES users(id)" +
                     ")";
             stmt.execute(sql);
         } catch (SQLException e) {
@@ -44,20 +58,50 @@ public class UserDAODatabase implements UserDAO {
 
         String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt()); // Hashes Password
 
-        String sql = "INSERT INTO users(username, password, email, phone, hoursOfStudy, expertiseLevel) VALUES(?, ?, ?, ?, ?, ?)";
+
         try {
-            PreparedStatement pstmt = connection.prepareStatement(sql);
-            pstmt.setString(1, username);
-            pstmt.setString(2, hashedPassword);
-            pstmt.setString(3, email);
-            pstmt.setString(4, phone);
-            pstmt.setString(5, hoursOfStudy);
-            pstmt.setString(6, expertiseLevel);
-            pstmt.executeUpdate();
+            // Ensures that the insert transactions fails or succeeds together
+            connection.setAutoCommit(false);
+
+            String userSql = "INSERT INTO users(username, password, email, phone) VALUES(?, ?, ?, ?)";
+            PreparedStatement userStmt = connection.prepareStatement(userSql, Statement.RETURN_GENERATED_KEYS);
+            userStmt.setString(1, username);
+            userStmt.setString(2, hashedPassword);
+            userStmt.setString(3, email);
+            userStmt.setString(4, phone);
+            userStmt.executeUpdate();
+
+            // Retrieve the created users ID
+            ResultSet rs = userStmt.getGeneratedKeys();
+            int userId = -1;
+            if (rs.next()) {
+                userId = rs.getInt(1);
+            } else {
+                throw new SQLException("User ID retrieval failed.");
+            }
+
+            // Insert study habits into studyHabits Table
+            String habitSql = "INSERT INTO studyHabits (id, hoursOfStudy, expertiseLevel) VALUES (?, ?, ?)";
+            PreparedStatement habitStmt = connection.prepareStatement(habitSql);
+            habitStmt.setInt(1, userId);
+            habitStmt.setString(2, hoursOfStudy);
+            habitStmt.setString(3,expertiseLevel);
+            habitStmt.executeUpdate();
+
+            // Commit the transactions
+            connection.commit();
             return true;
+
         } catch (SQLException e) {
             System.out.println("Registration failed: " + e.getMessage());
             return false;
+
+        } finally {
+            try {
+                connection.setAutoCommit(true); // Restore the default commit behaviour
+            } catch (SQLException ex) {
+                ex.printStackTrace();
+            }
         }
     }
 
