@@ -269,7 +269,7 @@ public class StudyModeController {
         String duration = durationTextField.getText();
         String mood = moodComboBox.getValue();
 
-        String model = "mistral";
+        String model = "llama3.2:1b";
         String prompt = "I would like to study " + subject + " for " + duration + " minutes and I am in a " + mood + " mood. Given this context, what study advice can you give me?";
         Runnable task = () -> {
 
