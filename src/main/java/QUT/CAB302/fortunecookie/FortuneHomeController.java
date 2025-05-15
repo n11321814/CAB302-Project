@@ -2,6 +2,7 @@ package QUT.CAB302.fortunecookie;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
@@ -38,6 +39,8 @@ public class FortuneHomeController {
 
     @FXML
     public Button studyVaultButton;
+    @FXML
+    private Button goToSettings;
 
     /**
      * Called automatically after the FXML is loaded.
@@ -162,11 +165,23 @@ public class FortuneHomeController {
         }
     }
 
-    public void goToSettings(MouseEvent event) {
+    @FXML
+    private void goToSettings(MouseEvent event) {
+        int userId = UserSession.getUserId();
+        goToSettings(event, userId);
+
+    }
+
+    public void goToSettings(MouseEvent event, int userId) {
         try {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("AccountSettings.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Settings.fxml"));
+            Parent root = fxmlLoader.load();
+
+            AccountSettingsController controller = fxmlLoader.getController();
+            controller.initialiseUser(UserSession.getUserId());
+
+            Scene scene = new Scene(root, ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();

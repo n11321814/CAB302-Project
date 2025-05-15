@@ -116,7 +116,10 @@ public class UserDAODatabase implements UserDAO {
             if (rs.next()) {
                 String storedHash = rs.getString("password"); // Checks hashed password
                 if (BCrypt.checkpw(password, storedHash)) {
-                    return new User(username, storedHash);
+                    // Build the full user object
+                    User user = new User(username, storedHash);
+                    user.setId(rs.getInt("id")); // Set user Id from DB
+                    return user;
                 }
             }
         } catch (SQLException e) {

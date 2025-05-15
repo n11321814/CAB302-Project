@@ -29,7 +29,8 @@
             <Label text="Settings"
                    fx:id="toSettings"
                    style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"
-                   onMouseClicked="#goToSettings"/>
+                   onMouseClicked="#goToSettings"
+            />
             <!-- Right side: LOG OUT -->
             <Label text="LOG OUT"
                    fx:id="toLogin"
