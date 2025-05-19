@@ -3,22 +3,18 @@ package QUT.CAB302.fortunecookie;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
-import javafx.scene.control.Alert;
-import javafx.scene.control.Label;
+import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
-import javafx.scene.control.Alert.AlertType;
-import javafx.scene.control.ButtonType;
 
 import java.io.IOException;
 import java.util.Random;
 import javafx.animation.ScaleTransition;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
-import javafx.scene.control.Button;
 import javafx.scene.Node;
 
-public class FortuneHomeController {
+public class HomepageController {
 
 
     @FXML
@@ -143,6 +139,7 @@ public class FortuneHomeController {
             }
         });
     }
+
     @FXML
     private void goToStudyVault(MouseEvent event) {
         try {

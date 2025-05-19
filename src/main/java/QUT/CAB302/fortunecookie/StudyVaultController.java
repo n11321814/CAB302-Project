@@ -4,7 +4,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 
 import java.io.IOException;
@@ -17,7 +16,9 @@ public class StudyVaultController {
     @FXML
     private ListView<String> quotesListView;
 
-    // Initialise controller
+    /**
+     * Initializes the study vault by loading saved quotes
+     */
     @FXML
     public void initialize() {
         loadSavedQuotes();
