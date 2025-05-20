@@ -6,15 +6,28 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-// Main class and entrypoint for the application
-public class
-ApplicationMain extends Application {
-    // Constants defining the window title and size
+/**
+ * The {@code ApplicationMain} class serves as the entry point for the JavaFX application.
+ * It sets up the primary stage, loads the login screen, and displays the main window.
+ */
+public class ApplicationMain extends Application {
+
+    /** The title of the application window. */
     public static final String TITLE = "Quote Me";
+
+    /** The width of the application window in pixels. */
     public static final int WIDTH = 800;
+
+    /** The height of the application window in pixels. */
     public static final int HEIGHT = 500;
 
-    // Loads the Login layout file, sets the scene height, width, and title
+    /**
+     * Starts the JavaFX application.
+     * Loads the login interface from an FXML file and displays it in the primary stage.
+     *
+     * @param stage the primary stage for this application
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
@@ -24,7 +37,11 @@ ApplicationMain extends Application {
         stage.show();
     }
 
-    // Main method, launches the application
+    /**
+     * The main method. Launches the JavaFX application.
+     *
+     * @param args the command-line arguments
+     */
     public static void main(String[] args) {
         launch();
     }

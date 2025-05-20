@@ -14,39 +14,45 @@ import javafx.animation.FadeTransition;
 import javafx.util.Duration;
 import javafx.scene.Node;
 
+/**
+ * Controller for the homepage view. Handles UI interactions such as
+ * displaying quotes, navigating to other screens, and handling button animations.
+ */
 public class HomepageController {
 
-
+    /** Displays the user's current study streak. */
     @FXML
     private Label streakLabel;
 
+    /** Displays an inspirational quote. */
     @FXML
     private Label quoteLabel;
 
+    /** Label used as a clickable link to return to the login screen. */
     @FXML
     private Label toLogin;
 
+    /** Button that, when double-clicked, shows a fortune with animations. */
     @FXML
     private Button cookieButton;
 
+    /** Button that starts the study mode. */
     @FXML
     private Button startStudyButton;
 
+    /** Button that navigates to the Study Vault page. */
     @FXML
     public Button studyVaultButton;
 
     /**
      * Called automatically after the FXML is loaded.
+     * Initializes UI components such as the quote and study streak.
      */
     @FXML
     public void initialize() {
-        // Attempt to get the current user; fallback to default value
-        // User currentUser = userDAO.getCurrentUser(); // Uncomment and implement this when ready
-
-        if (streakLabel != null /* && currentUser != null */) {
-            // int streak = currentUser.getStreak(); // Uncomment when ready
-            // streakLabel.setText("Study streak: 🔥 " + streak);
-            streakLabel.setText("Study streak: 🔥 0"); // Temporary placeholder
+        // Placeholder logic – replace with real user data once available
+        if (streakLabel != null) {
+            streakLabel.setText("Study streak: 🔥 0");
         }
 
         if (quoteLabel != null) {
@@ -55,12 +61,14 @@ public class HomepageController {
     }
 
     /**
-     * Handler for cookie break button.
+     * Handles double-clicks on the cookie button to show a fortune with animation.
+     *
+     * @param event the mouse event that triggered this handler
      */
     @FXML
     private void onCookieClick(MouseEvent event) {
         if (event.getClickCount() == 2) {
-            // Simple animation
+            // Animate the cookie button
             ScaleTransition scale = new ScaleTransition(Duration.millis(200), cookieButton);
             scale.setByX(0.2);
             scale.setByY(0.2);
@@ -76,7 +84,7 @@ public class HomepageController {
             scale.play();
             fade.play();
 
-            // Show fortune message
+            // Show random fortune
             String[] fortunes = {
                     "Great things are coming your way!",
                     "You will achieve your goals.",
@@ -95,7 +103,9 @@ public class HomepageController {
     }
 
     /**
-     * Go back to login screen.
+     * Navigates the user back to the login screen.
+     *
+     * @throws IOException if the FXML file cannot be loaded
      */
     @FXML
     public void goToLogin() throws IOException {
@@ -106,40 +116,41 @@ public class HomepageController {
     }
 
     /**
-     * Triggered when "Start Study Mode" is clicked.
+     * Handles the "Start Study Mode" button click.
+     * Asks for user confirmation and navigates to the study mode screen if confirmed.
      */
     @FXML
     private void startStudyMode() {
-        // Create an Alert to ask the user if they want to start study mode
         Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
         alert.setTitle("Start Study Mode");
         alert.setHeaderText("Are you sure you want to start study mode?");
         alert.setContentText("You will be switched to the study page.");
 
-        // Set custom button types (Yes / No)
         ButtonType yesButton = new ButtonType("Yes");
         ButtonType noButton = new ButtonType("No");
         alert.getButtonTypes().setAll(yesButton, noButton);
 
-        // Show the alert and wait for user input
         alert.showAndWait().ifPresent(response -> {
             if (response == yesButton) {
-                // If user clicks "Yes", navigate to the Study Mode page
                 try {
-                    Stage stage = (Stage) toLogin.getScene().getWindow(); // Get the current stage
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("studymode.fxml")); // Load the study mode FXML
-                    Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT); // Create a new scene
-                    stage.setScene(scene); // Set the new scene
+                    Stage stage = (Stage) toLogin.getScene().getWindow();
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("studymode.fxml"));
+                    Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
+                    stage.setScene(scene);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
             } else {
-                // If user clicks "No", just close the alert
                 alert.close();
             }
         });
     }
 
+    /**
+     * Navigates to the Study Vault screen when the corresponding button is clicked.
+     *
+     * @param event the mouse event that triggered this handler
+     */
     @FXML
     private void goToStudyVault(MouseEvent event) {
         try {
