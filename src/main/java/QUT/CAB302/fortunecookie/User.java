@@ -6,6 +6,7 @@ public class User {
     // Fields to store user variables
     private String username;
     private String password;
+    private int id;
 
     // Constructor to create a new user.
     public User(String username, String password){
@@ -25,6 +26,13 @@ public class User {
     }
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public int getId() {
+        return id;
+    }
+    public void setId(int id) {
+        this.id = id;
     }
 
 }

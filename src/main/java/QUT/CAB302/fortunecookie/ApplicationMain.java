@@ -11,14 +11,14 @@ public class
 ApplicationMain extends Application {
     // Constants defining the window title and size
     public static final String TITLE = "Quote Me";
-    public static final int WIDTH = 800;
-    public static final int HEIGHT = 500;
+    public static final int WIDTH = 1000;
+    public static final int HEIGHT = 700;
 
-    // Loads the Login layout file, sets the scene height, width, and title
+    // Loads the Login layout file, sets the scene height, width, and titled
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
-        Scene scene = new Scene(fxmlLoader.load(), WIDTH, HEIGHT);
+        Scene scene = new Scene(fxmlLoader.load(),WIDTH, HEIGHT);
         stage.setTitle(TITLE);
         stage.setScene(scene);
         stage.show();

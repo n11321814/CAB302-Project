@@ -44,6 +44,7 @@
 
             <Text text="Password" />
             <PasswordField fx:id="passwordField"/>
+
          </VBox>
 
          <!-- Buttons -->

@@ -10,6 +10,9 @@
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
 
 <StackPane xmlns="http://javafx.com/javafx/23.0.1"
            xmlns:fx="http://javafx.com/fxml/1"
@@ -44,6 +47,37 @@
 
             <Text text="Password" />
             <PasswordField fx:id="passwordField"/>
+
+            <Text text="Email" />
+            <TextField fx:id="emailField"/>
+
+            <Text text="Phone" />
+            <TextField fx:id="phoneField"/>
+
+            <Text text="Average hours of Study per Week" />
+            <ComboBox fx:id="hoursComboBox">
+               <items>
+                  <FXCollections fx:factory="observableArrayList">
+                     <String fx:value="1-5"/>
+                     <String fx:value="6-10"/>
+                     <String fx:value="11-15"/>
+                     <String fx:value="16+"/>
+                  </FXCollections>
+               </items>
+            </ComboBox>
+
+            <Text text="Level of Expertise" />
+            <ComboBox fx:id="expertiseComboBox">
+               <items>
+                  <FXCollections fx:factory="observableArrayList">
+                     <String fx:value="Beginner"/>
+                     <String fx:value="Intermediate"/>
+                     <String fx:value="Advanced"/>
+                     <String fx:value="Pro"/>
+                  </FXCollections>
+               </items>
+            </ComboBox>
+
          </VBox>
 
          <!-- Buttons (Back and Register) -->

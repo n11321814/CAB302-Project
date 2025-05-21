@@ -20,6 +20,10 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
     @FXML
+    private TextField phoneField;
+    @FXML
+    private TextField emailField;
+    @FXML
     private Button toRegister;
     @FXML
     private Button toHomepage;
@@ -34,6 +38,7 @@ public class LoginController {
         String password = passwordField.getText();
         User user = userDAO.loginUser(username, password);
         if (user != null) {
+            UserSession.setUserId(user.getId());
             showAlert("Login successful");
             Stage stage = (Stage) toHomepage.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("homepage.fxml"));
