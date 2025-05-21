@@ -26,6 +26,11 @@
             <!-- Spacer to push LOG OUT to the right -->
             <Region fx:id="spacer" HBox.hgrow="ALWAYS"/>
 
+            <Label text="Settings"
+                   fx:id="toSettings"
+                   style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"
+                   onMouseClicked="#goToSettings"
+            />
             <!-- Right side: LOG OUT -->
             <Label text="LOG OUT"
                    fx:id="toLogin"

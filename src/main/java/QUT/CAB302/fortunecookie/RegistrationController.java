@@ -8,6 +8,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import javafx.scene.control.ComboBox;
 
 import java.io.IOException;
 
@@ -17,6 +18,14 @@ public class RegistrationController {
     private TextField usernameField;
     @FXML
     private PasswordField passwordField;
+    @FXML
+    private TextField emailField;
+    @FXML
+    private TextField phoneField;
+    @FXML
+    private ComboBox<String> hoursComboBox;
+    @FXML
+    private ComboBox<String> expertiseComboBox;
     @FXML
     private Button toLogin;
 
@@ -28,10 +37,16 @@ public class RegistrationController {
     private void handleRegister() throws IOException {
         String username = usernameField.getText();
         String password = passwordField.getText();
-        if (username.isEmpty() || password.isEmpty()) {
-            showAlert("Please fill all fields");
+        String email = emailField.getText();
+        String phone = phoneField.getText();
+        String hours = hoursComboBox.getValue();
+        String expertise = expertiseComboBox.getValue();
+        if (username.isEmpty() || password.isEmpty() || (email.isEmpty() && phone.isEmpty())) {
+            showAlert("Please enter a username, password and at least an email or phone number.");
+        } else if (hours == null || expertise == null) {
+            showAlert("Please select your average hours studied per week and your level of expertise.");
         } else {
-            boolean success = userDAO.registerUser(username, password);
+            boolean success = userDAO.registerUser(username, password, email, phone, hours, expertise);
             if(success){
                 showAlert("Registration successful");
                 goToLogin();

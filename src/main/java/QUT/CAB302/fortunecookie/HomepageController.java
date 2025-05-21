@@ -2,6 +2,7 @@ package QUT.CAB302.fortunecookie;
 
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
@@ -34,6 +35,8 @@ public class HomepageController {
 
     @FXML
     public Button studyVaultButton;
+    @FXML
+    private Button goToSettings;
 
     /**
      * Called automatically after the FXML is loaded.
@@ -146,6 +149,35 @@ public class HomepageController {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("StudyVault.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+            // Show error message to user
+            Alert alert = new Alert(Alert.AlertType.ERROR);
+            alert.setTitle("Error");
+            alert.setHeaderText("Failed to load Study Vault");
+            alert.setContentText("Could not load the Study Vault page. Please try again.");
+            alert.showAndWait();
+        }
+    }
+
+    @FXML
+    private void goToSettings(MouseEvent event) {
+        int userId = UserSession.getUserId();
+        goToSettings(event, userId);
+
+    }
+
+    public void goToSettings(MouseEvent event, int userId) {
+        try {
+            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Settings.fxml"));
+            Parent root = fxmlLoader.load();
+
+            AccountSettingsController controller = fxmlLoader.getController();
+            controller.initialiseUser(UserSession.getUserId());
+
+            Scene scene = new Scene(root, ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();

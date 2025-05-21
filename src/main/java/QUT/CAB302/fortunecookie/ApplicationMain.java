@@ -14,7 +14,7 @@ ApplicationMain extends Application {
     public static final int WIDTH = 800;
     public static final int HEIGHT = 500;
 
-    // Loads the Login layout file, sets the scene height, width, and title
+    // Loads the Login layout file, sets the scene height, width, and titled
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
