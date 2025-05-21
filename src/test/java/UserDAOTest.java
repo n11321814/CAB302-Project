@@ -18,6 +18,13 @@ public class UserDAOTest {
     private static final String password1 = "TestPassword1";
     private static final String username2 = "TestUser2";
     private static final String password2 = "TestPassword2";
+    private static final String email1 = "test@email.com";
+    private static final String phone1 = "0486726574";
+    private static final String hours1 = "jdvksh";
+    private static final String expertise1 = "fafe";
+
+
+
 
     // DAO instance under testing
     private UserDAO userDAO;
@@ -32,22 +39,22 @@ public class UserDAOTest {
     @Test
     public void testRegisterUser() {
         String username = generateRandomString();
-        boolean result = userDAO.registerUser(username, username);
+        boolean result = userDAO.registerUser(username, username, email1, phone1, hours1, expertise1);
         assertTrue(result, "User successfully registered");
     }
 
     // Tests that duplicate usernames cannot be created
     @Test
     public void testDuplicateUsers() {
-        userDAO.registerUser(username1, password1);
-        boolean result = userDAO.registerUser(username1, password2);
+        userDAO.registerUser(username1, password1, email1, phone1, hours1, expertise1);
+        boolean result = userDAO.registerUser(username1, password2, email1, phone1, hours1, expertise1);
         assertFalse(result, "Duplicate Username should fail to register");
     }
 
     // Tests that users can successfully log in
     @Test
     public void testLoginUser() {
-        userDAO.registerUser(username1, password1);
+        userDAO.registerUser(username1, password1, email1, phone1, hours1, expertise1);
         User user = userDAO.loginUser(username1, password1);
         assertNotNull(user, "User should be logged in");
         assertEquals(username1, user.getUsername());
@@ -56,7 +63,7 @@ public class UserDAOTest {
     // Tests that logging in with incorrect password fails
     @Test
     public void testWrongPassword() {
-        userDAO.registerUser(username1, password1);
+        userDAO.registerUser(username1, password1, email1, phone1, hours1, expertise1);
         User user = userDAO.loginUser(username1, password2);
         assertNull(user, "Login with wrong password should fail");
     }
