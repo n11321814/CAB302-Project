@@ -21,53 +21,58 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Controller for the study mode view, managing the study timer, mood selection,
+ * motivational quotes, and interactions with the AI assistant for personalized study advice.
+ */
 public class StudyModeController {
 
+    // FXML UI elements for user interaction
     @FXML
-    private Label timerLabel;
-
+    private Label timerLabel;  // Label for displaying the study session time
     @FXML
-    private Button startButton;
-
+    private Button startButton;  // Button to start, pause, or resume the study session
     @FXML
-    private TextField subjectTextField;
-
+    private TextField subjectTextField;  // Text field for entering the subject
     @FXML
-    private TextField durationTextField;
-
+    private TextField durationTextField;  // Text field for entering the study duration
     @FXML
-    private ComboBox<String> moodComboBox;
-
+    private ComboBox<String> moodComboBox;  // ComboBox for selecting mood
     @FXML
-    private Label streakLabel;
-
+    private Label streakLabel;  // Label to display the study streak
     @FXML
-    private Label toLogin;
-
+    private Label toLogin;  // Label to navigate to the login page
     @FXML
-    private Label quoteLabel;
-
+    private Label quoteLabel;  // Label to display a motivational quote
     @FXML
-    private Button saveQuoteButton;
+    private Button saveQuoteButton;  // Button to save the current quote
 
-    private boolean isSessionActive = false;
-    private Timeline timer;
-    private int minutes = 0;
-    private int seconds = 0;
-    private int totalTimeInSeconds = 0;
-    private boolean isPaused = false;
-    private boolean sessionEnded = false;
+    // State variables for study session
+    private boolean isSessionActive = false;  // Tracks if the session is active
+    private Timeline timer;  // Timeline for the study timer
+    private int minutes = 0;  // Minutes counter for the timer
+    private int seconds = 0;  // Seconds counter for the timer
+    private int totalTimeInSeconds = 0;  // Total session time in seconds
+    private boolean isPaused = false;  // Tracks if the session is paused
+    private boolean sessionEnded = false;  // Tracks if the session has ended
 
-    private Timeline quoteTimeline;  // Timeline for cycling quotes
-    private List<String> quotes;  // List of quotes
+    // State variables for quote cycling
+    private Timeline quoteTimeline;  // Timeline for cycling quotes every 15 seconds
+    private List<String> quotes;  // List of motivational quotes
     private int quoteIndex = 0;  // Current index of the quote list
 
+    /**
+     * Initializes the controller, setting up the mood options and quotes.
+     * This method runs when the view is loaded.
+     */
     @FXML
     public void initialize() {
+        // Initialize streak label
         if (streakLabel != null) {
             streakLabel.setText("Study streak: 🔥 0");
         }
 
+        // Initialize mood combo box with predefined options
         if (moodComboBox != null) {
             moodComboBox.getItems().addAll("Happy", "Stressed", "Tired", "Motivated", "Anxious");
         }
@@ -89,8 +94,16 @@ public class StudyModeController {
         quoteTimeline.setCycleCount(Timeline.INDEFINITE);
     }
 
+    /**
+     * Starts, pauses, or resumes the study session based on the current session state.
+     * The method handles the start of a new session, toggles between pause and resume,
+     * and updates the UI accordingly.
+     *
+     * @param event The MouseEvent triggered by the start button
+     */
     @FXML
     private void startStudySession(MouseEvent event) {
+        // Handle session pause and resume
         if (isSessionActive && !isPaused) {
             timer.pause();
             isPaused = true;
@@ -105,41 +118,43 @@ public class StudyModeController {
             return;
         }
 
-        // NEW: Get mood from ComboBox
+        // Validate mood selection
         String mood = (moodComboBox != null) ? moodComboBox.getValue() : null;
         if (mood == null || mood.trim().isEmpty()) {
             showError("Please select your mood before starting the session.");
             return;
         }
 
+        // Validate subject and duration input
         String subject = subjectTextField.getText();
         String durationText = durationTextField.getText();
-
         if (subject.isEmpty() || durationText.isEmpty()) {
             showError("Please enter both subject and duration.");
             return;
         }
 
         try {
+            // Convert duration to seconds and initialize session
             totalTimeInSeconds = Integer.parseInt(durationText) * 60;
             minutes = totalTimeInSeconds / 60;
             seconds = totalTimeInSeconds % 60;
             sessionEnded = false;
 
-            updateTimerDisplay();
+            updateTimerDisplay();  // Update timer UI
 
+            // Start the study timer
             timer = new Timeline(new KeyFrame(Duration.seconds(1), e -> updateTimer()));
             timer.setCycleCount(Timeline.INDEFINITE);
             timer.play();
 
-            // Start the quote cycling timeline
+            // Start the quote cycling
             quoteTimeline.play();
 
             startButton.setText("Pause Study Session");
             isSessionActive = true;
             isPaused = false;
 
-            // Log mood (please add it being saved later)
+            // Log the mood for future reference (could be saved in DB)
             System.out.println("Mood before session: " + mood);
 
         } catch (NumberFormatException e) {
@@ -148,14 +163,18 @@ public class StudyModeController {
     }
 
     /**
-     * Update the quote every 15 seconds.
+     * Updates the quote displayed every 15 seconds.
      */
     private void updateQuote() {
-        // Cycle through the quotes
-        quoteIndex = (quoteIndex + 1) % quotes.size();  // Loops back to the first quote
-        quoteLabel.setText(quotes.get(quoteIndex));  // Update the label with the new quote
+        // Cycle through the quotes list
+        quoteIndex = (quoteIndex + 1) % quotes.size();
+        quoteLabel.setText(quotes.get(quoteIndex));  // Update the label with the next quote
     }
 
+    /**
+     * Updates the study session timer, decrementing the time and updating the UI.
+     * If the session time reaches 0, the session ends.
+     */
     private void updateTimer() {
         if (totalTimeInSeconds > 0) {
             totalTimeInSeconds--;
@@ -166,16 +185,24 @@ public class StudyModeController {
             if (!sessionEnded) {
                 sessionEnded = true;
                 timer.stop();
-                showSessionEndPopup();
+                showSessionEndPopup();  // Show session end popup
             }
         }
     }
 
+    /**
+     * Updates the timer display label with the current time in MM:SS format.
+     */
     private void updateTimerDisplay() {
         String time = String.format("%02d:%02d", minutes, seconds);
         timerLabel.setText(time);
     }
 
+    /**
+     * Displays an error alert with the given message.
+     *
+     * @param message The error message to display
+     */
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Input Error");
@@ -184,6 +211,10 @@ public class StudyModeController {
         alert.showAndWait();
     }
 
+    /**
+     * Displays a confirmation alert when the study session ends, offering the option
+     * to start a new session or end the current one.
+     */
     private void showSessionEndPopup() {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -200,7 +231,7 @@ public class StudyModeController {
                 if (response == newSession) {
                     subjectTextField.clear();
                     durationTextField.clear();
-                    moodComboBox.setValue(null); // Reset mood selection
+                    moodComboBox.setValue(null);  // Reset mood selection
                     timerLabel.setText("00:00");
                     startButton.setText("Start Study Session");
                     isSessionActive = false;
@@ -211,6 +242,9 @@ public class StudyModeController {
         });
     }
 
+    /**
+     * Navigates to the login screen.
+     */
     @FXML
     public void goToLogin() {
         try {
@@ -223,6 +257,9 @@ public class StudyModeController {
         }
     }
 
+    /**
+     * Navigates to the homepage screen.
+     */
     public void goToHomepage() {
         try {
             Stage stage = (Stage) toLogin.getScene().getWindow();
@@ -234,6 +271,13 @@ public class StudyModeController {
         }
     }
 
+    /**
+     * Saves the study session details to the database.
+     * (Placeholder method, implementation to be added.)
+     *
+     * @param subject The subject of the study session
+     * @param durationInSeconds The duration of the session in seconds
+     */
     private void saveStudySessionToDatabase(String subject, int durationInSeconds) {
         int durationInMinutes = durationInSeconds / 60;
         System.out.println("Saving session to database...");
@@ -241,6 +285,13 @@ public class StudyModeController {
         System.out.println("Duration: " + durationInMinutes + " minutes");
         // TODO: Replace this with actual DB logic
     }
+
+    /**
+     * Saves the current motivational quote to the database.
+     * (Placeholder method, for now just prints the quote to the console.)
+     *
+     * @param event The MouseEvent triggered by the save quote button
+     */
     @FXML
     private void saveQuote(MouseEvent event) {
         // Get the current quote from the label
@@ -262,9 +313,12 @@ public class StudyModeController {
     @FXML
     private TextArea aiResponse;
 
+    /**
+     * Handles the interaction with the AI assistant to provide personalized study advice.
+     * It sends a request to an AI model (using an HTTP POST request) and displays the response.
+     */
     @FXML
     public void handleAskAI() {
-
         String subject = subjectTextField.getText();
         String duration = durationTextField.getText();
         String mood = moodComboBox.getValue();
@@ -272,7 +326,6 @@ public class StudyModeController {
         String model = "llama3.2:1b";
         String prompt = "I would like to study " + subject + " for " + duration + " minutes and I am in a " + mood + " mood. Given this context, what study advice can you give me?";
         Runnable task = () -> {
-
             try {
                 // Set up an HTTP POST request
                 URL url = new URL("http://localhost:11434/api/generate");
@@ -307,5 +360,4 @@ public class StudyModeController {
         };
         new Thread(task).start();
     }
-
 }
