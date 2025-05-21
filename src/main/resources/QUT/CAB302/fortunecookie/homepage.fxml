@@ -19,14 +19,14 @@
               spacing="10"
               style="-fx-background-color: #FFE4C4; -fx-padding: 10 20 10 20;">
 
-            <!-- Left side: Title -->
+            <!-- Left side: Title (app name) -->
             <Label text="Quote Me"
                    style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #5A3E1B;"/>
 
-            <!-- Spacer to push LOG OUT to the right -->
+            <!-- Spacer to push the LOG OUT button to the right side of the bar -->
             <Region fx:id="spacer" HBox.hgrow="ALWAYS"/>
 
-            <!-- Right side: LOG OUT -->
+            <!-- Right side: LOG OUT label, triggers login page when clicked -->
             <Label text="LOG OUT"
                    fx:id="toLogin"
                    style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"
@@ -38,64 +38,54 @@
     <center>
         <HBox alignment="TOP_CENTER" spacing="40" style="-fx-padding: 30;">
 
-            <!-- Left column: Fortune Cookie Button and Start Study Mode -->
+            <!-- Left column: Fortune Cookie Button and Study Mode -->
             <VBox alignment="TOP_CENTER" spacing="30">
-                <!-- Fortune Cookie Button First -->
+
+                <!-- Fortune Cookie Button (trigger for breaking the cookie) -->
                 <Button text="Double Tap to Break the Cookie"
                         fx:id="cookieButton"
                         onMouseClicked="#onCookieClick"
                         wrapText="true"
                         alignment="CENTER"
-                        style="
-                            -fx-font-size: 16px;
-                            -fx-background-radius: 30;
-                            -fx-background-color: #FFDAB9;
-                            -fx-padding: 15 30 15 30;
-                        "/>
+                        style=" -fx-font-size: 16px; -fx-background-radius: 30;
+                                -fx-background-color: #FFDAB9; -fx-padding: 15 30 15 30;"/>
 
-                <!-- Start Study Mode Button Second -->
+                <!-- Start Study Mode Button (starts the study mode) -->
                 <Button text="Start Study Mode"
                         fx:id="startStudyButton"
                         onMouseClicked="#startStudyMode"
                         wrapText="true"
                         alignment="CENTER"
-                        style="
-                            -fx-font-size: 18px;
-                            -fx-background-radius: 30;
-                            -fx-background-color: #FFDAB9;
-                            -fx-padding: 20 40 20 40;
-                        "/>
+                        style=" -fx-font-size: 18px; -fx-background-radius: 30;
+                                -fx-background-color: #FFDAB9; -fx-padding: 20 40 20 40;"/>
 
+                <!-- Study Vault Button (navigates to the study vault) -->
                 <Button text="Study Vault"
                         fx:id="studyVaultButton"
                         onMouseClicked="#goToStudyVault"
                         wrapText="true"
                         alignment="CENTER"
-                        style="
-                            -fx-font-size: 18px;
-                            -fx-background-radius: 30;
-                            -fx-background-color: #FFDAB9;
-                            -fx-padding: 20 40 20 40;
-                        "/>
+                        style=" -fx-font-size: 18px; -fx-background-radius: 30;
+                                -fx-background-color: #FFDAB9; -fx-padding: 20 40 20 40;"/>
             </VBox>
 
-            <!-- Right column: Study Boost with Quote -->
-            <StackPane style="
-                    -fx-background-color: white;
-                    -fx-border-color: #D3E5F0;
-                    -fx-border-radius: 8;
-                    -fx-padding: 20;">
+            <!-- Right column: Study Boost section, with a quote -->
+            <StackPane style=" -fx-background-color: white;
+                              -fx-border-color: #D3E5F0;
+                              -fx-border-radius: 8; -fx-padding: 20;">
                 <VBox alignment="TOP_LEFT" spacing="15">
+                    <!-- Section title -->
                     <Label text="Today's Study Boost"
                            style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
 
-                    <!-- Study streak -->
+                    <!-- Study streak display -->
                     <Label fx:id="streakLabel" text="Study streak: 🔥 7"
                            style="-fx-font-size: 14px;"/>
 
-                    <!-- Quote section -->
+                    <!-- Quote title -->
                     <Label text="Quote:"
                            style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
+                    <!-- Motivational quote of the day -->
                     <Label fx:id="quoteLabel"
                            text="“Discipline is the bridge between goals and accomplishment.”"
                            wrapText="true"
