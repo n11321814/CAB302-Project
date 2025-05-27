@@ -7,6 +7,7 @@
     <children>
         <VBox layoutX="20" layoutY="20" prefWidth="400" spacing="10">
             <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #5A3E1B;" text="Account Settings" />
+            
 
             <HBox spacing="10">
                 <Label text="Username:" />
