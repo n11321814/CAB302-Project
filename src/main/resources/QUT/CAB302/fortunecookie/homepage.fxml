@@ -2,6 +2,8 @@
 
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
@@ -11,104 +13,93 @@
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="QUT.CAB302.fortunecookie.HomepageController"
-            style="-fx-background-color: #FFF9F2;">
+            style="-fx-background-color: #FFF9F2; -fx-font-family: 'Aptos';">
 
-    <!-- Top bar: Title and LOG OUT button -->
+    <!-- Top bar -->
     <top>
-        <HBox alignment="CENTER_LEFT"
-              spacing="10"
-              style="-fx-background-color: #FFE4C4; -fx-padding: 10 20 10 20;">
-
-            <!-- Left side: Title -->
+        <HBox alignment="CENTER_LEFT" spacing="20"
+              style="-fx-padding: 10 30; -fx-background-color:rgb(255, 188, 106);">
             <Label text="Quote Me"
-                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #5A3E1B;"/>
-
-            <!-- Spacer to push LOG OUT to the right -->
-            <Region fx:id="spacer" HBox.hgrow="ALWAYS"/>
-
-            <Label text="Settings"
+                   style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #333333;"/>
+            <Region HBox.hgrow="ALWAYS"/>
+            <Label text="Profile"
                    fx:id="toSettings"
-                   style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"
                    onMouseClicked="#goToSettings"
-            />
-            <!-- Right side: LOG OUT -->
-            <Label text="LOG OUT"
+                   style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-cursor: hand;"/>
+            <Label text="Log Out"
                    fx:id="toLogin"
-                   style="-fx-font-size: 14px; -fx-text-fill: #5A3E1B;"
-                   onMouseClicked="#goToLogin"/>
+                   onMouseClicked="#goToLogin"
+                   style="-fx-font-size: 16px; -fx-text-fill: #333333; -fx-cursor: hand;"/>
         </HBox>
     </top>
 
-    <!-- Center content: study mode button + study boost section -->
+    <!-- Center: Cookie image + buttons -->
     <center>
-        <HBox alignment="TOP_CENTER" spacing="40" style="-fx-padding: 30;">
-
-            <!-- Left column: Fortune Cookie Button and Start Study Mode -->
-            <VBox alignment="TOP_CENTER" spacing="30">
-                <!-- Fortune Cookie Button First -->
-                <Button text="Double Tap to Break the Cookie"
-                        fx:id="cookieButton"
-                        onMouseClicked="#onCookieClick"
-                        wrapText="true"
-                        alignment="CENTER"
+        <VBox alignment="TOP_CENTER" spacing="20" style="-fx-padding: 30 0 0 0;">
+            <ImageView fx:id="cookieImage"
+                       fitWidth="200"
+                       fitHeight="200"
+                       preserveRatio="true"
+                       pickOnBounds="true"
+                       onMouseClicked="#onCookieClick"
+                       style="-fx-cursor: hand;">
+                <image>
+                    <Image url="@FUNPREDICTION.png"/>
+                </image>
+            </ImageView>
+            <Label text="Double Tap"
+                   style="-fx-font-size: 16px; -fx-text-fill: #333333;"/>
+            <HBox alignment="CENTER" spacing="20">
+                <Button text="Study Mode"
+                        fx:id="startStudyButton"
+                        prefWidth="150"
+                        onMouseClicked="#startStudyMode"
                         style="
+                            -fx-background-color: #FFDAB9;
+                            -fx-text-fill: #333333;
                             -fx-font-size: 16px;
                             -fx-background-radius: 30;
-                            -fx-background-color: #FFDAB9;
-                            -fx-padding: 15 30 15 30;
-                        "/>
-
-                <!-- Start Study Mode Button Second -->
-                <Button text="Start Study Mode"
-                        fx:id="startStudyButton"
-                        onMouseClicked="#startStudyMode"
-                        wrapText="true"
-                        alignment="CENTER"
-                        style="
-                            -fx-font-size: 18px;
-                            -fx-background-radius: 30;
-                            -fx-background-color: #FFDAB9;
-                            -fx-padding: 20 40 20 40;
-                        "/>
-
+                            -fx-padding: 12 28;"/>
                 <Button text="Study Vault"
                         fx:id="studyVaultButton"
+                        prefWidth="140"
                         onMouseClicked="#goToStudyVault"
-                        wrapText="true"
-                        alignment="CENTER"
                         style="
-                            -fx-font-size: 18px;
-                            -fx-background-radius: 30;
                             -fx-background-color: #FFDAB9;
-                            -fx-padding: 20 40 20 40;
-                        "/>
-            </VBox>
+                            -fx-text-fill: #333333;
+                            -fx-font-size: 16px;
+                            -fx-background-radius: 30;
+                            -fx-padding: 12 28;"/>
+            </HBox>
+        </VBox>
+    </center>
 
-            <!-- Right column: Study Boost with Quote -->
+    <!-- Bottom: Study Boost Card -->
+    <bottom>
+        <HBox alignment="CENTER" style="-fx-padding: 20 40;">
             <StackPane style="
-                    -fx-background-color: white;
-                    -fx-border-color: #D3E5F0;
-                    -fx-border-radius: 8;
-                    -fx-padding: 20;">
-                <VBox alignment="TOP_LEFT" spacing="15">
+                -fx-background-color: white;
+                -fx-border-color: #D3E5F0;
+                -fx-border-radius: 8;
+                -fx-background-radius: 8;
+                -fx-padding: 20;
+                -fx-pref-width: 260;">
+                <VBox alignment="TOP_LEFT" spacing="12">
                     <Label text="Today's Study Boost"
-                           style="-fx-font-size: 18px; -fx-font-weight: bold;"/>
-
-                    <!-- Study streak -->
-                    <Label fx:id="streakLabel" text="Study streak: 🔥 7"
+                           style="-fx-font-size: 16px; -fx-font-weight: bold;"/>
+                    <Label fx:id="streakLabel"
+                           text="Study streak: 🔥 0"
                            style="-fx-font-size: 14px;"/>
-
-                    <!-- Quote section -->
                     <Label text="Quote:"
                            style="-fx-font-size: 14px; -fx-font-weight: bold;"/>
                     <Label fx:id="quoteLabel"
-                           text="“Discipline is the bridge between goals and accomplishment.”"
+                           text="Stay focused and keep going!"
                            wrapText="true"
+                           maxWidth="220"
                            style="-fx-font-size: 14px; -fx-font-style: italic;"/>
                 </VBox>
             </StackPane>
-
         </HBox>
-    </center>
+    </bottom>
 
 </BorderPane>
