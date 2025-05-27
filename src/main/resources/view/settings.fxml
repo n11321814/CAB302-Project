@@ -3,7 +3,7 @@
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFF9F2;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUT.CAB302.fortunecookie.AccountSettingsController">
+<AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFF9F2;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUT.CAB302.QuoteMe.controller.AccountSettingsController">
     <children>
         <VBox layoutX="20" layoutY="20" prefWidth="400" spacing="10">
             <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #5A3E1B;" text="Account Settings" />

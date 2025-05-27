@@ -14,7 +14,7 @@
 <?import javafx.scene.control.TextArea?>
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="QUT.CAB302.fortunecookie.StudyModeController"
+            fx:controller="QUT.CAB302.QuoteMe.controller.StudyModeController"
             style="-fx-background-color: #FFF9F2;">
 
     <!-- Top bar: Study Mode header with LOG OUT -->

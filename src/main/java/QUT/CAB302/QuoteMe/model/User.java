@@ -1,4 +1,4 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.QuoteMe.model;
 
 // A class to represent user's credentials
 public class User {

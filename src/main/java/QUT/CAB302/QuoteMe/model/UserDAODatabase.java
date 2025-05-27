@@ -1,6 +1,7 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.QuoteMe.model;
 
 import java.sql.*;
+
 import org.mindrot.jbcrypt.BCrypt;
 
 // Implementation of the UserDAO interface using SQLite

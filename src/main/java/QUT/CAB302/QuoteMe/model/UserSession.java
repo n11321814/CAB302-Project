@@ -1,4 +1,4 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.QuoteMe.model;
 
 public class UserSession {
     private static int userId;

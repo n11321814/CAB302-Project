@@ -1,16 +1,10 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.QuoteMe.controller;
 
+import QUT.CAB302.QuoteMe.model.SQLiteConnection;
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
-import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
-import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.xml.transform.Result;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;

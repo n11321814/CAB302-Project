@@ -1,5 +1,7 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.QuoteMe.controller;
 
+import QUT.CAB302.QuoteMe.ApplicationMain;
+import QUT.CAB302.QuoteMe.model.UserSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
@@ -103,7 +105,7 @@ public class HomepageController {
     @FXML
     public void goToLogin() throws IOException {
         Stage stage = (Stage) toLogin.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
         stage.setScene(scene);
     }
@@ -130,7 +132,7 @@ public class HomepageController {
                 // If user clicks "Yes", navigate to the Study Mode page
                 try {
                     Stage stage = (Stage) toLogin.getScene().getWindow(); // Get the current stage
-                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("studymode.fxml")); // Load the study mode FXML
+                    FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/studymode.fxml")); // Load the study mode FXML
                     Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT); // Create a new scene
                     stage.setScene(scene); // Set the new scene
                 } catch (IOException e) {
@@ -147,7 +149,7 @@ public class HomepageController {
     private void goToStudyVault(MouseEvent event) {
         try {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("StudyVault.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/studyvault.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {
@@ -171,7 +173,7 @@ public class HomepageController {
     public void goToSettings(MouseEvent event, int userId) {
         try {
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Settings.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/settings.fxml"));
             Parent root = fxmlLoader.load();
 
             AccountSettingsController controller = fxmlLoader.getController();

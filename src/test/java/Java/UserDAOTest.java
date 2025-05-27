@@ -1,8 +1,8 @@
 package Java;
 
-import QUT.CAB302.fortunecookie.User;
-import QUT.CAB302.fortunecookie.UserDAO;
-import QUT.CAB302.fortunecookie.UserDAODatabase;
+import QUT.CAB302.QuoteMe.model.User;
+import QUT.CAB302.QuoteMe.model.UserDAO;
+import QUT.CAB302.QuoteMe.model.UserDAODatabase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 

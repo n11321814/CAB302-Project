@@ -1,5 +1,10 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.QuoteMe.controller;
 
+import QUT.CAB302.QuoteMe.*;
+import QUT.CAB302.QuoteMe.model.User;
+import QUT.CAB302.QuoteMe.model.UserDAO;
+import QUT.CAB302.QuoteMe.model.UserDAOInstance;
+import QUT.CAB302.QuoteMe.model.UserSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -41,7 +46,7 @@ public class LoginController {
             UserSession.setUserId(user.getId());
             showAlert("Login successful");
             Stage stage = (Stage) toHomepage.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("homepage.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/homepage.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } else {
@@ -53,7 +58,7 @@ public class LoginController {
     @FXML
     private void goToRegister() throws IOException {
         Stage stage = (Stage) toRegister.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("registration.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("/view/registration.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
         stage.setScene(scene);
     }

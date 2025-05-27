@@ -8,10 +8,12 @@ module address.book.addressbook {
     requires org.json;
 
 
-    opens QUT.CAB302.fortunecookie to javafx.fxml;
-    exports QUT.CAB302.fortunecookie;
-    exports QUT.CAB302.fortunecookie.LegacyFiles;
-    opens QUT.CAB302.fortunecookie.LegacyFiles to javafx.fxml;
+    opens QUT.CAB302.QuoteMe to javafx.fxml;
+    exports QUT.CAB302.QuoteMe;
+    exports QUT.CAB302.QuoteMe.controller;
+    opens QUT.CAB302.QuoteMe.controller to javafx.fxml;
+    exports QUT.CAB302.QuoteMe.model;
+    opens QUT.CAB302.QuoteMe.model to javafx.fxml;
 
 
 }
