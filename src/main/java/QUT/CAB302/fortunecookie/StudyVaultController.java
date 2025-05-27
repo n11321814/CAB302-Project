@@ -8,46 +8,34 @@ import javafx.stage.Stage;
 
 import java.io.IOException;
 import java.util.List;
-public class StudyVaultController {
+
+public class StudyVaultController implements BackNavigable {
 
     @FXML
-    private Label backToHome;
+    private Button backToHome;  // Changed from Label to Button for better UX
 
     @FXML
     private ListView<String> quotesListView;
 
-    /**
-     * Initializes the study vault by loading saved quotes
-     */
     @FXML
     public void initialize() {
         loadSavedQuotes();
+
+        // Set back button action via BackButtonHandler (assumed helper)
+        BackButtonHandler.setBackAction(backToHome, this);
     }
 
-    /**
-     * Loads saved quotes from specific user in database and stores then in a string list
-      */
     private void loadSavedQuotes() {
-        //
-        List<String> savedQuotes = List.of("Test1", "Test2", "Test3"); // TODO access database and store in list
+        List<String> savedQuotes = List.of("Test1", "Test2", "Test3"); // TODO: replace with DB fetch
 
-        // Clear existing items
         quotesListView.getItems().clear();
-
-        // Add all saved quotes to the ListView
-        quotesListView.getItems().addAll(savedQuotes);
-
-        // If no quotes saved display a message
         if (savedQuotes.isEmpty()) {
             quotesListView.getItems().add("No saved quotes yet. Save some from your study sessions!");
+        } else {
+            quotesListView.getItems().addAll(savedQuotes);
         }
     }
 
-
-    /**
-     * Implementation of back to homepage button
-     */
-    @FXML
     public void goToHomepage() {
         try {
             Stage stage = (Stage) backToHome.getScene().getWindow();
@@ -57,5 +45,10 @@ public class StudyVaultController {
         } catch (IOException e) {
             e.printStackTrace();
         }
+    }
+
+    @Override
+    public void goBack() {
+        goToHomepage();
     }
 }

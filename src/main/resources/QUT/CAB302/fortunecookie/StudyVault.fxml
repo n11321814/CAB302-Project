@@ -1,35 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
-
 <?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.ListView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.control.Button?>
 
 <VBox xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
       fx:controller="QUT.CAB302.fortunecookie.StudyVaultController"
-      style="-fx-background-color: #FFF9F2;">
+      spacing="10"
+      style="-fx-background-color: #FFF9F2;"
+>
 
     <padding>
         <Insets top="20" right="20" bottom="20" left="20"/>
     </padding>
-    <spacing>10</spacing>
 
-    <HBox alignment="CENTER_LEFT">
-        <Label fx:id="backToHome" text="← Back to Home" style="-fx-text-fill: #2a9df4; -fx-cursor: hand;"
-               onMouseClicked="#goToHomepage"/>
+    <HBox alignment="CENTER_LEFT" spacing="10">
+        <Button fx:id="backToHome"
+                text="← Back"
+                onAction="#goToHomepage"
+                style="-fx-font-size: 14px; -fx-background-color: transparent; -fx-text-fill: #5A3E1B; -fx-cursor: hand;"/>
     </HBox>
 
-    <Label text="Your Study Vault" style="-fx-font-size: 24px; -fx-font-weight: bold;"/>
-    <Label text="Saved Quotes" style="-fx-font-size: 14px;"/>
+    <Label text="Your Study Vault"
+           style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #5A3E1B;"/>
 
-    <ListView fx:id="quotesListView" style="-fx-font-size: 16px;">
-        <padding>
-            <Insets top="10" right="10" bottom="10" left="10"/>
-        </padding>
-    </ListView>
+    <Label text="Saved Quotes"
+           style="-fx-font-size: 16px; -fx-text-fill: #5A3E1B;"/>
+
+    <ListView fx:id="quotesListView"
+              style="-fx-font-size: 16px; -fx-background-radius: 8; -fx-border-radius: 8; -fx-padding: 10;"
+              prefHeight="400" />
+
 </VBox>
-
