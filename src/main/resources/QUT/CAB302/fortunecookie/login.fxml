@@ -6,53 +6,65 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.BorderPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Text?>
 
-<StackPane xmlns="http://javafx.com/javafx/23.0.1"
-           xmlns:fx="http://javafx.com/fxml/1"
-           fx:controller="QUT.CAB302.fortunecookie.LoginController">
+<BorderPane xmlns="http://javafx.com/javafx/23.0.1"
+            xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="QUT.CAB302.fortunecookie.LoginController"
+            style="-fx-font-family: 'Aptos'; -fx-background-color: #FFF9F2;">
 
-   <children>
+    <!-- BIG header: enlarged cookie + elegant title -->
+    <top>
+        <VBox alignment="CENTER" spacing="15" style="-fx-padding: 30; -fx-background-color: #FFF9F2;">
+            <ImageView fitWidth="150" fitHeight="150" preserveRatio="true" pickOnBounds="true">
+                <image>
+                    <Image url="@QUTstudent.png"/>
+                </image>
+            </ImageView>
+            <Text text="QUOTE ME "
+                  style="
+                    -fx-font-size: 40px;
+                    -fx-font-style: italic;
+                    -fx-font-weight: bold;
+                    -fx-fill: #333333;
+                  "/>
+        </VBox>
+    </top>
 
-      <!-- Blue bar with "Login" on the left -->
-      <HBox prefHeight="33.0" alignment="CENTER_LEFT" style="-fx-background-color: #FFF9F2; -fx-border-color: black;">
-         <padding>
-            <Insets left="10"/>
-         </padding>
-      </HBox>
+    <!-- Centered login form -->
+    <center>
+        <VBox alignment="CENTER" spacing="15" style="-fx-padding: 30;">
+            <!-- Username -->
+            <VBox spacing="5" maxWidth="300">
+                <Text text="Username" style="-fx-font-size: 14px;"/>
+                <TextField fx:id="usernameField"
+                           promptText="Enter your username"
+                           style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
+            </VBox>
 
-      <!-- Content area -->
-      <VBox spacing="20.0" alignment="TOP_CENTER">
-         <padding>
-            <Insets top="20" right="20" bottom="20" left="20"/>
-         </padding>
+            <!-- Password -->
+            <VBox spacing="5" maxWidth="300">
+                <Text text="Password" style="-fx-font-size: 14px;"/>
+                <PasswordField fx:id="passwordField"
+                               promptText="Enter your password"
+                               style="-fx-background-radius: 5; -fx-border-radius: 5;"/>
+            </VBox>
 
-         <!-- Profile Image -->
-         <ImageView fitHeight="103.0" fitWidth="97.0" pickOnBounds="true" preserveRatio="true">
-            <image>
-               <Image url="@profile_icon.jpg" />
-            </image>
-         </ImageView>
+            <!-- Buttons -->
+            <HBox alignment="CENTER" spacing="20">
+                <Button text="Register"
+                        fx:id="toRegister"
+                        onAction="#goToRegister"
+                        style="-fx-font-size: 14px; -fx-pref-width: 120;"/>
+                <Button text="Login"
+                        fx:id="toHomepage"
+                        onAction="#handleLogin"
+                        style="-fx-font-size: 14px; -fx-pref-width: 120;"/>
+            </HBox>
+        </VBox>
+    </center>
 
-         <!-- Input fields -->
-         <VBox spacing="10.0" alignment="CENTER" maxWidth="250.0">
-            <Text text="Username" />
-            <TextField fx:id="usernameField"/>
-
-            <Text text="Password" />
-            <PasswordField fx:id="passwordField"/>
-
-         </VBox>
-
-         <!-- Buttons -->
-         <HBox spacing="15.0" alignment="CENTER">
-            <Button text="Register" fx:id="toRegister" onAction="#goToRegister"/>
-            <Button text="Login" fx:id="toHomepage" onAction="#handleLogin"/>
-         </HBox>
-      </VBox>
-
-   </children>
-</StackPane>
+</BorderPane>
