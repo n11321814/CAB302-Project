@@ -7,6 +7,11 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 public class StudyVaultController implements BackNavigable {
@@ -17,6 +22,9 @@ public class StudyVaultController implements BackNavigable {
     @FXML
     private ListView<String> quotesListView;
 
+    /**
+     * Initializes the study vault by loading saved quotes
+     */
     @FXML
     public void initialize() {
         loadSavedQuotes();
@@ -25,10 +33,31 @@ public class StudyVaultController implements BackNavigable {
         BackButtonHandler.setBackAction(backToHome, this);
     }
 
+    /**
+     * Loads saved quotes from specific user in database and stores then in a string list
+      */
     private void loadSavedQuotes() {
-        List<String> savedQuotes = List.of("Test1", "Test2", "Test3"); // TODO: replace with DB fetch
+        int userId = UserSession.getUserId();
 
+        String query = "SELECT savedQuote FROM savedQuotes WHERE id = ?";
+        List<String> savedQuotes = new ArrayList<>();
+
+        Connection connection = SQLiteConnection.getInstance();
+
+        try(PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                savedQuotes.add(rs.getString("savedQuote"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+
+        // Clear existing items
         quotesListView.getItems().clear();
+        // If no quotes saved display a message
         if (savedQuotes.isEmpty()) {
             quotesListView.getItems().add("No saved quotes yet. Save some from your study sessions!");
         } else {
@@ -36,6 +65,11 @@ public class StudyVaultController implements BackNavigable {
         }
     }
 
+
+    /**
+     * Implementation of back to homepage button
+     */
+    @FXML
     public void goToHomepage() {
         try {
             Stage stage = (Stage) backToHome.getScene().getWindow();
