@@ -21,7 +21,7 @@ import java.net.URL;
 import java.util.Arrays;
 import java.util.List;
 
-public class StudyModeController {
+public class StudyModeController implements BackNavigable {
 
     @FXML
     private Label timerLabel;
@@ -42,13 +42,16 @@ public class StudyModeController {
     private Label streakLabel;
 
     @FXML
-    private Label toLogin;
-
-    @FXML
     private Label quoteLabel;
 
     @FXML
     private Button saveQuoteButton;
+
+    @FXML
+    private Button backToHome;
+
+    @FXML
+    private TextArea aiResponse;
 
     private boolean isSessionActive = false;
     private Timeline timer;
@@ -58,9 +61,9 @@ public class StudyModeController {
     private boolean isPaused = false;
     private boolean sessionEnded = false;
 
-    private Timeline quoteTimeline;  // Timeline for cycling quotes
-    private List<String> quotes;  // List of quotes
-    private int quoteIndex = 0;  // Current index of the quote list
+    private Timeline quoteTimeline;
+    private List<String> quotes;
+    private int quoteIndex = 0;
 
     @FXML
     public void initialize() {
@@ -72,7 +75,6 @@ public class StudyModeController {
             moodComboBox.getItems().addAll("Happy", "Stressed", "Tired", "Motivated", "Anxious");
         }
 
-        // List of motivational quotes
         quotes = Arrays.asList(
                 "The best way to predict the future is to create it.",
                 "Success is the sum of small efforts, repeated day in and day out.",
@@ -81,12 +83,12 @@ public class StudyModeController {
                 "Believe in yourself and all that you are."
         );
 
-        // Set the initial quote
         quoteLabel.setText(quotes.get(quoteIndex));
 
-        // Setup the quote cycling timeline (every 15 seconds)
         quoteTimeline = new Timeline(new KeyFrame(Duration.seconds(15), e -> updateQuote()));
         quoteTimeline.setCycleCount(Timeline.INDEFINITE);
+
+        BackButtonHandler.setBackAction(backToHome, this);
     }
 
     @FXML
@@ -105,7 +107,6 @@ public class StudyModeController {
             return;
         }
 
-        // NEW: Get mood from ComboBox
         String mood = (moodComboBox != null) ? moodComboBox.getValue() : null;
         if (mood == null || mood.trim().isEmpty()) {
             showError("Please select your mood before starting the session.");
@@ -132,14 +133,12 @@ public class StudyModeController {
             timer.setCycleCount(Timeline.INDEFINITE);
             timer.play();
 
-            // Start the quote cycling timeline
             quoteTimeline.play();
 
             startButton.setText("Pause Study Session");
             isSessionActive = true;
             isPaused = false;
 
-            // Log mood (please add it being saved later)
             System.out.println("Mood before session: " + mood);
 
         } catch (NumberFormatException e) {
@@ -147,13 +146,9 @@ public class StudyModeController {
         }
     }
 
-    /**
-     * Update the quote every 15 seconds.
-     */
     private void updateQuote() {
-        // Cycle through the quotes
-        quoteIndex = (quoteIndex + 1) % quotes.size();  // Loops back to the first quote
-        quoteLabel.setText(quotes.get(quoteIndex));  // Update the label with the new quote
+        quoteIndex = (quoteIndex + 1) % quotes.size();
+        quoteLabel.setText(quotes.get(quoteIndex));
     }
 
     private void updateTimer() {
@@ -200,7 +195,7 @@ public class StudyModeController {
                 if (response == newSession) {
                     subjectTextField.clear();
                     durationTextField.clear();
-                    moodComboBox.setValue(null); // Reset mood selection
+                    moodComboBox.setValue(null);
                     timerLabel.setText("00:00");
                     startButton.setText("Start Study Session");
                     isSessionActive = false;
@@ -211,22 +206,21 @@ public class StudyModeController {
         });
     }
 
-    @FXML
-    public void goToLogin() {
+    public void goToHomepage() {
         try {
-            Stage stage = (Stage) toLogin.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
+            Stage stage = (Stage) backToHome.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("homepage.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-
-    public void goToHomepage() {
+    @FXML
+    public void goToLogin() {
         try {
-            Stage stage = (Stage) toLogin.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("homepage.fxml"));
+            Stage stage = (Stage) timerLabel.getScene().getWindow(); // any node that exists on the scene
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {
@@ -241,15 +235,12 @@ public class StudyModeController {
         System.out.println("Duration: " + durationInMinutes + " minutes");
         // TODO: Replace this with actual DB logic
     }
+
     @FXML
     private void saveQuote(MouseEvent event) {
-        // Get the current quote from the label
         String currentQuote = quoteLabel.getText();
-
-        // Save the quote to database(for now, we'll print it to the console here)
         System.out.println("Quote saved: " + currentQuote);
 
-        // Optionally, you could display a message saying the quote was saved
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Quote Saved");
         alert.setHeaderText(null);
@@ -257,42 +248,32 @@ public class StudyModeController {
         alert.showAndWait();
     }
 
-    // AI Implementation
-
-    @FXML
-    private TextArea aiResponse;
-
     @FXML
     public void handleAskAI() {
-
         String subject = subjectTextField.getText();
         String duration = durationTextField.getText();
         String mood = moodComboBox.getValue();
 
         String model = "llama3.2:1b";
         String prompt = "I would like to study " + subject + " for " + duration + " minutes and I am in a " + mood + " mood. Given this context, what study advice can you give me?";
-        Runnable task = () -> {
 
+        Runnable task = () -> {
             try {
-                // Set up an HTTP POST request
                 URL url = new URL("http://localhost:11434/api/generate");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
 
-                // Create request JSON
                 JSONObject requestJson = new JSONObject();
                 requestJson.put("model", model);
                 requestJson.put("prompt", prompt);
                 requestJson.put("stream", false);
 
-                // Send request
                 try (OutputStream os = conn.getOutputStream()) {
                     os.write(requestJson.toString().getBytes());
                 }
 
-                // Get response
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
                     String responseLine = br.readLine();
                     JSONObject responseJson = new JSONObject(responseLine);
@@ -305,7 +286,13 @@ public class StudyModeController {
                 Platform.runLater(() -> aiResponse.setText("Error: " + e.getMessage()));
             }
         };
+
         new Thread(task).start();
     }
 
+    // Implement goBack from BackNavigable
+    @Override
+    public void goBack() {
+        goToHomepage();
+    }
 }

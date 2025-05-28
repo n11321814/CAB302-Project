@@ -6,8 +6,14 @@
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFF9F2;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUT.CAB302.fortunecookie.AccountSettingsController">
     <children>
         <VBox layoutX="20" layoutY="20" prefWidth="400" spacing="10">
+
+            <!-- Back Button styled like Study Mode -->
+            <Button fx:id="backToHome"
+                    text="← Back"
+                    onAction="#goToHomepage"
+                    style="-fx-font-size: 14px; -fx-background-color: transparent; -fx-text-fill: #5A3E1B; -fx-cursor: hand;"/>
+
             <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #5A3E1B;" text="Account Settings" />
-            
 
             <HBox spacing="10">
                 <Label text="Username:" />
@@ -54,9 +60,6 @@
             <Button text="Save Changes" onAction="#handleSaveChanges"/>
             <Label fx:id="statusLabel" style="-fx-text-fill: red;" />
 
-
         </VBox>
-
     </children>
-
 </AnchorPane>

@@ -26,8 +26,10 @@
     <top>
         <HBox spacing="10" alignment="CENTER_LEFT"
               style="-fx-background-color: #FFE4C4; -fx-padding: 10 20;">
-            <Button text="← Back"
-                    onAction="#goToHomepage"
+            <!-- Changed to fx:id=backToHome to match controller and onAction calls goBack() -->
+            <Button fx:id="backToHome"
+                    text="← Back"
+                    onAction="#goBack"
                     style="-fx-font-size: 14px; -fx-background-color: transparent; -fx-text-fill: #5A3E1B;"/>
             <Region HBox.hgrow="ALWAYS"/>
             <Label text="LOG OUT"
