@@ -18,6 +18,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -40,6 +43,9 @@ public class StudyModeController implements BackNavigable {
 
     @FXML
     private Label streakLabel;
+
+    @FXML
+    private Label toLogin;
 
     @FXML
     private Label quoteLabel;
@@ -107,6 +113,7 @@ public class StudyModeController implements BackNavigable {
             return;
         }
 
+        // NEW: Get mood from ComboBox
         String mood = (moodComboBox != null) ? moodComboBox.getValue() : null;
         if (mood == null || mood.trim().isEmpty()) {
             showError("Please select your mood before starting the session.");
@@ -133,12 +140,14 @@ public class StudyModeController implements BackNavigable {
             timer.setCycleCount(Timeline.INDEFINITE);
             timer.play();
 
+            // Start the quote cycling timeline
             quoteTimeline.play();
 
             startButton.setText("Pause Study Session");
             isSessionActive = true;
             isPaused = false;
 
+            // Log mood (please add it being saved later)
             System.out.println("Mood before session: " + mood);
 
         } catch (NumberFormatException e) {
@@ -146,6 +155,9 @@ public class StudyModeController implements BackNavigable {
         }
     }
 
+    /**
+     * Update the quote every 15 seconds.
+     */
     private void updateQuote() {
         quoteIndex = (quoteIndex + 1) % quotes.size();
         quoteLabel.setText(quotes.get(quoteIndex));
@@ -238,18 +250,44 @@ public class StudyModeController implements BackNavigable {
 
     @FXML
     private void saveQuote(MouseEvent event) {
+        // Get the current quote from the label
         String currentQuote = quoteLabel.getText();
+        int userId = UserSession.getUserId();
+
+        String insertSql = "INSERT OR IGNORE INTO savedQuotes (id, savedQuote) VALUES (?, ?)";
+
+        // Save the quote to database(for now, we'll print it to the console here)
         System.out.println("Quote saved: " + currentQuote);
 
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Quote Saved");
-        alert.setHeaderText(null);
-        alert.setContentText("The following quote has been saved:\n" + currentQuote);
-        alert.showAndWait();
+        Connection connection = SQLiteConnection.getInstance();
+
+        try(PreparedStatement ps = connection.prepareStatement(insertSql)) {
+            ps.setInt(1, userId);
+            ps.setString(2,currentQuote);
+            int rows = ps.executeUpdate();
+
+            // Optionally, you could display a message saying the quote was saved
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Quote Saved");
+            alert.setHeaderText(null);
+            if (rows > 0) {
+                alert.setContentText("The following quote has been saved:\n" + currentQuote);
+            } else {
+                alert.setContentText("You have already saved this quote");
+            }
+            alert.showAndWait();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    "Failed to save quote:\n" + e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     @FXML
     public void handleAskAI() {
+
         String subject = subjectTextField.getText();
         String duration = durationTextField.getText();
         String mood = moodComboBox.getValue();
@@ -259,21 +297,25 @@ public class StudyModeController implements BackNavigable {
 
         Runnable task = () -> {
             try {
+                // Set up an HTTP POST request
                 URL url = new URL("http://localhost:11434/api/generate");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
 
+                // Create request JSON
                 JSONObject requestJson = new JSONObject();
                 requestJson.put("model", model);
                 requestJson.put("prompt", prompt);
                 requestJson.put("stream", false);
 
+                // Send request
                 try (OutputStream os = conn.getOutputStream()) {
                     os.write(requestJson.toString().getBytes());
                 }
 
+                // Get response
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
                     String responseLine = br.readLine();
                     JSONObject responseJson = new JSONObject(responseLine);

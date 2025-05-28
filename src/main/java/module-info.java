@@ -2,10 +2,10 @@ module address.book.addressbook {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
-    requires java.sql;
     requires jbcrypt;
     requires java.net.http;
     requires org.json;
+    requires org.xerial.sqlitejdbc;
 
 
     opens QUT.CAB302.fortunecookie to javafx.fxml;
