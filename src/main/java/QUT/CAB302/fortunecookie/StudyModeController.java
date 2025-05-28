@@ -18,6 +18,9 @@ import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.net.HttpURLConnection;
 import java.net.URL;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
@@ -245,16 +248,37 @@ public class StudyModeController {
     private void saveQuote(MouseEvent event) {
         // Get the current quote from the label
         String currentQuote = quoteLabel.getText();
+        int userId = UserSession.getUserId();
+
+        String insertSql = "INSERT OR IGNORE INTO savedQuotes (id, savedQuote) VALUES (?, ?)";
 
         // Save the quote to database(for now, we'll print it to the console here)
         System.out.println("Quote saved: " + currentQuote);
 
-        // Optionally, you could display a message saying the quote was saved
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle("Quote Saved");
-        alert.setHeaderText(null);
-        alert.setContentText("The following quote has been saved:\n" + currentQuote);
-        alert.showAndWait();
+        Connection connection = SQLiteConnection.getInstance();
+
+        try(PreparedStatement ps = connection.prepareStatement(insertSql)) {
+            ps.setInt(1, userId);
+            ps.setString(2,currentQuote);
+            int rows = ps.executeUpdate();
+
+            // Optionally, you could display a message saying the quote was saved
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Quote Saved");
+            alert.setHeaderText(null);
+            if (rows > 0) {
+                alert.setContentText("The following quote has been saved:\n" + currentQuote);
+            } else {
+                alert.setContentText("You have already saved this quote");
+            }
+            alert.showAndWait();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+            Alert alert = new Alert(Alert.AlertType.ERROR,
+                    "Failed to save quote:\n" + e.getMessage());
+            alert.showAndWait();
+        }
     }
 
     // AI Implementation

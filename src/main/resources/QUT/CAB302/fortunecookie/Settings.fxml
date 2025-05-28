@@ -2,12 +2,16 @@
 
 <?import javafx.scene.control.*?>
 <?import javafx.scene.layout.*?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
 
 <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: #FFF9F2;" xmlns="http://javafx.com/javafx/17.0.12" xmlns:fx="http://javafx.com/fxml/1" fx:controller="QUT.CAB302.fortunecookie.AccountSettingsController">
     <children>
         <VBox layoutX="20" layoutY="20" prefWidth="400" spacing="10">
             <Label style="-fx-font-size: 24px; -fx-font-weight: bold; -fx-text-fill: #5A3E1B;" text="Account Settings" />
-            
+
+            <Label fx:id="backToHome" text="← Back to Home" style="-fx-text-fill: #2a9df4; -fx-cursor: hand;"
+                   onMouseClicked="#goToHomepage"/>
 
             <HBox spacing="10">
                 <Label text="Username:" />
@@ -26,12 +30,30 @@
 
             <HBox spacing="10">
                 <Label text="Hours of Study:" />
-                <ComboBox fx:id="hoursComboBox" prefWidth="150" />
+                <ComboBox fx:id="hoursComboBox" prefWidth="150">
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                            <String fx:value="1-5"/>
+                            <String fx:value="6-10"/>
+                            <String fx:value="11-15"/>
+                            <String fx:value="16+"/>
+                        </FXCollections>
+                    </items>
+                </ComboBox>
             </HBox>
 
             <HBox spacing="10">
                 <Label text="Hours of Study:" />
-                <ComboBox fx:id="expertiseComboBox" prefWidth="150" />
+                <ComboBox fx:id="expertiseComboBox" prefWidth="150" >
+                    <items>
+                        <FXCollections fx:factory="observableArrayList">
+                        <String fx:value="1-5"/>
+                        <String fx:value="6-10"/>
+                        <String fx:value="11-15"/>
+                        <String fx:value="16+"/>
+                    </FXCollections>
+                    </items>
+                </ComboBox>
             </HBox>
 
             <Separator />

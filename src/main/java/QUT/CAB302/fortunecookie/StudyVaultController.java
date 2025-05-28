@@ -7,6 +7,11 @@ import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 public class StudyVaultController {
 
@@ -28,18 +33,31 @@ public class StudyVaultController {
      * Loads saved quotes from specific user in database and stores then in a string list
       */
     private void loadSavedQuotes() {
-        //
-        List<String> savedQuotes = List.of("Test1", "Test2", "Test3"); // TODO access database and store in list
+        int userId = UserSession.getUserId();
+
+        String query = "SELECT savedQuote FROM savedQuotes WHERE id = ?";
+        List<String> savedQuotes = new ArrayList<>();
+
+        Connection connection = SQLiteConnection.getInstance();
+
+        try(PreparedStatement ps = connection.prepareStatement(query)) {
+
+            ps.setInt(1, userId);
+            ResultSet rs = ps.executeQuery();
+            while (rs.next()) {
+                savedQuotes.add(rs.getString("savedQuote"));
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         // Clear existing items
         quotesListView.getItems().clear();
-
-        // Add all saved quotes to the ListView
-        quotesListView.getItems().addAll(savedQuotes);
-
         // If no quotes saved display a message
         if (savedQuotes.isEmpty()) {
             quotesListView.getItems().add("No saved quotes yet. Save some from your study sessions!");
+        } else {
+            quotesListView.getItems().addAll(savedQuotes);
         }
     }
 

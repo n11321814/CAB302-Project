@@ -16,6 +16,7 @@ public class UserDAODatabase implements UserDAO {
         connection = SQLiteConnection.getInstance();
         createUserTable();
         createStudyHabitsTable();
+        createSavedQuotesTable();
     }
 
     // Creates the user table if it doesn't already exist, stores username and password
@@ -44,6 +45,21 @@ public class UserDAODatabase implements UserDAO {
                     "hoursOfStudy INTEGER," +
                     "studyStreak INTEGER," +
                     "expertiseLevel TEXT," +
+                    "FOREIGN KEY(id) REFERENCES users(id)" +
+                    ")";
+            stmt.execute(sql);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void createSavedQuotesTable() {
+        try {
+            Statement stmt = connection.createStatement();
+            String sql = "CREATE TABLE IF NOT EXISTS savedQuotes (" +
+                    "id INTEGER," +
+                    "savedQuote TEXT NOT NULL," +
+                    "PRIMARY KEY(id, savedQuote)," +
                     "FOREIGN KEY(id) REFERENCES users(id)" +
                     ")";
             stmt.execute(sql);

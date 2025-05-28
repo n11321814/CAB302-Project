@@ -35,6 +35,8 @@ public class AccountSettingsController {
     private ComboBox<String> expertiseComboBox;
     @FXML
     private Label statusLabel;
+    @FXML
+    private Label backToHome;
 
     private int userId;
 
@@ -152,6 +154,17 @@ public class AccountSettingsController {
         } catch (SQLException e) {
             statusLabel.setText("Failed to save changes");
             statusLabel.setStyle("-fx-text-fill: red;");
+            e.printStackTrace();
+        }
+    }
+
+    public void goToHomepage() {
+        try {
+            Stage stage = (Stage) backToHome.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
+            stage.setScene(scene);
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
