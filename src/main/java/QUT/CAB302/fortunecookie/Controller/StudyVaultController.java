@@ -105,7 +105,6 @@ public class StudyVaultController implements BackNavigable {
 
     /**
      * Handles the back navigation action by redirecting the user to the homepage.
-     * This method fulfills the {@code BackNavigable} interface contract.
      */
     @Override
     public void goBack() {

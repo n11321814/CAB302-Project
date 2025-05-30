@@ -357,9 +357,6 @@ public class StudyModeController implements BackNavigable {
     /**
      * Sends a prompt to the AI model with context about the user's subject, mood, and duration,
      * and displays the response in the AI response text area.
-     * <p>
-     * The request is sent to a local server running on port 11434.
-     * </p>
      */
     @FXML
     public void handleAskAI() {
@@ -369,7 +366,8 @@ public class StudyModeController implements BackNavigable {
         String mood = moodComboBox.getValue();
 
         String model = "llama3.2:1b";
-        String prompt = "I would like to study " + subject + " for " + duration + " minutes and I am in a " + mood + " mood. Given this context, what study advice can you give me?";
+        String prompt1 = "I would like to study " + subject + " for " + duration + " minutes and I am in a " + mood + " mood. Given this context, what study advice can you give me?";
+        String prompt2 = "I would like to study " + subject + " for " + duration + " minutes and I am in a " + mood + " mood. Given this context, what study advice can you give me?";
 
         Runnable task = () -> {
             try {
@@ -383,7 +381,7 @@ public class StudyModeController implements BackNavigable {
                 // Create request JSON
                 JSONObject requestJson = new JSONObject();
                 requestJson.put("model", model);
-                requestJson.put("prompt", prompt);
+                requestJson.put("prompt", prompt1);
                 requestJson.put("stream", false);
 
                 // Send request

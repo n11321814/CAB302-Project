@@ -60,9 +60,6 @@ public class AccountSettingsController {
      * and the study hours and expertise level from the `studyHabits` table,
      * then populates the corresponding UI fields.
      * </p>
-     *
-     * @implNote This method uses a shared SQLite connection and assumes `userId` has been set.
-     *           It handles both profile data and study habit preferences.
      */
     private void loadUserData() {
         try {
