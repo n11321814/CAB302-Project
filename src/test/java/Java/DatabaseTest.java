@@ -6,6 +6,7 @@ import org.junit.jupiter.api.*;
 import java.sql.*;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 /**
  * Unit test class for verifying basic database connectivity using {@link SQLiteConnection}.
@@ -21,6 +22,6 @@ public class DatabaseTest {
     @Test
     public void testConnection() {
         Connection conn = SQLiteConnection.getInstance();
-        assertEquals(true, conn != null);
+        assertTrue(conn != null);
     }
 }

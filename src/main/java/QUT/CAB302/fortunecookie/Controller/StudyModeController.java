@@ -26,8 +26,6 @@ import java.net.URL;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
-import java.util.Arrays;
-import java.util.List;
 import java.util.function.Consumer;
 
 /**
@@ -100,11 +98,9 @@ public class StudyModeController implements BackNavigable {
      * Validates mood, subject, and duration input, initializes timers,
      * and begins cycling motivational quotes.
      * </p>
-     *
-     * @param event the mouse event triggering the session control
      */
     @FXML
-    private void startStudySession(MouseEvent event) {
+    private void startStudySession() {
         if (isSessionActive && !isPaused) {
             timer.pause();
             isPaused = true;
@@ -264,11 +260,9 @@ public class StudyModeController implements BackNavigable {
     /**
      * Saves the currently displayed motivational quote to the database for the logged-in user.
      * Prevents duplicate entries using {@code INSERT OR IGNORE}.
-     *
-     * @param event the mouse event triggering the save action
      */
     @FXML
-    private void saveQuote(MouseEvent event) {
+    private void saveQuote() {
         // Get the current quote from the label
         String currentQuote = quoteLabel.getText();
         int userId = UserSession.getUserId();

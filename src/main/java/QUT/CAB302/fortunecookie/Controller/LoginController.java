@@ -30,16 +30,12 @@ public class LoginController {
     @FXML
     private PasswordField passwordField;
     @FXML
-    private TextField phoneField;
-    @FXML
-    private TextField emailField;
-    @FXML
     private Button toRegister;
     @FXML
     private Button toHomepage;
 
     // Access to the database
-    private UserDAO userDAO = UserDAOInstance.getInstance();
+    private final UserDAO userDAO = UserDAOInstance.getInstance();
 
     /**
      * Handles the login process for a user.

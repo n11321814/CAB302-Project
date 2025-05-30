@@ -39,7 +39,7 @@ public class RegistrationController {
     private Button toLogin;
 
     // Access to the database
-    private UserDAO userDAO = UserDAOInstance.getInstance();
+    private final UserDAO userDAO = UserDAOInstance.getInstance();
 
     /**
      * Handles the registration process for a new user.

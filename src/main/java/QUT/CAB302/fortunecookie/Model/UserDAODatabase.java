@@ -12,9 +12,7 @@ import org.mindrot.jbcrypt.BCrypt;
  */
 public class UserDAODatabase implements UserDAO {
 
-    private static final String DB_URL = "jdbc:sqlite:";
-
-    private Connection connection;
+    private final Connection connection;
 
     /**
      * Initializes the database connection and ensures required tables are created.

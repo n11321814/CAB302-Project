@@ -8,7 +8,7 @@ package QUT.CAB302.fortunecookie.Model;
  */
 public class UserDAOInstance {
 
-    private static UserDAO instance = new UserDAODatabase();
+    private static final UserDAO instance = new UserDAODatabase();
 
     /**
      * Returns the shared instance of {@code UserDAO}.
