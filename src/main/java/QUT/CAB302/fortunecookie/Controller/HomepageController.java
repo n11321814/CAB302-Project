@@ -14,18 +14,15 @@ import javafx.stage.Stage;
 import javafx.animation.ScaleTransition;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
-import javafx.scene.Node;
 import java.io.IOException;
 import java.util.Random;
 
 public class HomepageController {
 
-
     @FXML private Label streakLabel;
     @FXML private Label quoteLabel;
     @FXML private Label toLogin;
 
-    @FXML private Button cookieButton;
     @FXML private Button toStudyMode;
     @FXML private Button toStudyVault;
     @FXML private Label toSettings;
@@ -69,14 +66,14 @@ public class HomepageController {
         }
     }
 
-    @FXML public void goToLogin(MouseEvent event) throws IOException {
+    @FXML public void goToLogin() throws IOException {
         Stage stage = (Stage) toLogin.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
         stage.setScene(scene);
     }
 
-    @FXML private void goToStudyMode(MouseEvent event) {
+    @FXML private void goToStudyMode() {
         try {
             Stage stage = (Stage) toStudyMode.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("StudyMode.fxml"));
@@ -87,7 +84,7 @@ public class HomepageController {
         }
     }
 
-    @FXML private void goToStudyVault(MouseEvent event) {
+    @FXML private void goToStudyVault() {
         try {
             Stage stage = (Stage) toStudyVault.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("StudyVault.fxml"));
@@ -103,7 +100,7 @@ public class HomepageController {
         }
     }
 
-    @FXML private void goToSettings(MouseEvent event) {
+    @FXML private void goToSettings() {
         try {
             Stage stage = (Stage) toSettings.getScene().getWindow();
             FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Settings.fxml"));
