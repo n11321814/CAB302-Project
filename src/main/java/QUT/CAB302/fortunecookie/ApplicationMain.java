@@ -7,13 +7,28 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 import java.io.IOException;
 
-// Main class and entrypoint for the application
+/**
+ * Main entry point for the Quote Me JavaFX application.
+ * <p>
+ * Initializes the primary stage with a login screen and sets default
+ * dimensions to emulate a mobile phone layout.
+ * </p>
+ */
 public class ApplicationMain extends Application {
-    // Phone-style default size
     public static final String TITLE  = "Quote Me";
     public static final int    WIDTH  = 360;
     public static final int    HEIGHT = 640;
 
+    /**
+     * Starts the JavaFX application by setting up the primary stage.
+     * <p>
+     * Loads the initial login screen from FXML, sets up the scene with
+     * fixed mobile dimensions, and enforces a minimum window size.
+     * </p>
+     *
+     * @param stage the primary application window
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @Override
     public void start(Stage stage) throws IOException {
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Login.fxml"));
@@ -29,10 +44,13 @@ public class ApplicationMain extends Application {
         stage.setMinWidth(WIDTH);
         stage.setMinHeight(HEIGHT);
 
-       
+
         stage.show();
     }
 
+    /**
+     * Launches the application.
+     */
     public static void main(String[] args) {
         launch();
     }

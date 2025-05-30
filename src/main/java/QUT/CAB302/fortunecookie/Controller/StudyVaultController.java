@@ -19,6 +19,13 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for the Study Vault view.
+ * <p>
+ * Displays saved motivational quotes for the logged-in user.
+ * Implements {@code BackNavigable} to support consistent back navigation.
+ * </p>
+ */
 public class StudyVaultController implements BackNavigable {
 
     @FXML
@@ -28,7 +35,10 @@ public class StudyVaultController implements BackNavigable {
     private ListView<String> quotesListView;
 
     /**
-     * Initializes the study vault by loading saved quotes
+     * Initializes the Study Vault view.
+     * <p>
+     * Loads the user's saved quotes and sets the back button behavior.
+     * </p>
      */
     @FXML
     public void initialize() {
@@ -39,8 +49,12 @@ public class StudyVaultController implements BackNavigable {
     }
 
     /**
-     * Loads saved quotes from specific user in database and stores then in a string list
-      */
+     * Loads all saved quotes for the currently logged-in user from the database
+     * and populates them into the {@code quotesListView}.
+     * <p>
+     * If no quotes are saved, a placeholder message is shown instead.
+     * </p>
+     */
     private void loadSavedQuotes() {
         int userId = UserSession.getUserId();
 
@@ -72,7 +86,10 @@ public class StudyVaultController implements BackNavigable {
 
 
     /**
-     * Implementation of back to homepage button
+     * Navigates the user back to the homepage.
+     * <p>
+     * Triggered by the "Back to Home" button.
+     * </p>
      */
     @FXML
     public void goToHomepage() {
@@ -86,6 +103,10 @@ public class StudyVaultController implements BackNavigable {
         }
     }
 
+    /**
+     * Handles the back navigation action by redirecting the user to the homepage.
+     * This method fulfills the {@code BackNavigable} interface contract.
+     */
     @Override
     public void goBack() {
         goToHomepage();

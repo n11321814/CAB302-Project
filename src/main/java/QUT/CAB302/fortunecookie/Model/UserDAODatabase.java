@@ -3,15 +3,22 @@ package QUT.CAB302.fortunecookie.Model;
 import java.sql.*;
 import org.mindrot.jbcrypt.BCrypt;
 
-// Implementation of the UserDAO interface using SQLite
+/**
+ * Implementation of {@link UserDAO} that interacts with a SQLite database.
+ * <p>
+ * Handles user registration, authentication, and related table creation including
+ * user credentials, study habits, and saved quotes.
+ * </p>
+ */
 public class UserDAODatabase implements UserDAO {
 
-    // Database file path
     private static final String DB_URL = "jdbc:sqlite:";
 
     private Connection connection;
 
-    // Constructor for the user table
+    /**
+     * Initializes the database connection and ensures required tables are created.
+     */
     public UserDAODatabase() {
         connection = SQLiteConnection.getInstance();
         createUserTable();
@@ -19,7 +26,13 @@ public class UserDAODatabase implements UserDAO {
         createSavedQuotesTable();
     }
 
-    // Creates the user table if it doesn't already exist, stores username and password
+    /**
+     * Creates the {@code users} table if it does not already exist.
+     * <p>
+     * Stores user credentials and contact details. Enforces a constraint
+     * requiring at least one contact method (email or phone).
+     * </p>
+     */
     private void createUserTable() {
         try {
             Statement stmt = connection.createStatement();
@@ -37,6 +50,13 @@ public class UserDAODatabase implements UserDAO {
         }
     }
 
+    /**
+     * Creates the {@code studyHabits} table if it does not already exist.
+     * <p>
+     * Stores hours of study, study streaks, and expertise level for each user.
+     * Linked to the {@code users} table via a foreign key.
+     * </p>
+     */
     private void createStudyHabitsTable() {
         try {
             Statement stmt = connection.createStatement();
@@ -53,6 +73,13 @@ public class UserDAODatabase implements UserDAO {
         }
     }
 
+    /**
+     * Creates the {@code savedQuotes} table if it does not already exist.
+     * <p>
+     * Stores user-saved motivational quotes, using a composite primary key
+     * to prevent duplicate quote entries per user.
+     * </p>
+     */
     private void createSavedQuotesTable() {
         try {
             Statement stmt = connection.createStatement();
@@ -68,7 +95,21 @@ public class UserDAODatabase implements UserDAO {
         }
     }
 
-    // Registers a user by inserting their credentials into the database
+    /**
+     * Registers a new user and stores their study habits in the database.
+     * <p>
+     * Performs the operation as a transaction to ensure consistency between
+     * {@code users} and {@code studyHabits} tables.
+     * </p>
+     *
+     * @param username the new user's username
+     * @param password the new user's plain text password (will be hashed)
+     * @param email the user's email address
+     * @param phone the user's phone number
+     * @param hoursOfStudy average hours studied per week
+     * @param expertiseLevel the user's self-reported expertise level
+     * @return {@code true} if registration succeeds, {@code false} otherwise
+     */
     @Override
     public boolean registerUser(String username, String password, String email, String phone, String hoursOfStudy, String expertiseLevel) {
 
@@ -121,7 +162,13 @@ public class UserDAODatabase implements UserDAO {
         }
     }
 
-    // Authenticates users logging in against the database
+    /**
+     * Authenticates a user by comparing the provided password to the stored hashed password.
+     *
+     * @param username the user's username
+     * @param password the user's plain text password to verify
+     * @return a {@code User} object if authentication is successful; {@code null} otherwise
+     */
     @Override
     public User loginUser(String username, String password) {
         String sql = "SELECT * FROM users WHERE username = ?";

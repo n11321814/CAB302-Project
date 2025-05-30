@@ -14,9 +14,14 @@ import javafx.stage.Stage;
 import javafx.animation.ScaleTransition;
 import javafx.animation.FadeTransition;
 import javafx.util.Duration;
+
 import java.io.IOException;
 import java.util.Random;
 
+/**
+ * Controller for the Homepage view.
+ * Handles navigation, UI animations, and user session display.
+ */
 public class HomepageController {
 
     private Button cookieButton;
@@ -28,6 +33,13 @@ public class HomepageController {
     @FXML private Button toStudyVault;
     @FXML private Label toSettings;
 
+    /**
+     * Initializes the homepage by setting default values for UI components.
+     * <p>
+     * Displays the user's current study streak and a motivational quote.
+     * Called automatically by JavaFX after the FXML components are loaded.
+     * </p>
+     */
     @FXML public void initialize() {
         if (streakLabel != null) {
             streakLabel.setText("Study streak: 🔥 0");
@@ -37,6 +49,15 @@ public class HomepageController {
         }
     }
 
+    /**
+     * Handles a double click event on the cookie button.
+     * <p>
+     * Triggers a scale and fade animation, then displays a random fortune message
+     * in an alert dialog to provide a fun, interactive user experience.
+     * </p>
+     *
+     * @param event the mouse event triggering the action (must be a double click)
+     */
     @FXML private void onCookieClick(MouseEvent event) {
         if (event.getClickCount() == 2) {
             ScaleTransition scale = new ScaleTransition(Duration.millis(200), cookieButton);
@@ -67,6 +88,14 @@ public class HomepageController {
         }
     }
 
+    /**
+     * Navigates the user to the login screen.
+     * <p>
+     * Loads the Login.fxml layout and replaces the current scene with it.
+     * </p>
+     *
+     * @throws IOException if the FXML file cannot be loaded
+     */
     @FXML public void goToLogin() throws IOException {
         Stage stage = (Stage) toLogin.getScene().getWindow();
         FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Login.fxml"));
@@ -74,6 +103,13 @@ public class HomepageController {
         stage.setScene(scene);
     }
 
+    /**
+     * Navigates the user to the Study Mode screen.
+     * <p>
+     * Loads the StudyMode.fxml layout and sets it as the current scene.
+     * Triggered by the Study Mode button.
+     * </p>
+     */
     @FXML private void goToStudyMode() {
         try {
             Stage stage = (Stage) toStudyMode.getScene().getWindow();
@@ -85,6 +121,13 @@ public class HomepageController {
         }
     }
 
+    /**
+     * Navigates the user to the Study Vault screen.
+     * <p>
+     * Loads the StudyVault.fxml layout and sets it as the current scene.
+     * If loading fails, an error alert is displayed to the user.
+     * </p>
+     */
     @FXML private void goToStudyVault() {
         try {
             Stage stage = (Stage) toStudyVault.getScene().getWindow();
@@ -101,6 +144,14 @@ public class HomepageController {
         }
     }
 
+    /**
+     * Navigates the user to the Account Settings screen.
+     * <p>
+     * Loads the Settings.fxml layout, retrieves the associated controller,
+     * and initializes it with the current user's ID from the session.
+     * If the FXML fails to load, an error alert is shown.
+     * </p>
+     */
     @FXML private void goToSettings() {
         try {
             Stage stage = (Stage) toSettings.getScene().getWindow();
