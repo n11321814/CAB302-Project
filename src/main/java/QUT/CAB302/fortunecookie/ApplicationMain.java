@@ -16,8 +16,8 @@ import java.io.IOException;
  */
 public class ApplicationMain extends Application {
     public static final String TITLE  = "Quote Me";
-    public static final int    WIDTH  = 360;
-    public static final int    HEIGHT = 640;
+    public static final int    WIDTH  = 600;
+    public static final int    HEIGHT = 680;
 
     /**
      * Starts the JavaFX application by setting up the primary stage.
