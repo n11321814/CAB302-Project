@@ -1,5 +1,10 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.fortunecookie.Controller;
 
+import QUT.CAB302.fortunecookie.*;
+import QUT.CAB302.fortunecookie.Model.BackButtonHandler;
+import QUT.CAB302.fortunecookie.Model.BackNavigable;
+import QUT.CAB302.fortunecookie.Model.SQLiteConnection;
+import QUT.CAB302.fortunecookie.Model.UserSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -14,28 +19,42 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * Controller for the Study Vault view.
+ * <p>
+ * Displays saved motivational quotes for the logged-in user.
+ * Implements {@code BackNavigable} to support consistent back navigation.
+ * </p>
+ */
 public class StudyVaultController implements BackNavigable {
 
     @FXML
-    private Button backToHome;  // Changed from Label to Button for better UX
+    private Button toHome;  // Changed from Label to Button for better UX
 
     @FXML
     private ListView<String> quotesListView;
 
     /**
-     * Initializes the study vault by loading saved quotes
+     * Initializes the Study Vault view.
+     * <p>
+     * Loads the user's saved quotes and sets the back button behavior.
+     * </p>
      */
     @FXML
     public void initialize() {
         loadSavedQuotes();
 
         // Set back button action via BackButtonHandler (assumed helper)
-        BackButtonHandler.setBackAction(backToHome, this);
+        BackButtonHandler.setBackAction(toHome, this);
     }
 
     /**
-     * Loads saved quotes from specific user in database and stores then in a string list
-      */
+     * Loads all saved quotes for the currently logged-in user from the database
+     * and populates them into the {@code quotesListView}.
+     * <p>
+     * If no quotes are saved, a placeholder message is shown instead.
+     * </p>
+     */
     private void loadSavedQuotes() {
         int userId = UserSession.getUserId();
 
@@ -67,13 +86,16 @@ public class StudyVaultController implements BackNavigable {
 
 
     /**
-     * Implementation of back to homepage button
+     * Navigates the user back to the homepage.
+     * <p>
+     * Triggered by the "Back to Home" button.
+     * </p>
      */
     @FXML
     public void goToHomepage() {
         try {
-            Stage stage = (Stage) backToHome.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+            Stage stage = (Stage) toHome.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Homepage.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {
@@ -81,6 +103,9 @@ public class StudyVaultController implements BackNavigable {
         }
     }
 
+    /**
+     * Handles the back navigation action by redirecting the user to the homepage.
+     */
     @Override
     public void goBack() {
         goToHomepage();

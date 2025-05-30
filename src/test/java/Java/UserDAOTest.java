@@ -1,16 +1,27 @@
 package Java;
 
-import QUT.CAB302.fortunecookie.User;
-import QUT.CAB302.fortunecookie.UserDAO;
-import QUT.CAB302.fortunecookie.UserDAODatabase;
+import QUT.CAB302.fortunecookie.Model.SQLiteConnection;
+import QUT.CAB302.fortunecookie.Model.User;
+import QUT.CAB302.fortunecookie.Model.UserDAO;
+import QUT.CAB302.fortunecookie.Model.UserDAODatabase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-// Class containing unit tests for the login and registration logic
+/**
+ * Unit tests for the {@link UserDAO} interface and its {@link UserDAODatabase} implementation.
+ * <p>
+ * These tests verify the correctness of user registration and login logic,
+ * including edge cases such as duplicate usernames, incorrect credentials,
+ * and handling of empty input fields.
+ * </p>
+ */
 public class UserDAOTest {
 
     // Mock user data for testing
@@ -20,8 +31,8 @@ public class UserDAOTest {
     private static final String password2 = "TestPassword2";
     private static final String email1 = "test@email.com";
     private static final String phone1 = "0486726574";
-    private static final String hours1 = "jdvksh";
-    private static final String expertise1 = "fafe";
+    private static final String hours1 = "1-5";
+    private static final String expertise1 = "Beginner";
 
 
 
@@ -29,13 +40,31 @@ public class UserDAOTest {
     // DAO instance under testing
     private UserDAO userDAO;
 
-    // Initialises a fresh instance of the database before each test
+    /**
+     * Sets up the database connection and clears tables before each test.
+     * Ensures a clean state to avoid interference between tests.
+     */
     @BeforeEach
     public void setUp() {
         userDAO = new UserDAODatabase(); // Tests against Mock Database as opposed to UserDAODatabase (SQL)
+
+        try {
+            Connection conn = SQLiteConnection.getInstance();
+            Statement stmt = conn.createStatement();
+
+            // Clear dependent tables first due to foreign key constraints
+            stmt.executeUpdate("DELETE FROM savedQuotes");
+            stmt.executeUpdate("DELETE FROM studyHabits");
+            stmt.executeUpdate("DELETE FROM users");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
-    // Tests a user can successfully be registered
+    /**
+     * Tests that a user can be successfully registered with valid credentials.
+     * Ensures that the registerUser method returns true when data is valid.
+     */
     @Test
     public void testRegisterUser() {
         String username = generateRandomString();
@@ -43,7 +72,10 @@ public class UserDAOTest {
         assertTrue(result, "User successfully registered");
     }
 
-    // Tests that duplicate usernames cannot be created
+    /**
+     * Tests that registering a user with a duplicate username fails.
+     * Verifies that the method returns false when trying to register the same username twice.
+     */
     @Test
     public void testDuplicateUsers() {
         userDAO.registerUser(username1, password1, email1, phone1, hours1, expertise1);
@@ -51,7 +83,10 @@ public class UserDAOTest {
         assertFalse(result, "Duplicate Username should fail to register");
     }
 
-    // Tests that users can successfully log in
+    /**
+     * Tests that a registered user can successfully log in with correct credentials.
+     * Asserts the user is not null and the username matches.
+     */
     @Test
     public void testLoginUser() {
         userDAO.registerUser(username1, password1, email1, phone1, hours1, expertise1);
@@ -60,7 +95,10 @@ public class UserDAOTest {
         assertEquals(username1, user.getUsername());
     }
 
-    // Tests that logging in with incorrect password fails
+    /**
+     * Tests that logging in with a correct username but incorrect password fails.
+     * Ensures that loginUser returns null in this case.
+     */
     @Test
     public void testWrongPassword() {
         userDAO.registerUser(username1, password1, email1, phone1, hours1, expertise1);
@@ -68,20 +106,89 @@ public class UserDAOTest {
         assertNull(user, "Login with wrong password should fail");
     }
 
-    // Tests logging in with an existing user passes
+    /**
+     * Tests that login works after a user has been registered.
+     * Ensures the system can retrieve a user that exists.
+     */
     @Test
     public void testUserExists() {
+        userDAO.registerUser(username1, password1, email1, phone1, hours1, expertise1);
         User user = userDAO.loginUser(username1, password1);
-        assertNotNull(user, "Login without registering should fail");
+        assertNotNull(user, "Login after registering should pass");
     }
 
-    // Tests logging in with a non-existent user fails
+    /**
+     * Tests that login fails for a user who has not been registered.
+     * Ensures loginUser returns null when the user doesn't exist in the database.
+     */
     @Test
     public void testUserNotExists() {
         User user = userDAO.loginUser("dsahdhj", "asDasasda");
         assertNull(user, "Login without registering should fail");
     }
 
+    /**
+     * Tests that the system does not allow registration with empty input fields.
+     * Ensures that registerUser returns false when provided with blank strings.
+     */
+    @Test
+    public void testRegisterUserWithEmptyFields() {
+        boolean result = userDAO.registerUser("", "", "", "", "", "");
+        assertFalse(result, "User should not be registered with empty fields");
+    }
+
+    /**
+     * Tests that duplicate users cannot be registered, even if the details are the same.
+     * Ensures registerUser returns false when attempting duplicate registration.
+     */
+    @Test
+    public void testRegisterDuplicateUser() {
+        userDAO.registerUser(username1, password1, email1, phone1, hours1, expertise1);
+        boolean result = userDAO.registerUser(username1, password1, email1, phone1, hours1, expertise1);
+        assertFalse(result, "Duplicate user should not be registered");
+    }
+
+    /**
+     * Tests that login fails when the correct username is used but the password is incorrect.
+     * Ensures loginUser returns null on invalid password.
+     */
+    @Test
+    public void testLoginWithIncorrectPassword() {
+        userDAO.registerUser(username2, password2, email1, phone1, hours1, expertise1);
+        User user = userDAO.loginUser(username2, "WrongPassword");
+        assertNull(user, "Login should fail with incorrect password");
+    }
+
+    /**
+     * Tests that login fails when using credentials for a user that does not exist.
+     * Ensures loginUser returns null when the username is not in the database.
+     */
+    @Test
+    public void testLoginWithNonExistentUser() {
+        User user = userDAO.loginUser("ghostuser", "ghostpass");
+        assertNull(user, "Login should fail for non-existent user");
+    }
+
+    /**
+     * Tests that a user can log in immediately after successful registration.
+     * Ensures both registration and login succeed and the username matches.
+     */
+    @Test
+    public void testLoginAfterSuccessfulRegistration() {
+        boolean success = userDAO.registerUser(username2, password2, email1, phone1, hours1, expertise1);
+        assertTrue(success, "Registration should succeed");
+
+        User user = userDAO.loginUser(username2, password2);
+        assertNotNull(user, "User should be able to login after registration");
+        assertEquals(username2, user.getUsername(), "Username should match");
+    }
+
+    /**
+     * Utility method to generate a random alphanumeric string.
+     * Used to ensure unique usernames during test registration.
+     *
+     * @return a randomly generated 7-character string
+     */
     public static String generateRandomString() {
         String characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
         long seed = System.currentTimeMillis(); // Using system time as seed

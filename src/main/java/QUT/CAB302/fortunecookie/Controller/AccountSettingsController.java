@@ -1,21 +1,24 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.fortunecookie.Controller;
 
+import QUT.CAB302.fortunecookie.ApplicationMain;
+import QUT.CAB302.fortunecookie.Model.SQLiteConnection;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import org.mindrot.jbcrypt.BCrypt;
 
-import javax.xml.transform.Result;
 import java.io.IOException;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * Controller class for managing user account settings.
+ * Handles user profile updates, password changes, and page navigation.
+ */
 public class AccountSettingsController {
     @FXML
     private Label usernameLabel;
@@ -40,11 +43,24 @@ public class AccountSettingsController {
 
     private int userId;
 
+    /**
+     * Initializes the account settings page with data for the specified user.
+     *
+     * @param userID the ID of the logged-in user
+     */
     public void initialiseUser(int userID) {
         this.userId = userID;
         loadUserData();
     }
 
+    /**
+     * Loads the user's account and study habit data from the database.
+     * <p>
+     * Retrieves the username, email, and phone number from the `users` table,
+     * and the study hours and expertise level from the `studyHabits` table,
+     * then populates the corresponding UI fields.
+     * </p>
+     */
     private void loadUserData() {
         try {
             Connection conn = SQLiteConnection.getInstance();
@@ -79,6 +95,23 @@ public class AccountSettingsController {
         }
     }
 
+    /**
+     * Handles saving the user's updated account and study habit information.
+     * <p>
+     * This method updates the user's email and phone number in the `users` table,
+     * their study preferences in the `studyHabits` table, and optionally changes
+     * the user's password if the password fields are filled and validated.
+     * </p>
+     *
+     * <ul>
+     *   <li>Validates that all password fields are filled if any are used.</li>
+     *   <li>Ensures new password and confirmation match.</li>
+     *   <li>Verifies the current password against the hashed password in the database.</li>
+     * </ul>
+     *
+     * On success, updates are saved to the database and a success message is displayed.
+     * On failure, appropriate error messages are shown in the status label.
+     */
     @FXML
     private void handleSaveChanges() {
         try {
@@ -157,11 +190,20 @@ public class AccountSettingsController {
             e.printStackTrace();
         }
     }
+    /**
+     * Navigates the user back to the homepage scene.
+     * <p>
+     * Loads the Homepage FXML layout and sets it as the current scene in the stage.
+     * Triggered by the "Back to Home" button.
+     * </p>
+     *
+     * IOException if the FXML file cannot be loaded
+     */
     @FXML
     private void goToHomepage() {
         try {
             Stage stage = (Stage) backToHome.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Homepage.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {

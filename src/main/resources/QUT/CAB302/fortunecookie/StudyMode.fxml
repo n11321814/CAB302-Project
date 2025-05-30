@@ -2,11 +2,9 @@
 
 <?import java.lang.String?>
 <?import javafx.collections.FXCollections?>
-<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Separator?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.BorderPane?>
@@ -19,7 +17,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="QUT.CAB302.fortunecookie.StudyModeController"
+            fx:controller="QUT.CAB302.fortunecookie.Controller.StudyModeController"
             style="-fx-background-color: #FFF9F2;">
 
     <!-- Top bar: Study Mode header with Back and LOG OUT -->
@@ -30,7 +28,7 @@
             <Button fx:id="backToHome"
                     text="← Back"
                     onAction="#goBack"
-                    style="-fx-font-size: 14px; -fx-background-color: transparent; -fx-text-fill: #5A3E1B;"/>
+                    style="-fx-font-size: 14px; -fx-background-color: transparent; -fx-text-fill: #5A3E1B; -fx-cursor: hand;"/>
             <Region HBox.hgrow="ALWAYS"/>
             <Label text="LOG OUT"
                    fx:id="toLogin"
@@ -106,7 +104,7 @@
             <!-- Right: Study Progress panel -->
             <StackPane GridPane.columnIndex="1"
                        style="-fx-background-color: white; -fx-border-color: #D3E5F0; -fx-border-radius: 8; -fx-background-radius: 8; -fx-padding: 20;">
-                <VBox spacing="15" alignment="TOP_LEFT">
+                <VBox spacing="15">
                     <Label text="Study Progress"
                            wrapText="true"
                            style="-fx-font-size: 18px; -fx-font-weight: bold;"/>

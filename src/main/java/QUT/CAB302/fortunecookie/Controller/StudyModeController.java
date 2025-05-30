@@ -1,5 +1,10 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.fortunecookie.Controller;
 
+import QUT.CAB302.fortunecookie.*;
+import QUT.CAB302.fortunecookie.Model.BackButtonHandler;
+import QUT.CAB302.fortunecookie.Model.BackNavigable;
+import QUT.CAB302.fortunecookie.Model.SQLiteConnection;
+import QUT.CAB302.fortunecookie.Model.UserSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -24,6 +29,14 @@ import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
 
+/**
+ * Controller for the Study Mode view.
+ * <p>
+ * Manages the user’s study session workflow including the timer, motivational quotes,
+ * mood selection, AI study advice, and database interactions for quote saving.
+ * Implements {@code BackNavigable} to support back navigation.
+ * </p>
+ */
 public class StudyModeController implements BackNavigable {
 
     @FXML
@@ -71,6 +84,13 @@ public class StudyModeController implements BackNavigable {
     private List<String> quotes;
     private int quoteIndex = 0;
 
+    /**
+     * Initializes the Study Mode view.
+     * <p>
+     * Sets default UI values, populates mood options, prepares quote cycling,
+     * and assigns the back button behavior.
+     * </p>
+     */
     @FXML
     public void initialize() {
         if (streakLabel != null) {
@@ -97,6 +117,15 @@ public class StudyModeController implements BackNavigable {
         BackButtonHandler.setBackAction(backToHome, this);
     }
 
+    /**
+     * Starts, pauses, or resumes the study session based on current state.
+     * <p>
+     * Validates mood, subject, and duration input, initializes timers,
+     * and begins cycling motivational quotes.
+     * </p>
+     *
+     * @param event the mouse event triggering the session control
+     */
     @FXML
     private void startStudySession(MouseEvent event) {
         if (isSessionActive && !isPaused) {
@@ -156,13 +185,18 @@ public class StudyModeController implements BackNavigable {
     }
 
     /**
-     * Update the quote every 15 seconds.
+     * Updates the motivational quote shown in the label.
+     * Called every 15 seconds during an active session.
      */
     private void updateQuote() {
         quoteIndex = (quoteIndex + 1) % quotes.size();
         quoteLabel.setText(quotes.get(quoteIndex));
     }
 
+    /**
+     * Decrements the session timer and updates the display.
+     * If time reaches zero, stops the session and prompts the user.
+     */
     private void updateTimer() {
         if (totalTimeInSeconds > 0) {
             totalTimeInSeconds--;
@@ -178,11 +212,19 @@ public class StudyModeController implements BackNavigable {
         }
     }
 
+    /**
+     * Updates the timer label with the current time remaining in MM:SS format.
+     */
     private void updateTimerDisplay() {
         String time = String.format("%02d:%02d", minutes, seconds);
         timerLabel.setText(time);
     }
 
+    /**
+     * Displays an error alert with the given message.
+     *
+     * @param message the error message to display
+     */
     private void showError(String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle("Input Error");
@@ -191,6 +233,10 @@ public class StudyModeController implements BackNavigable {
         alert.showAndWait();
     }
 
+    /**
+     * Displays a popup when the session ends, giving the user the option to start a new session or return home.
+     * Runs on the JavaFX Application Thread using {@code Platform.runLater}.
+     */
     private void showSessionEndPopup() {
         Platform.runLater(() -> {
             Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
@@ -218,21 +264,13 @@ public class StudyModeController implements BackNavigable {
         });
     }
 
+    /**
+     * Navigates the user back to the homepage.
+     */
     public void goToHomepage() {
         try {
             Stage stage = (Stage) backToHome.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("homepage.fxml"));
-            Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
-            stage.setScene(scene);
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-    @FXML
-    public void goToLogin() {
-        try {
-            Stage stage = (Stage) timerLabel.getScene().getWindow(); // any node that exists on the scene
-            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Homepage.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {
@@ -240,6 +278,31 @@ public class StudyModeController implements BackNavigable {
         }
     }
 
+    /**
+     * Navigates the user to the login screen.
+     * Useful for switching users or logging out.
+     */
+    @FXML
+    public void goToLogin() {
+        try {
+            Stage stage = (Stage) timerLabel.getScene().getWindow(); // any node that exists on the scene
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Login.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
+            stage.setScene(scene);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    /**
+     * Simulates saving a completed study session to the database.
+     * <p>
+     * Currently logs to the console. Replace with database interaction logic.
+     * </p>
+     *
+     * @param subject the subject studied
+     * @param durationInSeconds the duration of the session in seconds
+     */
     private void saveStudySessionToDatabase(String subject, int durationInSeconds) {
         int durationInMinutes = durationInSeconds / 60;
         System.out.println("Saving session to database...");
@@ -248,6 +311,12 @@ public class StudyModeController implements BackNavigable {
         // TODO: Replace this with actual DB logic
     }
 
+    /**
+     * Saves the currently displayed motivational quote to the database for the logged-in user.
+     * Prevents duplicate entries using {@code INSERT OR IGNORE}.
+     *
+     * @param event the mouse event triggering the save action
+     */
     @FXML
     private void saveQuote(MouseEvent event) {
         // Get the current quote from the label
@@ -285,6 +354,10 @@ public class StudyModeController implements BackNavigable {
         }
     }
 
+    /**
+     * Sends a prompt to the AI model with context about the user's subject, mood, and duration,
+     * and displays the response in the AI response text area.
+     */
     @FXML
     public void handleAskAI() {
 
@@ -293,7 +366,8 @@ public class StudyModeController implements BackNavigable {
         String mood = moodComboBox.getValue();
 
         String model = "llama3.2:1b";
-        String prompt = "I would like to study " + subject + " for " + duration + " minutes and I am in a " + mood + " mood. Given this context, what study advice can you give me?";
+        String prompt1 = "I would like to study " + subject + " for " + duration + " minutes and I am in a " + mood + " mood. Given this context, what study advice can you give me?";
+        String prompt2 = "I would like to study " + subject + " for " + duration + " minutes and I am in a " + mood + " mood. Given this context, what study advice can you give me?";
 
         Runnable task = () -> {
             try {
@@ -307,7 +381,7 @@ public class StudyModeController implements BackNavigable {
                 // Create request JSON
                 JSONObject requestJson = new JSONObject();
                 requestJson.put("model", model);
-                requestJson.put("prompt", prompt);
+                requestJson.put("prompt", prompt1);
                 requestJson.put("stream", false);
 
                 // Send request
@@ -332,7 +406,10 @@ public class StudyModeController implements BackNavigable {
         new Thread(task).start();
     }
 
-    // Implement goBack from BackNavigable
+    /**
+     * Handles the back navigation by returning to the homepage.
+     * Part of the {@code BackNavigable} interface.
+     */
     @Override
     public void goBack() {
         goToHomepage();

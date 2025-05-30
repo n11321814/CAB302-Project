@@ -1,5 +1,8 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.fortunecookie.Controller;
 
+import QUT.CAB302.fortunecookie.ApplicationMain;
+import QUT.CAB302.fortunecookie.Model.UserDAO;
+import QUT.CAB302.fortunecookie.Model.UserDAOInstance;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -12,7 +15,13 @@ import javafx.scene.control.ComboBox;
 
 import java.io.IOException;
 
-// Controller for the registration view, handles user interaction and navigation on the registration screen
+/**
+ * Controller class for the registration view.
+ * <p>
+ * Handles user input validation, account creation, and navigation to the login screen.
+ * Communicates with the database through the UserDAO.
+ * </p>
+ */
 public class RegistrationController {
     @FXML
     private TextField usernameField;
@@ -32,7 +41,16 @@ public class RegistrationController {
     // Access to the database
     private UserDAO userDAO = UserDAOInstance.getInstance();
 
-    // Handles registration logic, determines whether username and password is valid and navigates to login page if successful
+    /**
+     * Handles the registration process for a new user.
+     * <p>
+     * Validates user input fields including username, password, contact info,
+     * and study habit selections. If validation passes and registration is
+     * successful, navigates the user to the login screen.
+     * </p>
+     *
+     * @throws IOException if navigation to the login screen fails
+     */
     @FXML
     private void handleRegister() throws IOException {
         String username = usernameField.getText();
@@ -56,16 +74,27 @@ public class RegistrationController {
         }
     }
 
-    // Handles navigation to login screen when back button is clicked
+    /**
+     * Navigates the user to the login screen.
+     * <p>
+     * Triggered when the "Back" or "Login" button is clicked after registration.
+     * </p>
+     *
+     * @throws IOException if the Login.fxml file cannot be loaded
+     */
     @FXML
     private void goToLogin() throws IOException {
         Stage stage = (Stage) toLogin.getScene().getWindow();
-        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Login.fxml"));
         Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
         stage.setScene(scene);
     }
 
-    // Utility method to show an alert with a message
+    /**
+     * Displays an informational alert dialog with the given message.
+     *
+     * @param message the message to display in the alert content
+     */
     private void showAlert(String message) {
         Alert alert = new Alert(Alert.AlertType.INFORMATION);
         alert.setTitle("Info");

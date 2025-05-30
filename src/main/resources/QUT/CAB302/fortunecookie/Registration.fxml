@@ -16,7 +16,7 @@
 
 <BorderPane xmlns="http://javafx.com/javafx/23.0.1"
             xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="QUT.CAB302.fortunecookie.RegistrationController"
+            fx:controller="QUT.CAB302.fortunecookie.Controller.RegistrationController"
             style="-fx-font-family: 'Aptos'; -fx-background-color: #FFF9F2;">
 
     <center>
