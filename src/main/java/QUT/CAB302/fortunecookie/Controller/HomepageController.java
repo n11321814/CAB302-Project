@@ -19,6 +19,7 @@ import java.util.Random;
 
 public class HomepageController {
 
+    private Button cookieButton;
     @FXML private Label streakLabel;
     @FXML private Label quoteLabel;
     @FXML private Label toLogin;
