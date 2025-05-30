@@ -1,3 +1,4 @@
 module:address.book.addressbook
 QUT.CAB302.fortunecookie
-QUT.CAB302.fortunecookie.LegacyFiles
+QUT.CAB302.fortunecookie.Controller
+QUT.CAB302.fortunecookie.Model
