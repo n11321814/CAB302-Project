@@ -44,16 +44,16 @@
                        onMouseClicked="#onCookieClick"
                        style="-fx-cursor: hand;">
                 <image>
-                    <Image url="@FUNPREDICTION.png"/>
+                    <Image url="@Prediction.png"/>
                 </image>
             </ImageView>
             <Label text="Double Tap"
                    style="-fx-font-size: 16px; -fx-text-fill: #333333;"/>
             <HBox alignment="CENTER" spacing="20">
                 <Button text="Study Mode"
-                        fx:id="startStudyButton"
+                        fx:id="toStudyMode"
                         prefWidth="150"
-                        onMouseClicked="#startStudyMode"
+                        onMouseClicked="#goToStudyMode"
                         style="
                             -fx-background-color: #FFDAB9;
                             -fx-text-fill: #333333;

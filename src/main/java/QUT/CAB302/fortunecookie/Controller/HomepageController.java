@@ -24,7 +24,7 @@ public class HomepageController {
     @FXML private Label quoteLabel;
     @FXML private Label toLogin;
     @FXML private Button cookieButton;
-    @FXML private Button startStudyButton;
+    @FXML private Button toStudyMode;
     @FXML private Button studyVaultButton;
     @FXML private Button goToSettings;
 
@@ -69,15 +69,17 @@ public class HomepageController {
 
     @FXML public void goToLogin(MouseEvent event) throws IOException {
         Stage stage = (Stage) toLogin.getScene().getWindow();
-        Parent root = FXMLLoader.load(ApplicationMain.class.getResource("Login.fxml"));
-        stage.setScene(new Scene(root, ApplicationMain.WIDTH, ApplicationMain.HEIGHT));
+        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Login.fxml"));
+        Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
+        stage.setScene(scene);
     }
 
-    @FXML private void startStudyMode(MouseEvent event) {
+    @FXML private void goToStudyMode(MouseEvent event) {
         try {
-            Stage stage = (Stage) startStudyButton.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("StudyMode.fxml"));
-            stage.setScene(new Scene(root, ApplicationMain.WIDTH, ApplicationMain.HEIGHT));
+            Stage stage = (Stage) toStudyMode.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("StudyMode.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
+            stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
         }
