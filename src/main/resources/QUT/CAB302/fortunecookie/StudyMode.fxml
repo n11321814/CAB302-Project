@@ -30,7 +30,7 @@
             <Button fx:id="backToHome"
                     text="← Back"
                     onAction="#goBack"
-                    style="-fx-font-size: 14px; -fx-background-color: transparent; -fx-text-fill: #5A3E1B;"/>
+                    style="-fx-font-size: 14px; -fx-background-color: transparent; -fx-text-fill: #5A3E1B; -fx-cursor: hand;"/>
             <Region HBox.hgrow="ALWAYS"/>
             <Label text="LOG OUT"
                    fx:id="toLogin"

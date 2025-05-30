@@ -59,7 +59,8 @@
                             -fx-text-fill: #333333;
                             -fx-font-size: 16px;
                             -fx-background-radius: 30;
-                            -fx-padding: 12 28;"/>
+                            -fx-padding: 12 28;
+                            -fx-cursor: hand;"/>
                 <Button text="Study Vault"
                         fx:id="toStudyVault"
                         prefWidth="140"
@@ -69,7 +70,8 @@
                             -fx-text-fill: #333333;
                             -fx-font-size: 16px;
                             -fx-background-radius: 30;
-                            -fx-padding: 12 28;"/>
+                            -fx-padding: 12 28;
+                            -fx-cursor: hand;"/>
             </HBox>
         </VBox>
     </center>
