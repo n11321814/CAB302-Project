@@ -1,12 +1,13 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.fortunecookie.Controller;
 
+import QUT.CAB302.fortunecookie.ApplicationMain;
+import QUT.CAB302.fortunecookie.Model.UserSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
-import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
@@ -68,14 +69,14 @@ public class HomepageController {
 
     @FXML public void goToLogin(MouseEvent event) throws IOException {
         Stage stage = (Stage) toLogin.getScene().getWindow();
-        Parent root = FXMLLoader.load(ApplicationMain.class.getResource("login.fxml"));
+        Parent root = FXMLLoader.load(ApplicationMain.class.getResource("Login.fxml"));
         stage.setScene(new Scene(root, ApplicationMain.WIDTH, ApplicationMain.HEIGHT));
     }
 
     @FXML private void startStudyMode(MouseEvent event) {
         try {
             Stage stage = (Stage) startStudyButton.getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("studymode.fxml"));
+            Parent root = FXMLLoader.load(getClass().getResource("StudyMode.fxml"));
             stage.setScene(new Scene(root, ApplicationMain.WIDTH, ApplicationMain.HEIGHT));
         } catch (IOException e) {
             e.printStackTrace();

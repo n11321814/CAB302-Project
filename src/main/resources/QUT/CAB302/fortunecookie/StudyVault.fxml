@@ -9,7 +9,7 @@
 
 <VBox xmlns="http://javafx.com/javafx/23.0.1"
       xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="QUT.CAB302.fortunecookie.StudyVaultController"
+      fx:controller="QUT.CAB302.fortunecookie.Controller.StudyVaultController"
       spacing="10"
       style="-fx-background-color: #FFF9F2;"
 >

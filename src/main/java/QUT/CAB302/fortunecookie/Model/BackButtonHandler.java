@@ -1,4 +1,4 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.fortunecookie.Model;
 
 import javafx.scene.control.Button;
 

@@ -1,5 +1,10 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.fortunecookie.Controller;
 
+import QUT.CAB302.fortunecookie.*;
+import QUT.CAB302.fortunecookie.Model.BackButtonHandler;
+import QUT.CAB302.fortunecookie.Model.BackNavigable;
+import QUT.CAB302.fortunecookie.Model.SQLiteConnection;
+import QUT.CAB302.fortunecookie.Model.UserSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -73,7 +78,7 @@ public class StudyVaultController implements BackNavigable {
     public void goToHomepage() {
         try {
             Stage stage = (Stage) backToHome.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("homepage.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Homepage.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {

@@ -16,7 +16,7 @@ public class ApplicationMain extends Application {
 
     @Override
     public void start(Stage stage) throws IOException {
-        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
+        FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Login.fxml"));
         Parent root = fxmlLoader.load();
 
         // Create scene at phone aspect ratio

@@ -1,5 +1,10 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.fortunecookie.Controller;
 
+import QUT.CAB302.fortunecookie.*;
+import QUT.CAB302.fortunecookie.Model.BackButtonHandler;
+import QUT.CAB302.fortunecookie.Model.BackNavigable;
+import QUT.CAB302.fortunecookie.Model.SQLiteConnection;
+import QUT.CAB302.fortunecookie.Model.UserSession;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -221,7 +226,7 @@ public class StudyModeController implements BackNavigable {
     public void goToHomepage() {
         try {
             Stage stage = (Stage) backToHome.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("homepage.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Homepage.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {
@@ -232,7 +237,7 @@ public class StudyModeController implements BackNavigable {
     public void goToLogin() {
         try {
             Stage stage = (Stage) timerLabel.getScene().getWindow(); // any node that exists on the scene
-            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("login.fxml"));
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Login.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {

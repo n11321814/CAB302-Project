@@ -1,4 +1,4 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.fortunecookie.Model;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;

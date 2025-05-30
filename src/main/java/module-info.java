@@ -10,8 +10,10 @@ module address.book.addressbook {
 
     opens QUT.CAB302.fortunecookie to javafx.fxml;
     exports QUT.CAB302.fortunecookie;
-    exports QUT.CAB302.fortunecookie.LegacyFiles;
-    opens QUT.CAB302.fortunecookie.LegacyFiles to javafx.fxml;
+    exports QUT.CAB302.fortunecookie.Controller;
+    opens QUT.CAB302.fortunecookie.Controller to javafx.fxml;
+    exports QUT.CAB302.fortunecookie.Model;
+    opens QUT.CAB302.fortunecookie.Model to javafx.fxml;
 
 
 }

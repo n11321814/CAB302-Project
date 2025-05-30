@@ -1,4 +1,4 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.fortunecookie.Model;
 
 // Singleton access point for the UserDAO implementation, ensures there is only one instance of the database in use
 public class UserDAOInstance {

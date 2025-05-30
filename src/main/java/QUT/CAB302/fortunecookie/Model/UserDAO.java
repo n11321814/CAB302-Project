@@ -1,4 +1,4 @@
-package QUT.CAB302.fortunecookie;
+package QUT.CAB302.fortunecookie.Model;
 
 // Database interface, defines methods for interacting with the database
 public interface UserDAO {

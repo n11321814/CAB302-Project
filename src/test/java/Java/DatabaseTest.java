@@ -1,6 +1,6 @@
 package Java;
 
-import QUT.CAB302.fortunecookie.*;
+import QUT.CAB302.fortunecookie.Model.SQLiteConnection;
 import org.junit.jupiter.api.*;
 
 import java.sql.*;
