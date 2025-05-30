@@ -43,9 +43,7 @@
                        pickOnBounds="true"
                        onMouseClicked="#onCookieClick"
                        style="-fx-cursor: hand;">
-                <image>
-                    <Image url="@Prediction.png"/>
-                </image>
+                <Image url="@Prediction.png"/>
             </ImageView>
             <Label text="Double Tap"
                    style="-fx-font-size: 16px; -fx-text-fill: #333333;"/>
