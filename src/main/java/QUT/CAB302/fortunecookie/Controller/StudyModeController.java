@@ -28,6 +28,7 @@ import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.Arrays;
 import java.util.List;
+import java.util.function.Consumer;
 
 /**
  * Controller for the Study Mode view.
@@ -41,34 +42,20 @@ public class StudyModeController implements BackNavigable {
 
     @FXML
     private Label timerLabel;
-
     @FXML
     private Button startButton;
-
     @FXML
     private TextField subjectTextField;
-
     @FXML
     private TextField durationTextField;
-
     @FXML
     private ComboBox<String> moodComboBox;
-
     @FXML
     private Label streakLabel;
-
-    @FXML
-    private Label toLogin;
-
     @FXML
     private Label quoteLabel;
-
-    @FXML
-    private Button saveQuoteButton;
-
     @FXML
     private Button backToHome;
-
     @FXML
     private TextArea aiResponse;
 
@@ -79,10 +66,8 @@ public class StudyModeController implements BackNavigable {
     private int totalTimeInSeconds = 0;
     private boolean isPaused = false;
     private boolean sessionEnded = false;
-
     private Timeline quoteTimeline;
-    private List<String> quotes;
-    private int quoteIndex = 0;
+
 
     /**
      * Initializes the Study Mode view.
@@ -97,19 +82,11 @@ public class StudyModeController implements BackNavigable {
             streakLabel.setText("Study streak: 🔥 0");
         }
 
-        if (moodComboBox != null) {
-            moodComboBox.getItems().addAll("Happy", "Stressed", "Tired", "Motivated", "Anxious");
-        }
+        //if (moodComboBox != null) {
+        //    moodComboBox.getItems().addAll("Happy", "Stressed", "Tired", "Motivated", "Anxious");
+        //}
 
-        quotes = Arrays.asList(
-                "The best way to predict the future is to create it.",
-                "Success is the sum of small efforts, repeated day in and day out.",
-                "Don’t watch the clock; do what it does. Keep going.",
-                "It always seems impossible until it’s done.",
-                "Believe in yourself and all that you are."
-        );
-
-        quoteLabel.setText(quotes.get(quoteIndex));
+        updateQuote();
 
         quoteTimeline = new Timeline(new KeyFrame(Duration.seconds(15), e -> updateQuote()));
         quoteTimeline.setCycleCount(Timeline.INDEFINITE);
@@ -142,7 +119,6 @@ public class StudyModeController implements BackNavigable {
             return;
         }
 
-        // NEW: Get mood from ComboBox
         String mood = (moodComboBox != null) ? moodComboBox.getValue() : null;
         if (mood == null || mood.trim().isEmpty()) {
             showError("Please select your mood before starting the session.");
@@ -182,15 +158,6 @@ public class StudyModeController implements BackNavigable {
         } catch (NumberFormatException e) {
             showError("Invalid duration format. Please enter a valid number.");
         }
-    }
-
-    /**
-     * Updates the motivational quote shown in the label.
-     * Called every 15 seconds during an active session.
-     */
-    private void updateQuote() {
-        quoteIndex = (quoteIndex + 1) % quotes.size();
-        quoteLabel.setText(quotes.get(quoteIndex));
     }
 
     /**
@@ -295,23 +262,6 @@ public class StudyModeController implements BackNavigable {
     }
 
     /**
-     * Simulates saving a completed study session to the database.
-     * <p>
-     * Currently logs to the console. Replace with database interaction logic.
-     * </p>
-     *
-     * @param subject the subject studied
-     * @param durationInSeconds the duration of the session in seconds
-     */
-    private void saveStudySessionToDatabase(String subject, int durationInSeconds) {
-        int durationInMinutes = durationInSeconds / 60;
-        System.out.println("Saving session to database...");
-        System.out.println("Subject: " + subject);
-        System.out.println("Duration: " + durationInMinutes + " minutes");
-        // TODO: Replace this with actual DB logic
-    }
-
-    /**
      * Saves the currently displayed motivational quote to the database for the logged-in user.
      * Prevents duplicate entries using {@code INSERT OR IGNORE}.
      *
@@ -355,55 +305,70 @@ public class StudyModeController implements BackNavigable {
     }
 
     /**
-     * Sends a prompt to the AI model with context about the user's subject, mood, and duration,
-     * and displays the response in the AI response text area.
+     * Sends a prompt to the local Ollama AI model and passes the response to a callback.
+     *
+     * @param prompt     the prompt string to send to the AI model
+     * @param onResponse a callback to handle the AI's response on the JavaFX thread
      */
-    @FXML
-    public void handleAskAI() {
-
-        String subject = subjectTextField.getText();
-        String duration = durationTextField.getText();
-        String mood = moodComboBox.getValue();
-
-        String model = "llama3.2:1b";
-        String prompt1 = "I would like to study " + subject + " for " + duration + " minutes and I am in a " + mood + " mood. Given this context, what study advice can you give me?";
-        String prompt2 = "I would like to study " + subject + " for " + duration + " minutes and I am in a " + mood + " mood. Given this context, what study advice can you give me?";
-
+    private void fetchAIResponse(String prompt, Consumer<String> onResponse) {
         Runnable task = () -> {
             try {
-                // Set up an HTTP POST request
                 URL url = new URL("http://localhost:11434/api/generate");
                 HttpURLConnection conn = (HttpURLConnection) url.openConnection();
                 conn.setRequestMethod("POST");
                 conn.setRequestProperty("Content-Type", "application/json");
                 conn.setDoOutput(true);
 
-                // Create request JSON
                 JSONObject requestJson = new JSONObject();
-                requestJson.put("model", model);
-                requestJson.put("prompt", prompt1);
+                requestJson.put("model", "llama3.2:1b");
+                requestJson.put("prompt", prompt);
                 requestJson.put("stream", false);
 
-                // Send request
                 try (OutputStream os = conn.getOutputStream()) {
                     os.write(requestJson.toString().getBytes());
                 }
 
-                // Get response
                 try (BufferedReader br = new BufferedReader(new InputStreamReader(conn.getInputStream()))) {
                     String responseLine = br.readLine();
                     JSONObject responseJson = new JSONObject(responseLine);
-                    String fullResponse = responseJson.getString("response");
+                    String fullResponse = responseJson.getString("response").trim();
 
-                    Platform.runLater(() -> aiResponse.setText(fullResponse));
+                    Platform.runLater(() -> onResponse.accept(fullResponse));
                 }
             } catch (Exception e) {
                 e.printStackTrace();
-                Platform.runLater(() -> aiResponse.setText("Error: " + e.getMessage()));
+                Platform.runLater(() -> onResponse.accept("Error: " + e.getMessage()));
             }
         };
 
         new Thread(task).start();
+    }
+
+    /**
+     * Sends a study-related prompt to the AI based on user input and displays the response.
+     * <p>
+     * Uses subject, duration, and mood to generate advice via {@code fetchAIResponse}.
+     */
+    @FXML
+    public void handleAskAI() {
+        String subject = subjectTextField.getText();
+        String duration = durationTextField.getText();
+        String mood = moodComboBox.getValue();
+
+        String prompt = "I would like to study " + subject + " for " + duration +
+                " minutes and I am in a " + mood +
+                " mood. Given this context, what study advice can you give me?";
+
+        fetchAIResponse(prompt, response -> aiResponse.setText(response));
+    }
+
+    /**
+     * Updates the motivational quote shown in the label.
+     * Called every 15 seconds during an active session.
+     */
+    private void updateQuote() {
+        String prompt = "Give me a short motivational quote about studying or learning.";
+        fetchAIResponse(prompt, response -> quoteLabel.setText(response));
     }
 
     /**
