@@ -22,7 +22,7 @@ import java.util.List;
 public class StudyVaultController implements BackNavigable {
 
     @FXML
-    private Button backToHome;  // Changed from Label to Button for better UX
+    private Button toHome;  // Changed from Label to Button for better UX
 
     @FXML
     private ListView<String> quotesListView;
@@ -35,7 +35,7 @@ public class StudyVaultController implements BackNavigable {
         loadSavedQuotes();
 
         // Set back button action via BackButtonHandler (assumed helper)
-        BackButtonHandler.setBackAction(backToHome, this);
+        BackButtonHandler.setBackAction(toHome, this);
     }
 
     /**
@@ -77,8 +77,8 @@ public class StudyVaultController implements BackNavigable {
     @FXML
     public void goToHomepage() {
         try {
-            Stage stage = (Stage) backToHome.getScene().getWindow();
-            FXMLLoader fxmlLoader = new FXMLLoader(getClass().getResource("Homepage.fxml"));
+            Stage stage = (Stage) toHome.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Homepage.fxml"));
             Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
             stage.setScene(scene);
         } catch (IOException e) {

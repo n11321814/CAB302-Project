@@ -20,12 +20,15 @@ import java.util.Random;
 
 public class HomepageController {
 
+
     @FXML private Label streakLabel;
     @FXML private Label quoteLabel;
     @FXML private Label toLogin;
+
+    @FXML private Button toSettings;
     @FXML private Button cookieButton;
     @FXML private Button toStudyMode;
-    @FXML private Button studyVaultButton;
+    @FXML private Button toStudyVault;
     @FXML private Button goToSettings;
 
     @FXML public void initialize() {
@@ -87,9 +90,10 @@ public class HomepageController {
 
     @FXML private void goToStudyVault(MouseEvent event) {
         try {
-            Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
-            Parent root = FXMLLoader.load(getClass().getResource("StudyVault.fxml"));
-            stage.setScene(new Scene(root, ApplicationMain.WIDTH, ApplicationMain.HEIGHT));
+            Stage stage = (Stage) toStudyVault.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("StudyVault.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
+            stage.setScene(scene);
         } catch (IOException e) {
             e.printStackTrace();
             Alert alert = new Alert(Alert.AlertType.ERROR);
@@ -102,11 +106,21 @@ public class HomepageController {
 
     @FXML private void goToSettings(MouseEvent event) {
         try {
+
+            Stage stage = (Stage) toSettings.getScene().getWindow();
+            FXMLLoader fxmlLoader = new FXMLLoader(ApplicationMain.class.getResource("Settings.fxml"));
+            Scene scene = new Scene(fxmlLoader.load(), ApplicationMain.WIDTH, ApplicationMain.HEIGHT);
+            stage.setScene(scene);
+
+
+
+
             Stage stage = (Stage) ((Node) event.getSource()).getScene().getWindow();
             FXMLLoader loader = new FXMLLoader(getClass().getResource("Settings.fxml"));
             Parent root = loader.load();
             AccountSettingsController controller = loader.getController();
             controller.initialiseUser(UserSession.getUserId());
+
             stage.setScene(new Scene(root, ApplicationMain.WIDTH, ApplicationMain.HEIGHT));
         } catch (IOException e) {
             e.printStackTrace();

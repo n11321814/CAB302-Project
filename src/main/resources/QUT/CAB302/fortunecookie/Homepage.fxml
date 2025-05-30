@@ -61,7 +61,7 @@
                             -fx-background-radius: 30;
                             -fx-padding: 12 28;"/>
                 <Button text="Study Vault"
-                        fx:id="studyVaultButton"
+                        fx:id="toStudyVault"
                         prefWidth="140"
                         onMouseClicked="#goToStudyVault"
                         style="

@@ -19,9 +19,9 @@
     </padding>
 
     <HBox alignment="CENTER_LEFT" spacing="10">
-        <Button fx:id="backToHome"
+        <Button fx:id="toHome"
                 text="← Back"
-                onAction="#goToHomepage"
+                onAction="#goBack"
                 style="-fx-font-size: 14px; -fx-background-color: transparent; -fx-text-fill: #5A3E1B; -fx-cursor: hand;"/>
     </HBox>
 
