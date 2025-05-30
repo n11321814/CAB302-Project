@@ -9,7 +9,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
-import javafx.scene.input.MouseEvent;
 import javafx.stage.Stage;
 import javafx.animation.KeyFrame;
 import javafx.animation.Timeline;
@@ -70,7 +69,7 @@ public class StudyModeController implements BackNavigable {
     /**
      * Initializes the Study Mode view.
      * <p>
-     * Sets default UI values, populates mood options, prepares quote cycling,
+     * Sets default UI values, prepares quote cycling,
      * and assigns the back button behavior.
      * </p>
      */
@@ -79,10 +78,6 @@ public class StudyModeController implements BackNavigable {
         if (streakLabel != null) {
             streakLabel.setText("Study streak: 🔥 0");
         }
-
-        //if (moodComboBox != null) {
-        //    moodComboBox.getItems().addAll("Happy", "Stressed", "Tired", "Motivated", "Anxious");
-        //}
 
         updateQuote();
 

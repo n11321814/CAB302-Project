@@ -74,7 +74,7 @@ public class UserDAODatabase implements UserDAO {
     /**
      * Creates the {@code savedQuotes} table if it does not already exist.
      * <p>
-     * Stores user-saved motivational quotes, using a composite primary key
+     * Stores saved motivational quotes, using a composite primary key
      * to prevent duplicate quote entries per user.
      * </p>
      */
@@ -105,7 +105,7 @@ public class UserDAODatabase implements UserDAO {
      * @param email the user's email address
      * @param phone the user's phone number
      * @param hoursOfStudy average hours studied per week
-     * @param expertiseLevel the user's self-reported expertise level
+     * @param expertiseLevel the user's expertise level
      * @return {@code true} if registration succeeds, {@code false} otherwise
      */
     @Override
