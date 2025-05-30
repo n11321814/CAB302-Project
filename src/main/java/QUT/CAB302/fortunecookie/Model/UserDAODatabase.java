@@ -113,8 +113,16 @@ public class UserDAODatabase implements UserDAO {
     @Override
     public boolean registerUser(String username, String password, String email, String phone, String hoursOfStudy, String expertiseLevel) {
 
-        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt()); // Hashes Password
+        if (username == null || username.isBlank() ||
+                password == null || password.isBlank() ||
+                (email == null || email.isBlank()) && (phone == null || phone.isBlank()) ||
+                hoursOfStudy == null || hoursOfStudy.isBlank() ||
+                expertiseLevel == null || expertiseLevel.isBlank()) {
+            System.out.println("Registration failed: One or more fields are empty or invalid.");
+            return false;
+        }
 
+        String hashedPassword = BCrypt.hashpw(password, BCrypt.gensalt()); // Hashes Password
 
         try {
             // Ensures that the insert transactions fails or succeeds together

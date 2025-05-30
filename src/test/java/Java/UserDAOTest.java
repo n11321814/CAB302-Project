@@ -1,11 +1,15 @@
 package Java;
 
+import QUT.CAB302.fortunecookie.Model.SQLiteConnection;
 import QUT.CAB302.fortunecookie.Model.User;
 import QUT.CAB302.fortunecookie.Model.UserDAO;
 import QUT.CAB302.fortunecookie.Model.UserDAODatabase;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -20,8 +24,8 @@ public class UserDAOTest {
     private static final String password2 = "TestPassword2";
     private static final String email1 = "test@email.com";
     private static final String phone1 = "0486726574";
-    private static final String hours1 = "jdvksh";
-    private static final String expertise1 = "fafe";
+    private static final String hours1 = "1-5";
+    private static final String expertise1 = "Beginner";
 
 
 
@@ -33,6 +37,18 @@ public class UserDAOTest {
     @BeforeEach
     public void setUp() {
         userDAO = new UserDAODatabase(); // Tests against Mock Database as opposed to UserDAODatabase (SQL)
+
+        try {
+            Connection conn = SQLiteConnection.getInstance();
+            Statement stmt = conn.createStatement();
+
+            // Clear dependent tables first due to foreign key constraints
+            stmt.executeUpdate("DELETE FROM savedQuotes");
+            stmt.executeUpdate("DELETE FROM studyHabits");
+            stmt.executeUpdate("DELETE FROM users");
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     // Tests a user can successfully be registered
@@ -71,8 +87,9 @@ public class UserDAOTest {
     // Tests logging in with an existing user passes
     @Test
     public void testUserExists() {
+        userDAO.registerUser(username1, password1, email1, phone1, hours1, expertise1);
         User user = userDAO.loginUser(username1, password1);
-        assertNotNull(user, "Login without registering should fail");
+        assertNotNull(user, "Login after registering should pass");
     }
 
     // Tests logging in with a non-existent user fails
@@ -80,6 +97,42 @@ public class UserDAOTest {
     public void testUserNotExists() {
         User user = userDAO.loginUser("dsahdhj", "asDasasda");
         assertNull(user, "Login without registering should fail");
+    }
+
+    @Test
+    public void testRegisterUserWithEmptyFields() {
+        boolean result = userDAO.registerUser("", "", "", "", "", "");
+        assertFalse(result, "User should not be registered with empty fields");
+    }
+
+    @Test
+    public void testRegisterDuplicateUser() {
+        userDAO.registerUser(username1, password1, email1, phone1, hours1, expertise1);
+        boolean result = userDAO.registerUser(username1, password1, email1, phone1, hours1, expertise1);
+        assertFalse(result, "Duplicate user should not be registered");
+    }
+
+    @Test
+    public void testLoginWithIncorrectPassword() {
+        userDAO.registerUser(username2, password2, email1, phone1, hours1, expertise1);
+        User user = userDAO.loginUser(username2, "WrongPassword");
+        assertNull(user, "Login should fail with incorrect password");
+    }
+
+    @Test
+    public void testLoginWithNonExistentUser() {
+        User user = userDAO.loginUser("ghostuser", "ghostpass");
+        assertNull(user, "Login should fail for non-existent user");
+    }
+
+    @Test
+    public void testLoginAfterSuccessfulRegistration() {
+        boolean success = userDAO.registerUser(username2, password2, email1, phone1, hours1, expertise1);
+        assertTrue(success, "Registration should succeed");
+
+        User user = userDAO.loginUser(username2, password2);
+        assertNotNull(user, "User should be able to login after registration");
+        assertEquals(username2, user.getUsername(), "Username should match");
     }
 
     public static String generateRandomString() {
