@@ -74,7 +74,7 @@ public class UserDAODatabase implements UserDAO {
     /**
      * Creates the {@code savedQuotes} table if it does not already exist.
      * <p>
-     * Stores saved motivational quotes, using a composite primary key
+     * Stores saved motivational quotes, using a primary key
      * to prevent duplicate quote entries per user.
      * </p>
      */
@@ -95,10 +95,6 @@ public class UserDAODatabase implements UserDAO {
 
     /**
      * Registers a new user and stores their study habits in the database.
-     * <p>
-     * Performs the operation as a transaction to ensure consistency between
-     * {@code users} and {@code studyHabits} tables.
-     * </p>
      *
      * @param username the new user's username
      * @param password the new user's plain text password (will be hashed)

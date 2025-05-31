@@ -4,7 +4,7 @@ package QUT.CAB302.fortunecookie.Model;
  * Data Access Object (DAO) interface for user-related operations.
  * <p>
  * Provides an abstraction for user registration and authentication.
- * Implementations should handle database interaction details.
+ * Handles database interaction details.
  * </p>
  */
 public interface UserDAO {
@@ -30,6 +30,4 @@ public interface UserDAO {
      * @return a {@code User} object if authentication succeeds; {@code null} otherwise
      */
     User loginUser(String username, String password);
-
-
 }

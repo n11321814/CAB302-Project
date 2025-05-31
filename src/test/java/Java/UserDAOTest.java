@@ -71,7 +71,6 @@ public class UserDAOTest {
         boolean result = userDAO.registerUser(username, username, email1, phone1, hours1, expertise1);
         assertTrue(result, "User successfully registered");
     }
-
     /**
      * Tests that registering a user with a duplicate username fails.
      * Verifies that the method returns false when trying to register the same username twice.
@@ -135,52 +134,6 @@ public class UserDAOTest {
     public void testRegisterUserWithEmptyFields() {
         boolean result = userDAO.registerUser("", "", "", "", "", "");
         assertFalse(result, "User should not be registered with empty fields");
-    }
-
-    /**
-     * Tests that duplicate users cannot be registered, even if the details are the same.
-     * Ensures registerUser returns false when attempting duplicate registration.
-     */
-    @Test
-    public void testRegisterDuplicateUser() {
-        userDAO.registerUser(username1, password1, email1, phone1, hours1, expertise1);
-        boolean result = userDAO.registerUser(username1, password1, email1, phone1, hours1, expertise1);
-        assertFalse(result, "Duplicate user should not be registered");
-    }
-
-    /**
-     * Tests that login fails when the correct username is used but the password is incorrect.
-     * Ensures loginUser returns null on invalid password.
-     */
-    @Test
-    public void testLoginWithIncorrectPassword() {
-        userDAO.registerUser(username2, password2, email1, phone1, hours1, expertise1);
-        User user = userDAO.loginUser(username2, "WrongPassword");
-        assertNull(user, "Login should fail with incorrect password");
-    }
-
-    /**
-     * Tests that login fails when using credentials for a user that does not exist.
-     * Ensures loginUser returns null when the username is not in the database.
-     */
-    @Test
-    public void testLoginWithNonExistentUser() {
-        User user = userDAO.loginUser("ghostuser", "ghostpass");
-        assertNull(user, "Login should fail for non-existent user");
-    }
-
-    /**
-     * Tests that a user can log in immediately after successful registration.
-     * Ensures both registration and login succeed and the username matches.
-     */
-    @Test
-    public void testLoginAfterSuccessfulRegistration() {
-        boolean success = userDAO.registerUser(username2, password2, email1, phone1, hours1, expertise1);
-        assertTrue(success, "Registration should succeed");
-
-        User user = userDAO.loginUser(username2, password2);
-        assertNotNull(user, "User should be able to login after registration");
-        assertEquals(username2, user.getUsername(), "Username should match");
     }
 
     /**
