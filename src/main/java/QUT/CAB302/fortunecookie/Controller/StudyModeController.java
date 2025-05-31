@@ -76,7 +76,7 @@ public class StudyModeController implements BackNavigable {
     @FXML
     public void initialize() {
         if (streakLabel != null) {
-            streakLabel.setText("Study streak: 🔥 0");
+            streakLabel.setText("Study streak: 🔥 1");
         }
 
         updateQuote();
@@ -356,7 +356,7 @@ public class StudyModeController implements BackNavigable {
      * Called every 15 seconds during an active session.
      */
     private void updateQuote() {
-        String prompt = "Give me a short motivational quote about studying or learning.";
+        String prompt = "Give me a short motivational quote in less then 8 words about studying or learning.";
         fetchAIResponse(prompt, response -> quoteLabel.setText(response));
     }
 

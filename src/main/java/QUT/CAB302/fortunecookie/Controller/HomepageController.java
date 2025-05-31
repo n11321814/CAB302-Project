@@ -42,10 +42,10 @@ public class HomepageController {
      */
     @FXML public void initialize() {
         if (streakLabel != null) {
-            streakLabel.setText("Study streak: 🔥 0");
+            streakLabel.setText("Study streak: 🔥 1");
         }
         if (quoteLabel != null) {
-            quoteLabel.setText("Quote: Stay focused and keep going!");
+            quoteLabel.setText("The best way to predict the future is to create it");
         }
     }
 
