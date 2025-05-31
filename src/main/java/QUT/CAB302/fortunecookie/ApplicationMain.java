@@ -23,7 +23,7 @@ public class ApplicationMain extends Application {
      * Starts the JavaFX application by setting up the primary stage.
      * <p>
      * Loads the initial login screen from FXML, sets up the scene with
-     * fixed mobile dimensions, and enforces a minimum window size.
+     * fixed dimensions, and enforces a minimum window size.
      * </p>
      *
      * @param stage the primary application window
